@@ -1,0 +1,15 @@
+.text-effect :global {
+  background: 50% 100% / 50% 50% no-repeat
+    radial-gradient(ellipse at bottom, rgba(255, 255, 255, 0.6), transparent, transparent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 7vw;
+  font-weight: bold;
+  animation: reveal 3000ms ease-in-out forwards 200ms, glow 2500ms linear infinite 2000ms;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}

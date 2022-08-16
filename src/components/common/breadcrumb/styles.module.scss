@@ -1,0 +1,12 @@
+.breadcrumb :global {
+  @apply flex justify-end font-bold;
+  a {
+    @apply cursor-pointer text-white;
+  }
+  span.sep {
+    @apply px-3;
+    &:last-child {
+      @apply px-0;
+    }
+  }
+}

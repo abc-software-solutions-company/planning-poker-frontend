@@ -1,0 +1,11 @@
+.float-element :global {
+  .float-wrap {
+    @apply absolute transition-top duration-1500 ease-in-out;
+    &.left {
+      @apply left-10;
+    }
+    &.right {
+      @apply right-10;
+    }
+  }
+}

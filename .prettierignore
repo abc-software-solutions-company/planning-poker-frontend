@@ -1,0 +1,11 @@
+node_modules
+.next
+public
+.husky
+next-env.d.ts
+yarn.lock
+coverage
+cypress
+CHANGELOG.md
+.circleci/
+.env

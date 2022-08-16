@@ -1,0 +1,25 @@
+.socialNetwork :global {
+  @apply flex justify-end;
+  a {
+    @apply flex items-center border-r border-abc-blue;
+    &:last-child {
+      @apply border-none;
+    }
+  }
+}
+.social-topbar {
+  a {
+    @apply h-9 px-2.5;
+  }
+  a:last-child {
+    @apply px-0 pl-2.5;
+  }
+  svg {
+    @apply h-[15px] w-[15px];
+  }
+}
+.social-menu {
+  a {
+    @apply h-12 items-center px-4 sm:h-[60px] sm:px-6;
+  }
+}
