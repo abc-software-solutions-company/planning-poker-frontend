@@ -46,9 +46,9 @@ const schemaJsonLdWebSiteDefault = {
 };
 
 export const siteSettings = {
-  name: 'IKI Design',
+  name: 'PP',
   description: 'Simple solutions for complex problems',
-  defaultLanguage: 'vi',
+  defaultLanguage: 'en',
   phoneNumber: '0987654321',
   facebookUrl: '#',
   twitterUrl: '#',
