@@ -11,23 +11,18 @@ module.exports = {
     },
     screens: Object.fromEntries(Object.entries(defaultTheme.screens).filter(([key, value]) => key !== '2xl')),
     fontFamily: {
-      sans: ['Quicksand', 'san-serif'],
-      serif: ['Merriweather'],
-      mono: ['"Roboto Mono"'],
-      display: ['"Sansita Swashed"'],
-      handwriting: ['"Dancing Script"']
+      sans: ['Montserrat', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans']
     },
     extend: {
       fontSize: {
         none: ['0', '0'],
-        superhero: ['11.25rem', '12.5rem'], // 180/200
-        hero: ['6.25rem', '7.313rem'], // 100/117
-        h1: ['2.375rem', '2.813rem'], // 38/45
-        h2: ['2rem', '2.375rem'], // 32/38
-        h3: ['1.5rem', '2.063rem'], // 24/33
-        base: ['1rem', '1.5rem'], // 16/19
-        base2: ['0.875rem', '1.188rem'], // 14/16
-        caption: ['0.75rem', '0.875rem'] // 12/14
+        hero: ['3.5rem', '5.5rem'], // 56/88
+        h1: ['2.5rem', '3.75rem'], // 40/60
+        h2: ['2rem', '2.5rem'], // 32/40
+        h3: ['1.75rem', '2.25rem'], // 28/36
+        h4: ['1.5rem', '2rem'], // 24/32
+        base: ['1.25rem', '1.75rem'], // 20/28
+        text: ['1rem', '1.5rem'] // 16/24
       },
       letterSpacing: {
         3: '0.03em', // -3%
@@ -38,17 +33,21 @@ module.exports = {
         0: '0'
       },
       screens: {
-        xl: '1198px'
+        '2xl': '1440px'
       },
       colors: {
-        'abc-blue': '#3CC7F4',
-        'abc-dark-blue': '#3D99D3',
-        'abc-deep-blue': '#3D91CE',
-        'abc-dark-red': '#DB5136',
-        'abc-yellow': '#DBA936',
-        'abc-deep-green': '#00A57E',
-        'abc-orange': '#EF7622',
-        'abc-dark': '#151313'
+        'pp-blue': '#4B9AE8',
+        'pp-dark-blue': '#3D99D3',
+        'pp-light-blue': '#3CC7F4',
+        'pp-light-aqua': '#A8CEF4',
+        'pp-green': '#3B8260',
+        'pp-deep-green': '#00A57E',
+        'pp-red': '#FF0000',
+        'pp-light-red': '#D14F4F',
+        'pp-pink': '#FED0EE',
+        'pp-yellow': '#DBA936',
+        'pp-light-yellow': '#FBE38E',
+        'pp-grey': '#D9D9D9'
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'
@@ -119,7 +118,7 @@ module.exports = {
             maxWidth: theme('maxWidth.full')
           }
         },
-        abc: {
+        pp: {
           color: theme('colors.white'),
           css: {
             '--tw-prose-body': theme('colors.white'),
@@ -160,7 +159,7 @@ module.exports = {
       addUtilities({
         '.invalid': {
           fontSize: theme('fontSize.xs'),
-          color: theme('colors.abc-dark-red'),
+          color: theme('colors.pp-dark-red'),
           fontStyle: 'italic'
         },
         '.overflow-initial': {
