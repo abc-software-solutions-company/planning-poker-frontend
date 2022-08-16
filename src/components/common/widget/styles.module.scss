@@ -1,0 +1,20 @@
+.widget :global {
+  .name {
+    @apply text-xl font-bold;
+  }
+  .line {
+    @apply mt-2 border-t;
+  }
+  .w-list {
+    @apply pt-3;
+  }
+  .w-item {
+    @apply flex pb-2 pt-2;
+    a {
+      @apply cursor-pointer font-semibold text-gray-700 transition-all duration-300 ease-in-out hover:text-abc-blue;
+    }
+    .active {
+      @apply text-abc-blue;
+    }
+  }
+}

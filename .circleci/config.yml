@@ -1,0 +1,84 @@
+version: '2.1'
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2
+  aws-ecs: circleci/aws-ecs@2.3.0
+
+executors:
+  nodejs:
+    docker:
+      - image: cimg/node:14.17.3
+    resource_class: medium+
+  python:
+    docker:
+      - image: cimg/python:3.9.6
+    resource_class: small
+  ubuntu:
+    machine:
+      image: ubuntu-2004:202111-01
+
+.only-main: &only-main
+  filters:
+    branches:
+      only:
+        - main
+
+.only-release: &only-release
+  filters:
+    branches:
+      only:
+        - release
+jobs:
+  build-and-deploy-stage:
+    executor: ubuntu
+    steps:
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile-stage
+          platform: linux/amd64
+          push-image: true
+          tag: latest
+          repo: iki-stage
+
+  # build-and-deploy-production:
+  #   executor: ubuntu
+  #   steps:
+  #     - aws-ecr/build-and-push-image:
+  #         aws-access-key-id: AWS_ACCESS_KEY_ID
+  #         aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+  #         create-repo: true
+  #         dockerfile: Dockerfile-production
+  #         platform: linux/amd64
+  #         push-image: true
+  #         tag: latest
+  #         repo: abc-frontend
+
+workflows:
+  deploy-stage:
+    jobs:
+      - build-and-deploy-stage:
+          <<: *only-main
+      - aws-ecs/deploy-service-update:
+          <<: *only-main
+          name: deploy-service-update-stage
+          requires:
+            - build-and-deploy-stage
+          cluster-name: fargate-cluster
+          family: 'iki-amd-stage'
+          service-name: 'iki-service-stage1'
+          skip-task-definition-registration: no
+  # deploy-production:
+  #   jobs:
+  #     - build-and-deploy-production:
+  #         <<: *only-release
+  #     - aws-ecs/deploy-service-update:
+  #         <<: *only-release
+  #         name: deploy-service-update-production
+  #         requires:
+  #           - build-and-deploy-production
+  #         cluster-name: fargate-cluster
+  #         family: 'abc-frontend-amd'
+  #         service-name: 'abc-frontend-service'
+  #         skip-task-definition-registration: no
+

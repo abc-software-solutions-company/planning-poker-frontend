@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    "oderwat.indent-rainbow",
+    "ChakrounAnas.turbo-console-log",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "PKief.material-icon-theme"
+  ]
+}

@@ -1,0 +1,20 @@
+.scrollbar {
+  &::-webkit-scrollbar {
+    @apply h-[6px] w-[6px];
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-stone-900;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-abc-dark-blue;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-abc-dark-blue;
+  }
+  &.scrolling-touch {
+    -webkit-overflow-scrolling: touch;
+  }
+  &.scrolling-auto {
+    -webkit-overflow-scrolling: auto;
+  }
+}

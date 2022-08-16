@@ -1,0 +1,43 @@
+{
+  "404-heading": "Lỗi: 404",
+  "404-sub-heading": "Xin lỗi bạn về sự bất tiện này, trang này hiện không tồn tại.",
+  "404-back-home": "Về trang chủ",
+
+  "menu-home":"Trang chủ",
+  "menu-blog":"Bài viết",
+  "menu-contact-us":"Liên hệ",
+
+  "contact": "Liên hệ",
+  "contact-input-first-name": "Tên*",
+  "contact-input-last-name": "Họ*",
+  "contact-input-email": "Email*",
+  "contact-input-phone-number": "Số điện thoại*",
+  "contact-input-subject": "Tiêu đề*",
+  "contact-input-message": "Nhập nội dung",
+  "contact-button-submit": "Gửi",
+  "contact-button-sending": "Đang gửi...",
+  "contact-submit-success-msg": "Cảm ơn bạn đã quan tâm đến IKI.\nMột trong những thành viên trong nhóm của chúng tôi sẽ sớm liên hệ với bạn.",
+  "contact-submit-success-btn": "Về trang chủ",
+  "contact-submit-fail-title": "Lỗi!",
+  "contact-submit-fail-msg": "Đã xảy ra lỗi, vui lòng thử lại.",
+  "contact-submit-fail-btn": "Thử lại",
+
+  "validate-first-name-required": "Vui lòng nhập thông tin.",
+  "validate-first-name-min-length": "Tên phải có ít nhất 2 ký tự.",
+  "validate-last-name-required": "Vui lòng nhập thông tin.",
+  "validate-last-name-min-length": "Họ phải có ít nhất 2 ký tự.",
+  "validate-phone-number-invalid": "Vui lòng nhập đúng số điện thoại.",
+  "validate-phone-number-required": "Vui lòng nhập số điện thoại.",
+  "validate-email-invalid": "Email không hợp lệ.",
+  "validate-email-required": "Vui lòng nhập email.",
+  "validate-subject-required": "Vui lòng nhập thông tin.",
+  "validate-message-required": "Vui lòng nhập thông tin.",
+
+  "copyright":"© Bản quyền 2022 | Công ty thiết kế nội thất IKI",
+  "copyright-right":"Đã đăng ký Bản quyền",
+
+  "blog-view-more": "Xem thêm",
+  "blog-list-empty": "Không có dữ liệu.",
+  "project-view-more": "Xem thêm",
+  "project-list-empty": "Không có dữ liệu."
+}

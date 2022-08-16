@@ -1,0 +1,45 @@
+{
+  "404-heading": "Error code: 404",
+  "404-sub-heading": "Sory for your convenience, this page is not available.\nPlease try again or go to another page.",
+  "404-back-home": "Take me home",
+
+  "menu-home":"Home",
+  "menu-blog":"Blog",
+  "menu-contact-us":"Contact Us",
+
+  "contact": "Contact",
+  "contact-input-name": "Full Name",
+  "contact-input-first-name": "First Name*",
+  "contact-input-last-name": "Last Name*",
+  "contact-input-phone-number": "Phone Number*",
+  "contact-input-subject": "Subject*",
+  "contact-input-message": "Message*",
+  "contact-button-submit": "Submit",
+  "contact-button-sending": "Sending...",
+  "contact-submit-success-msg": "Thank you for your interest in ABC.\nOne of our team members will be in touch soon.",
+  "contact-submit-success-btn": "Back to home",
+  "contact-submit-fail-title": "Oops!",
+  "contact-submit-fail-msg": "Something went wrong, please try again.",
+  "contact-submit-fail-btn": "Try again",
+
+  "validate-full-name-required": "Required.",
+  "validate-first-name-required": "Required.",
+  "validate-first-name-min-length": "First name must be at least 2 characters.",
+  "validate-last-name-required": "Required.",
+  "validate-last-name-min-length": "First name must be at least 2 characters.",
+  "validate-email-invalid": "Email is not valid.",
+  "validate-email-required": "Required.",
+  "validate-phone-number-invalid": "Phone number is not valid.",
+  "validate-phone-number-required": "Required.",
+  "validate-email-or-phone-invalid": "Email or Phone number is not valid.",
+  "validate-email-or-phone-required": "Required.",
+  "validate-subject-required": "Required.",
+  "validate-message-required": "Required.",
+
+  "copyright":"© Copyright 2022 | ABC Software Solutions Company",
+  "copyright-all-right":"All Rights Reserved",
+
+  "blog-view-more": "View more",
+  "project-view-more": "View more",
+  "project-list-empty": "Project list empty."
+}

@@ -1,0 +1,46 @@
+.menu-desktop :global {
+  @apply sticky top-0 right-0 left-0 z-50 w-full bg-abc-dark/[0.7] lg:mt-10;
+  .inner {
+    @apply flex items-center justify-between text-white;
+  }
+  .logo-iki {
+    @apply text-center text-caption text-white hover:no-underline;
+    h1 {
+      @apply relative top-[1px];
+    }
+  }
+  nav {
+    @apply hidden lg:block;
+    li {
+      &:hover,
+      &.hover,
+      &.active {
+        > a span {
+          @apply text-abc-dark-blue;
+        }
+      }
+      a {
+        @apply py-4 px-5 font-semibold uppercase text-white;
+        i {
+          @apply -mt-[2px];
+        }
+      }
+      > ul,
+      > div:not(.menu-mega),
+      .menu-mega {
+        @apply bg-black;
+      }
+      li {
+        a {
+          @apply py-3;
+        }
+      }
+    }
+    > ul > li a.active {
+      @apply text-abc-dark-blue;
+    }
+    > ul > li:last-child > a {
+      @apply pr-0;
+    }
+  }
+}

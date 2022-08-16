@@ -1,0 +1,9 @@
+.mod-share :global {
+  @apply flex items-center gap-x-4;
+  .text {
+    @apply font-bold uppercase text-gray-500;
+  }
+  .list {
+    @apply flex gap-x-1 leading-0;
+  }
+}

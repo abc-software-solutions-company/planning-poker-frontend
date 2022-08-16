@@ -1,0 +1,21 @@
+.confirmation :global {
+  @apply mx-auto max-w-sm text-center;
+  svg {
+    @apply mx-auto;
+  }
+  h4 {
+    @apply mt-5 text-h3 font-bold;
+    &.success {
+      @apply text-abc-deep-green;
+    }
+    &.failure {
+      @apply text-abc-dark-red;
+    }
+  }
+  button {
+    @apply mt-4;
+  }
+  div {
+    @apply py-3 font-bold;
+  }
+}
