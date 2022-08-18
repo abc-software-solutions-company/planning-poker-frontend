@@ -1,13 +1,10 @@
 .section-vote-room :global {
   @apply pt-32;
-  h5 {
-    @apply pp-base;
-  }
   p {
-    @apply pp-text;
+    @apply text-base;
   }
   .room-name {
-    @apply pp-h4;
+    @apply text-h4;
   }
   .content {
     @apply mt-9 flex justify-center;
@@ -21,7 +18,7 @@
       @apply py-4 px-4;
     }
     .title {
-      @apply bg-pp-blue px-16 py-5 text-center text-white;
+      @apply bg-abc-blue px-16 py-5 text-center text-white;
     }
     .player-status {
       @apply flex items-center justify-between px-4 py-4;
@@ -56,7 +53,7 @@
   .left-content {
     @apply mr-[33px] w-auto;
     .story-name {
-      @apply text-center pp-h4;
+      @apply text-center text-h4;
     }
     .card-holder {
       @apply mt-20 grid grid-cols-4 gap-7;
