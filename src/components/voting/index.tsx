@@ -1,6 +1,6 @@
 import {useRef} from 'react';
 
-import Button from '@/core_UI/button';
+import Button from '@/core-ui/button';
 import {IVoteUser} from '@/types';
 
 import LogoCopy from '../icons/copy';
@@ -9,10 +9,9 @@ import VoteUser from './voters';
 
 interface IProps {
   dataUsers: IVoteUser[];
-  btnL: string;
-  btnR: string;
+  btn: string;
 }
-const VoteRoom: React.FC<IProps> = ({dataUsers, btnL, btnR}) => {
+const VoteRoom: React.FC<IProps> = ({dataUsers, btn}) => {
   const inputLink = useRef<HTMLInputElement>(null);
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
@@ -30,12 +29,11 @@ const VoteRoom: React.FC<IProps> = ({dataUsers, btnL, btnR}) => {
             <div className="right-content">
               <h5 className="title">Waiting for Admin vote</h5>
               <h5 className="sub-title border-line">Players:</h5>
-              {dataUsers.map(({name, host}, index) => {
-                return <VoteUser className="border-line" key={index} name={name} host={host} />;
+              {dataUsers.map(({name, host, vote}, index) => {
+                return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
               <div className="action border-line">
-                <Button>{btnL}</Button>
-                <Button>{btnR}</Button>
+                <Button>{btn}</Button>
               </div>
               <div className="sharing">
                 <h5>Invite a teammate</h5>

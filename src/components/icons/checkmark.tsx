@@ -1,6 +1,8 @@
 import React from 'react';
 
-const LogoCheckmark: React.FC<React.SVGAttributes<Record<string, unknown>>> = ({width = 22, className = ''}) => {
+import {IpropsSVG} from '@/types';
+
+const LogoCheckmark: React.FC<IpropsSVG> = ({width = 22, className = ''}) => {
   return (
     <svg
       preserveAspectRatio="xMidYMid meet"

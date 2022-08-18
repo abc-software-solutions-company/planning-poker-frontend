@@ -5,11 +5,16 @@ import LayoutDefault from '@/layouts/default';
 import {IVoteUser} from '@/types';
 
 export default function PageHome() {
-  const dataVoteUsers: IVoteUser[] = [{name: 'Khanh', host: true}, {name: 'Huy'}, {name: 'Linh'}, {name: 'Phuoc'}];
+  const dataVoteUsers: IVoteUser[] = [
+    {name: 'Khanh', host: true, vote: true},
+    {name: 'Huy'},
+    {name: 'Linh'},
+    {name: 'Phuoc', vote: true}
+  ];
 
   return (
     <>
-      <VoteRoom dataUsers={dataVoteUsers} btnL="Finish" btnR="Next" />
+      <VoteRoom dataUsers={dataVoteUsers} btn="Finish" />
     </>
   );
 }

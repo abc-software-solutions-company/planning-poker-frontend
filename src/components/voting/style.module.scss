@@ -70,10 +70,10 @@
         @apply text-h2;
       }
     }
-    .back {
-      @apply absolute left-0 top-0 h-full w-full rounded-[5px] transition-all duration-500;
-      filter: drop-shadow(0 0 5px silver);
-      backface-visibility: hidden;
-    }
+    // .back {
+    //   @apply absolute left-0 top-0 h-full w-full rounded-[5px] transition-all duration-500;
+    //   filter: drop-shadow(0 0 5px silver);
+    //   backface-visibility: hidden;
+    // }
   }
 }

@@ -7,9 +7,10 @@ interface IProps {
   className?: string;
   name: string;
   host?: boolean;
+  vote?: boolean;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, host}) => {
+const VoteUser: React.FC<IProps> = ({name, className, host, vote}) => {
   return (
     <>
       <div className={cn('player-status', className)}>
@@ -17,7 +18,7 @@ const VoteUser: React.FC<IProps> = ({name, className, host}) => {
           <LogoAvatar host={host} />
           <div className="name">{name}</div>
         </div>
-        <LogoCheckmark />
+        {vote && <LogoCheckmark />}
       </div>
     </>
   );

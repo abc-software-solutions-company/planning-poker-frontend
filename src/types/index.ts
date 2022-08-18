@@ -201,4 +201,5 @@ export interface IpropsSVG {
 export interface IVoteUser {
   name: string;
   host?: boolean;
+  vote?: boolean;
 }
