@@ -1,5 +1,5 @@
 .btn {
-  @apply w-full border border-abc-blue bg-white py-[9px] text-base font-medium text-abc-blue;
+  @apply w-full border border-abc-blue bg-abc-blue p-3 text-base font-medium text-white;
   &:hover {
     @apply bg-abc-blue text-white;
   }
@@ -9,4 +9,5 @@
       @apply bg-white text-abc-blue;
     }
   }
+  // @apply border-pp-blue/[0.2] bg-pp-blue mx-auto h-12 w-full border;
 }
