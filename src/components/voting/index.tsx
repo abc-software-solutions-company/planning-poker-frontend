@@ -3,6 +3,7 @@ import {useRef} from 'react';
 import Button from '@/core-ui/button';
 import {IVoteUser} from '@/types';
 
+import VoteCard from '../cards';
 import LogoCopy from '../icons/copy';
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -24,7 +25,16 @@ const VoteRoom: React.FC<IProps> = ({dataUsers, btn}) => {
           <div className="content">
             <div className="left-content">
               <h2 className="story-name">Story name</h2>
-              <div className="card-holder"></div>
+              <div className="card-holder">
+                <VoteCard>0</VoteCard>
+                <VoteCard>1</VoteCard>
+                <VoteCard>2</VoteCard>
+                <VoteCard>3</VoteCard>
+                <VoteCard>5</VoteCard>
+                <VoteCard>8</VoteCard>
+                <VoteCard>13</VoteCard>
+                <VoteCard>21</VoteCard>
+              </div>
             </div>
             <div className="right-content">
               <h5 className="title">Waiting for Admin vote</h5>
