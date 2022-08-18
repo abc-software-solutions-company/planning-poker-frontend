@@ -1,30 +1,21 @@
-.PlanningPocker :global {
-  @apply mx-auto bg-[#EDF2F7];
+.planning-pocker :global {
+  @apply mx-auto bg-abc-light-grey;
   .container {
-    @apply p-20;
+    @apply py-80;
   }
-  .logo-abc {
-    @apply mx-auto mb-8 w-40 lg:w-[286px];
-  }
-  h1 {
-    @apply flex justify-center text-h1 font-extrabold text-pp-dark-blue lg:text-hero;
-  }
-  h4 {
-    @apply my-6 flex items-center justify-center text-h3 font-medium text-pp-dark-blue lg:text-h1;
-  }
-  .button1 {
-    @apply w-full justify-center gap-3 space-y-4 lg:flex lg:space-y-0;
+  .input-button {
+    @apply mx-auto max-w-xl justify-center gap-8 space-y-4 lg:flex lg:space-y-0;
   }
   .button-left {
-    @apply gap-2 lg:w-[30%] xl:w-[20%];
+    @apply lg:w-1/2;
   }
   .input-right {
-    @apply lg:w-[30%] xl:w-[20%];
+    @apply flex lg:w-1/2;
   }
-  .input-group {
-    @apply lg:w-[81%] xl:w-[75%];
+  .form-input {
+    @apply lg:w-3/4;
   }
   .button-right {
-    @apply p-4 text-white;
+    @apply w-1/4;
   }
 }

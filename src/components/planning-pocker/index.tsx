@@ -1,24 +1,23 @@
 import React from 'react';
 
-import IconSum from '../icons/icon-sum';
-import LogoABC from '../icons/logo-abc';
+import Heading from '@/components/heading';
+import InputText from '@/components/input-text';
+import Button from '@/core-ui/button';
+
 import styles from './style.module.scss';
 
 const PlanningPocker: React.FC = () => {
   return (
     <>
-      <div className={`PlanningPocker ${styles.PlanningPocker}`}>
+      <div className={styles['planning-pocker']}>
         <div className="container">
-          <LogoABC className="logo-abc" />
-          <h1>PLANNING POKER</h1>
-          <h4>High-functioning teams here also rely on Planning Poker</h4>
-          <div className="button1">
-            <button className="button-left btn">
-              <IconSum width={28} /> Create Room
-            </button>
-            <div className="input-right btn">
-              <input className="input-group form-input" type="text" placeholder="Enter a link or ID" />
-              <button className="button-right">Join</button>
+          <Heading as="h2">PLANNING POKER</Heading>
+          <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
+          <div className="input-button">
+            <Button className="btn button-left">Create</Button>
+            <div className="input-right">
+              <InputText className="form-input" placeholder="Enter a link or ID"></InputText>
+              <Button className="btn button-right">Join</Button>
             </div>
           </div>
         </div>

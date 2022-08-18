@@ -5,14 +5,14 @@ import {IVoteUser} from '@/types';
 
 import VoteCard from '../cards';
 import LogoCopy from '../icons/copy';
+import InputText from '../input-text';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
 interface IProps {
   dataUsers: IVoteUser[];
-  btn: string;
 }
-const VoteRoom: React.FC<IProps> = ({dataUsers, btn}) => {
+const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const inputLink = useRef<HTMLInputElement>(null);
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
@@ -43,12 +43,12 @@ const VoteRoom: React.FC<IProps> = ({dataUsers, btn}) => {
                 return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
               <div className="action border-line">
-                <Button>{btn}</Button>
+                <Button>Finish</Button>
               </div>
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">
-                  <input type="text" ref={inputLink} value="https://www.google.com.vn/" />
+                  <InputText ref={inputLink} value="https://www.google.com.vn/"></InputText>
                   <button className="copy-btn" onClick={handleCopy}>
                     <LogoCopy />
                   </button>

@@ -18,7 +18,7 @@ export default function PageHome() {
     <>
       <Login />
       <PlanningPocker />
-      <VoteRoom dataUsers={dataVoteUsers} btn="Finish" />
+      <VoteRoom dataUsers={dataVoteUsers} />
     </>
   );
 }
