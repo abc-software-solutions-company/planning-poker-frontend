@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       fontSize: {
         none: ['0', '0'],
+        caption: ['5rem', {lineHeight: '6rem', letterSpacing: '0.03em'}], //80/96
         hero: ['3.5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], // 56/88
         h1: ['2.5rem', {lineHeight: '3.75rem', letterSpacing: '0.03em'}], // 40/60
         h2: ['2rem', {lineHeight: '2.5rem', letterSpacing: '0.03em'}], // 32/40

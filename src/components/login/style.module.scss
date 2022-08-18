@@ -1,21 +1,15 @@
 .login :global {
   @apply mx-auto bg-abc-light-grey;
   .container {
-    @apply p-10 lg:p-32;
-  }
-  .logo-planning-pocker {
-    @apply mx-auto mb-5 flex w-1/3 justify-center lg:w-full;
+    @apply p-10 lg:py-24;
   }
   .content {
-    @apply mx-auto grid max-w-xl gap-1 border border-black/[0.2] bg-white p-8 text-black lg:py-16 lg:px-20;
-  }
-  h3 {
-    @apply mb-5 flex justify-center text-h3 lg:mb-14;
+    @apply mx-auto grid max-w-xl gap-1 border border-black border-opacity-20 bg-white p-8 text-black lg:py-16 lg:px-20;
   }
   .form-input {
     @apply mb-5 lg:mb-8;
   }
   .footer {
-    @apply mt-7 flex items-center justify-center text-base lg:mt-36;
+    @apply mt-7 text-center text-base lg:mt-36;
   }
 }
