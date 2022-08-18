@@ -24,13 +24,20 @@ module.exports = {
         base: ['1.25rem', '1.75rem'], // 20/28
         text: ['1rem', '1.5rem'] // 16/24
       },
+      lineHeight: {
+        hero: '5.5rem',
+        h1: '3.75rem',
+        h2: '2.5rem',
+        h3: '2.25rem',
+        h4: '2rem',
+        base: '1.75rem',
+        text: '1.5rem',
+        0: '0'
+      },
       letterSpacing: {
         3: '0.03em', // -3%
         2: '0.02em', // -2%
         1: '0.01em' // -1%
-      },
-      lineHeight: {
-        0: '0'
       },
       screens: {
         '2xl': '1440px'
@@ -40,14 +47,13 @@ module.exports = {
         'pp-dark-blue': '#3D99D3',
         'pp-light-blue': '#3CC7F4',
         'pp-light-aqua': '#A8CEF4',
-        'pp-green': '#3B8260',
         'pp-deep-green': '#00A57E',
-        'pp-red': '#FF0000',
         'pp-light-red': '#D14F4F',
         'pp-pink': '#FED0EE',
         'pp-yellow': '#DBA936',
         'pp-light-yellow': '#FBE38E',
-        'pp-grey': '#D9D9D9'
+        'pp-grey': '#D9D9D9',
+        'pp-light-grey': '#EDF2F7'
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'
@@ -171,6 +177,34 @@ module.exports = {
           visibility: 'hidden',
           marginTop: '-100px',
           height: '100px'
+        },
+        '.pp-hero': {
+          fontSize: theme('fontSize.hero'),
+          lineHeight: theme('lineHeight.hero')
+        },
+        '.pp-h1': {
+          fontSize: theme('fontSize.h1'),
+          lineHeight: theme('lineHeight.h1')
+        },
+        '.pp-h2': {
+          fontSize: theme('fontSize.h2'),
+          lineHeight: theme('lineHeight.h2')
+        },
+        '.pp-h3': {
+          fontSize: theme('fontSize.h3'),
+          lineHeight: theme('lineHeight.h3')
+        },
+        '.pp-h4': {
+          fontSize: theme('fontSize.h4'),
+          lineHeight: theme('lineHeight.h4')
+        },
+        '.pp-base': {
+          fontSize: theme('fontSize.base'),
+          lineHeight: theme('lineHeight.base')
+        },
+        '.pp-text': {
+          fontSize: theme('fontSize.text'),
+          lineHeight: theme('lineHeight.text')
         }
       });
     })

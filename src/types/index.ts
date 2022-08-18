@@ -192,3 +192,13 @@ export type ISectionResponse = IBaseApiResponse<IData<ISectionAttributes>>;
 export type ISectionsResponse = IBaseApiResponse<IData<ISectionAttributes>[]>;
 
 export type ISettingResponse = IBaseApiResponse<IData<ISettingAttributes>>;
+
+export interface IpropsSVG {
+  className?: string;
+  fill?: string;
+  width?: number;
+}
+export interface IVoteUser {
+  name: string;
+  host?: boolean;
+}

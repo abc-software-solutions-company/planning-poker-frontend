@@ -1,0 +1,12 @@
+.btn {
+  @apply w-full border border-pp-blue bg-white py-[9px] text-text font-medium text-pp-blue;
+  &:hover {
+    @apply bg-pp-blue text-white;
+  }
+  &.btn-fill {
+    @apply bg-pp-blue text-white;
+    &:hover {
+      @apply bg-white text-pp-blue;
+    }
+  }
+}
