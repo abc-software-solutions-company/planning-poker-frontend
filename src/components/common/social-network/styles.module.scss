@@ -1,7 +1,7 @@
 .socialNetwork :global {
   @apply flex justify-end;
   a {
-    @apply flex items-center border-r border-pp-blue;
+    @apply flex items-center border-r border-abc-blue;
     &:last-child {
       @apply border-none;
     }

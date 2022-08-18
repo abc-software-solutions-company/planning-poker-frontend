@@ -16,38 +16,37 @@ module.exports = {
     extend: {
       fontSize: {
         none: ['0', '0'],
-        hero: ['3.5rem', '5.5rem'], // 56/88
-        h1: ['2.5rem', '3.75rem'], // 40/60
-        h2: ['2rem', '2.5rem'], // 32/40
-        h3: ['1.75rem', '2.25rem'], // 28/36
-        h4: ['1.5rem', '2rem'], // 24/32
-        base: ['1.25rem', '1.75rem'], // 20/28
-        text: ['1rem', '1.5rem'] // 16/24
+        hero: ['3.5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], // 56/88
+        h1: ['2.5rem', {lineHeight: '3.75rem', letterSpacing: '0.03em'}], // 40/60
+        h2: ['2rem', {lineHeight: '2.5rem', letterSpacing: '0.03em'}], // 32/40
+        h3: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
+        h4: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
+        h5: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
+        base: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0.03em'}] // 16/24
+      },
+      lineHeight: {
+        0: '0'
       },
       letterSpacing: {
         3: '0.03em', // -3%
         2: '0.02em', // -2%
         1: '0.01em' // -1%
       },
-      lineHeight: {
-        0: '0'
-      },
       screens: {
         '2xl': '1440px'
       },
       colors: {
-        'pp-blue': '#4B9AE8',
-        'pp-dark-blue': '#3D99D3',
-        'pp-light-blue': '#3CC7F4',
-        'pp-light-aqua': '#A8CEF4',
-        'pp-green': '#3B8260',
-        'pp-deep-green': '#00A57E',
-        'pp-red': '#FF0000',
-        'pp-light-red': '#D14F4F',
-        'pp-pink': '#FED0EE',
-        'pp-yellow': '#DBA936',
-        'pp-light-yellow': '#FBE38E',
-        'pp-grey': '#D9D9D9'
+        'abc-blue': '#4B9AE8',
+        'abc-dark-blue': '#3D99D3',
+        'abc-light-blue': '#3CC7F4',
+        'abc-light-aqua': '#A8CEF4',
+        'abc-deep-green': '#00A57E',
+        'abc-light-red': '#D14F4F',
+        'abc-pink': '#FED0EE',
+        'abc-yellow': '#DBA936',
+        'abc-light-yellow': '#FBE38E',
+        'abc-grey': '#D9D9D9',
+        'abc-light-grey': '#EDF2F7'
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'

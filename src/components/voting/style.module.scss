@@ -1,0 +1,76 @@
+.section-vote-room :global {
+  @apply pt-32;
+  p {
+    @apply text-base;
+  }
+  .room-name {
+    @apply text-h4;
+  }
+  .content {
+    @apply mt-9 flex justify-center;
+  }
+  .border-line {
+    @apply border-b-2 border-b-black border-opacity-20;
+  }
+  .right-content {
+    @apply w-auto border-2 border-black border-opacity-20;
+    .sub-title {
+      @apply py-4 px-4;
+    }
+    .title {
+      @apply bg-abc-blue px-16 py-5 text-center text-white;
+    }
+    .player-status {
+      @apply flex items-center justify-between px-4 py-4;
+    }
+    .player-status:last-child {
+      @apply border-0;
+    }
+    .player-info {
+      @apply flex;
+    }
+    .name {
+      @apply pl-4;
+    }
+    .action {
+      @apply flex justify-center gap-4 p-4;
+    }
+    .sharing {
+      h5 {
+        @apply pl-4 pt-2;
+      }
+    }
+    .share-link {
+      @apply mx-4 mb-4 mt-2 flex border border-black border-opacity-20;
+      input {
+        @apply h-12 w-full border-none;
+      }
+      .copy-btn {
+        @apply w-auto border border-y-0 border-r-0 border-l-2 border-black border-opacity-20 bg-white px-4;
+      }
+    }
+  }
+  .left-content {
+    @apply mr-8 w-auto;
+    .story-name {
+      @apply text-center text-h4;
+    }
+    .card-holder {
+      @apply mt-20 grid grid-cols-4 gap-10;
+    }
+    .card-item {
+      @apply h-48 w-32 cursor-pointer rounded-[5px] border border-black border-opacity-20 bg-white p-5;
+    }
+    .card-number {
+      @apply flex h-full items-center justify-center rounded-[5px] border border-black border-opacity-50 text-center;
+      span {
+        @apply text-h2;
+      }
+    }
+    // .back {
+    //   @apply absolute left-0 top-0 h-full w-full rounded-[5px] transition-all duration-500;
+    //   filter: drop-shadow(0 0 5px silver);
+    //   backface-visibility: hidden;
+    // }
+  }
+}
