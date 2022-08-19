@@ -9,7 +9,6 @@ import InputText from '@/core-ui/input-text';
 import ModalCreate from '@/core-ui/modal';
 import {IVoteUser} from '@/types';
 
-// import VoteCard from '../cards';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
