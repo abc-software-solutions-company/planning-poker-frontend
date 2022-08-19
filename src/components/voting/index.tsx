@@ -10,7 +10,6 @@ import ModalCreate from '@/core-ui/modal';
 import {createStory} from '@/data/client/story.client';
 import {ICreateStory, IVoteUser} from '@/types';
 
-// import VoteCard from '../cards';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
