@@ -4,3 +4,9 @@ h1 {
 h4 {
   @apply mb-5 flex justify-center text-h3 lg:mb-14;
 }
+h2 {
+  @apply pb-5 text-center text-h1 font-extrabold text-abc-dark-blue lg:pb-16 lg:text-hero;
+}
+h3 {
+  @apply pb-9 text-center text-h3 font-medium text-abc-dark-blue lg:text-h1;
+}
