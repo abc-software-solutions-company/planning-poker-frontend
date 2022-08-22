@@ -1,7 +1,7 @@
 import qs from 'qs';
 
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
-import {ICreateRoom, ICreateUser, IRoom, IUser} from '@/types';
+import {ICreateRoom, ICreateStory, ICreateUser, IRoom, IStory, IUser} from '@/types';
 import {HttpClient} from '@/utils/http-client';
 
 class HttpBase {
@@ -30,6 +30,20 @@ class HttpBase {
     },
     post: async (data: ICreateRoom) => {
       return HttpClient.post<IRoom>(`${API_ENDPOINTS.ROOM}`, data);
+    }
+  };
+
+  stories = {
+    all: async (params?: unknown) => {
+      const query = qs.stringify(params, {encodeValuesOnly: true});
+      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}${query}`);
+    },
+    get: async (params?: unknown) => {
+      const query = qs.stringify(params, {encodeValuesOnly: true});
+      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}${query}`);
+    },
+    post: async (data: ICreateStory) => {
+      return HttpClient.post<IStory>(`${API_ENDPOINTS.STORY}`, data);
     }
   };
 }

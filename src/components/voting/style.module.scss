@@ -59,7 +59,7 @@
       @apply mt-20 grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4;
     }
     .card-item {
-      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white transition-all duration-1000 ease-in;
+      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white transition-all duration-500 ease-in;
       transform-style: preserve-3d;
       &:hover {
         transform: rotateY(180deg);
