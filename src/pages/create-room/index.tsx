@@ -1,12 +1,12 @@
 import React from 'react';
 
-import PlanningPocker from '@/components/planning-pocker';
+import Room from '@/components/room';
 import LayoutDefault from '@/layouts/default';
 
 export default function PageAction() {
   return (
     <>
-      <PlanningPocker />
+      <Room />
     </>
   );
 }

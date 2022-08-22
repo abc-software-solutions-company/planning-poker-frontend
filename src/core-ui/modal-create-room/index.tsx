@@ -12,13 +12,14 @@ interface IProps {
   open: boolean;
   onClose?: () => void;
 }
+
 const ModalCreateNewRoom: React.FC<IProps> = ({open, onClose}) => {
   const router = useRouter();
 
   return (
     <>
       <Modal open={open} onClose={onClose}>
-        <div className={styles['create-new-room']}>
+        <div className={styles['modal-create-room']}>
           <div className="container">
             <div className="content">
               <Heading as="h5">Create New Room</Heading>
