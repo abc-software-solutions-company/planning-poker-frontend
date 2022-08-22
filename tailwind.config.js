@@ -41,14 +41,18 @@ module.exports = {
         'abc-blue': '#4B9AE8',
         'abc-dark-blue': '#3D99D3',
         'abc-light-blue': '#3CC7F4',
+        'abc-aqua': '#56CCF2', //aqua
         'abc-light-aqua': '#A8CEF4',
-        'abc-deep-green': '#00A57E',
-        'abc-light-red': '#D14F4F',
-        'abc-pink': '#FED0EE',
+        'abc-deep-green': '#3B8260', //dark green
+        'abc-light-red': '#D14F4F', //red
+        'abc-orange': '#F2994A', //orange
+        'abc-purple': '#BB6BD9', //purple
+        'abc-pink': '#FED0EE', //pink
         'abc-yellow': '#DBA936',
-        'abc-light-yellow': '#FBE38E',
+        'abc-light-yellow': '#FBE38E', //light yellow
         'abc-grey': '#D9D9D9',
-        'abc-light-grey': '#EDF2F7'
+        'abc-light-grey': '#EDF2F7',
+        'abc-dark-grey': '#4F4F4F' //dark grey
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'
