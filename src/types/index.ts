@@ -35,12 +35,21 @@ export interface IRoom extends IBastAttributes {
   name: string;
 }
 
+export interface IStory extends IBastAttributes {
+  id: string;
+  name: string;
+}
+
 export interface ICreateUser {
   name: string;
   isHost?: boolean;
 }
 
 export interface ICreateRoom {
+  name: string;
+}
+
+export interface ICreateStory {
   name: string;
 }
 

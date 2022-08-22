@@ -6,7 +6,8 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import InputText from '@/core-ui/input-text';
 import ModalCreate from '@/core-ui/modal';
-import {IVoteUser} from '@/types';
+import {createStory} from '@/data/client/story.client';
+import {ICreateStory, IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -20,6 +21,9 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const inputLink = useRef<HTMLInputElement>(null);
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
+  };
+  const handleOnSubmit = (data: ICreateStory) => {
+    createStory(data);
   };
   return (
     <>
@@ -51,7 +55,13 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="action border-line">
                 <Button>Finish</Button>
               </div>
-              <ModalCreate placeholder="Enter story " title="Create New Story" open={open} onClose={handleClose} />
+              <ModalCreate
+                placeholder="Enter story "
+                title="Create New Story"
+                open={open}
+                onClose={handleClose}
+                handleOnSubmit={handleOnSubmit}
+              />
 
               <div className="sharing">
                 <h5>Invite a teammate</h5>

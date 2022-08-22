@@ -1,12 +1,10 @@
 import {Modal} from '@mui/material';
-import {useRouter} from 'next/router';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import {createRoom} from '@/data/client/room.client';
-import {ICreateRoom} from '@/types';
+import {ICreateRoom, ICreateStory} from '@/types';
 
 // import InputText from '@/core-ui/input-text';
 import styles from './style.module.scss';
@@ -16,15 +14,18 @@ interface IProps {
   title: string;
   onClose: () => void;
   placeholder: string;
+  handleOnSubmit: (data: ICreateRoom | ICreateStory) => void;
 }
 
-const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
-  const router = useRouter();
+const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder, handleOnSubmit}) => {
   const {register, handleSubmit} = useForm();
   return (
     <>
       <Modal open={open} onClose={onClose}>
-        <form className={styles['modal-create']} onSubmit={handleSubmit(data => createRoom(data as ICreateRoom))}>
+        <form
+          className={styles['modal-create']}
+          onSubmit={handleSubmit(data => handleOnSubmit(data as ICreateRoom | ICreateStory))}
+        >
           <div className="container">
             <div className="content">
               <Heading as="h5">{title}</Heading>
@@ -32,7 +33,7 @@ const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
                 <input className="form-input" placeholder={placeholder} {...register('name')} />
                 <div className="button">
                   <Button onClick={onClose}>Cancel</Button>
-                  <Button onClick={() => router.push('/room-detail')}>Create</Button>
+                  <Button>Create</Button>
                 </div>
               </div>
             </div>
