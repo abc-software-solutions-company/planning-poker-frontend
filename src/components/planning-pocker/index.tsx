@@ -1,10 +1,10 @@
 import {useRouter} from 'next/router';
 import React from 'react';
 
-import ModalCreateNewRoom from '@/components/modal-create-new-room';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import InputText from '@/core-ui/input-text';
+import ModalCreateNewRoom from '@/core-ui/modal-create-new-room';
 
 import styles from './style.module.scss';
 
