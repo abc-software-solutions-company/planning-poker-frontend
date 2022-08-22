@@ -1,15 +1,13 @@
-import {useRouter} from 'next/router';
 import React from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import InputText from '@/core-ui/input-text';
-import ModalCreateRoom from '@/core-ui/modal-create-room';
+import ModalCreate from '@/core-ui/modal';
 
 import styles from './style.module.scss';
 
 const Room: React.FC = () => {
-  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -24,12 +22,10 @@ const Room: React.FC = () => {
               <Button className="button-left" onClick={handleOpen}>
                 Create Room
               </Button>
-              <ModalCreateRoom open={open} onClose={handleClose} />
+              <ModalCreate placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
               <div className="input-right">
                 <InputText placeholder="Enter a link or ID"></InputText>
-                <Button className="button-right" onClick={() => router.push('/room-detail')}>
-                  Join
-                </Button>
+                <Button className="button-right">Join</Button>
               </div>
             </div>
           </div>

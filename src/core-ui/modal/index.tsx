@@ -13,21 +13,23 @@ import styles from './style.module.scss';
 
 interface IProps {
   open: boolean;
-  onClose?: () => void;
+  title: string;
+  onClose: () => void;
+  placeholder: string;
 }
 
-const ModalCreateNewRoom: React.FC<IProps> = ({open, onClose}) => {
+const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
   const router = useRouter();
   const {register, handleSubmit} = useForm();
   return (
     <>
       <Modal open={open} onClose={onClose}>
-        <form className={styles['modal-create-room']} onSubmit={handleSubmit(data => createRoom(data as ICreateRoom))}>
+        <form className={styles['modal-create']} onSubmit={handleSubmit(data => createRoom(data as ICreateRoom))}>
           <div className="container">
             <div className="content">
-              <Heading as="h5">Create New Room</Heading>
+              <Heading as="h5">{title}</Heading>
               <div className="input-button">
-                <input className="form-input" placeholder="Enter room name" {...register('name')} />
+                <input className="form-input" placeholder={placeholder} {...register('name')} />
                 <div className="button">
                   <Button onClick={onClose}>Cancel</Button>
                   <Button onClick={() => router.push('/room-detail')}>Create</Button>
@@ -41,4 +43,4 @@ const ModalCreateNewRoom: React.FC<IProps> = ({open, onClose}) => {
   );
 };
 
-export default ModalCreateNewRoom;
+export default ModalCreate;

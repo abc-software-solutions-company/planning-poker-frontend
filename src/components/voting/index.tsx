@@ -1,9 +1,10 @@
-import {useRef} from 'react';
+import React, {useRef} from 'react';
 
 import VoteCard from '@/components/cards';
 import LogoCopy from '@/components/icons/copy';
 import Button from '@/core-ui/button';
 import InputText from '@/core-ui/input-text';
+import ModalCreate from '@/core-ui/modal';
 import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
@@ -13,6 +14,8 @@ interface IProps {
   dataUsers: IVoteUser[];
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
+  const [open, setOpen] = React.useState(true);
+  const handleClose = () => setOpen(false);
   const inputLink = useRef<HTMLInputElement>(null);
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
@@ -45,6 +48,8 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="action border-line">
                 <Button>Finish</Button>
               </div>
+              <ModalCreate placeholder="Enter story " title="Create New Story" open={open} onClose={handleClose} />
+
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">
