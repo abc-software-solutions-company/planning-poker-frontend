@@ -1,0 +1,15 @@
+.create-new-room :global {
+  @apply mx-auto;
+  .container {
+    @apply py-80;
+  }
+  .content {
+    @apply mx-auto max-w-xl bg-white;
+  }
+  .input-button {
+    @apply space-y-4 bg-abc-light-grey p-6;
+  }
+  .button {
+    @apply flex gap-6;
+  }
+}
