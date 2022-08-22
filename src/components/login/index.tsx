@@ -1,8 +1,8 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 
-import Heading from '@/components/heading';
 import Button from '@/core-ui/button';
+import Heading from '@/core-ui/heading';
 import {createUser} from '@/data/client/user.client';
 import {ICreateUser} from '@/types';
 

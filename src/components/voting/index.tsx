@@ -1,11 +1,11 @@
 import {useRef} from 'react';
 
+import VoteCard from '@/components/cards';
+import LogoCopy from '@/components/icons/copy';
 import Button from '@/core-ui/button';
+import InputText from '@/core-ui/input-text';
 import {IVoteUser} from '@/types';
 
-import VoteCard from '../cards';
-import LogoCopy from '../icons/copy';
-import InputText from '../input-text';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
@@ -48,7 +48,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">
-                  <InputText ref={inputLink} value="https://www.google.com.vn/"></InputText>
+                  <InputText value="https://www.google.com.vn/"></InputText>
                   <button className="copy-btn" onClick={handleCopy}>
                     <LogoCopy />
                   </button>
