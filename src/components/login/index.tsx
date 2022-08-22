@@ -1,4 +1,3 @@
-import {useRouter} from 'next/router';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 
@@ -11,7 +10,6 @@ import styles from './style.module.scss';
 
 const Login: React.FC = () => {
   const {register, handleSubmit} = useForm();
-  const router = useRouter();
 
   return (
     <>
@@ -21,9 +19,7 @@ const Login: React.FC = () => {
           <div className="content">
             <Heading as="h4">Let&apos;s start !</Heading>
             <input className="form-input" placeholder="Enter your name" {...register('name')} />
-            <Button className="btn" onClick={() => router.push('/create-room')}>
-              Enter
-            </Button>
+            <Button className="btn">Enter</Button>
           </div>
           <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
         </div>
