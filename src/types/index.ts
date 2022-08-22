@@ -30,9 +30,18 @@ export interface IUser extends IBastAttributes {
   isHost: boolean;
 }
 
+export interface IRoom extends IBastAttributes {
+  id: string;
+  name: string;
+}
+
 export interface ICreateUser {
   name: string;
   isHost?: boolean;
+}
+
+export interface ICreateRoom {
+  name: string;
 }
 
 export interface IpropsSVG {
