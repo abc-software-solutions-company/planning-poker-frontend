@@ -9,6 +9,7 @@ import InputText from '@/core-ui/input-text';
 import ModalCreate from '@/core-ui/modal';
 import {IVoteUser} from '@/types';
 
+// import VoteCard from '../cards';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
@@ -19,6 +20,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
   const inputLink = useRef<HTMLInputElement>(null);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
   };
@@ -46,50 +48,80 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 className="chart-holder"
                 data={{
                   type: 'doughnut',
+                  data: {
+                    labels: ['Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 5', 'Level 8', 'Level 13', 'Level 21'],
+                    datasets: [
+                      {
+                        data: [1, 2, 3, 4, 5, 6, 7, 8],
+                        backgroundColor: [
+                          '#56CCF2',
+                          '#4F4F4F',
+                          '#FBE38E',
+                          '#FED0EE',
+                          '#BB6BD9',
+                          '#F2994A',
+                          '#D14F4F',
+                          '#3B8260'
+                        ]
+                      }
+                    ]
+                  },
                   options: {
                     rotation: 0.5 * Math.PI - (95 / 180) * Math.PI,
                     responsive: false,
                     plugins: {
-                      datalabels: {
+                      title: {
                         display: true,
-                        backgroundColor: '#ccc',
-                        borderRadius: 3,
-                        font: {
-                          color: 'red',
-                          weight: 'bold'
+                        fullSize: true,
+                        text: 'Multiple Lines of Text',
+                        padding: {
+                          top: 20,
+                          bottom: 10
                         }
-                      },
-                      doughnutlabel: {
-                        labels: [
-                          {
-                            text: '550',
-                            font: {
-                              size: 20,
-                              weight: 'bold'
-                            }
-                          },
-                          {
-                            text: 'total'
-                          }
-                        ]
                       },
                       legend: {
                         position: 'bottom',
+                        fullWidth: true,
                         labels: {
                           usePointStyle: true,
                           boxWidth: 8
                         }
+                      },
+                      doughnutLabel: {
+                        labels: [
+                          {
+                            text: 'The Title',
+                            color: 'blue',
+                            font: {
+                              size: '35',
+                              family: 'Arial, Helvetica, sans-serif',
+                              style: 'italic',
+                              weight: 'bold'
+                            }
+                          },
+                          {
+                            text: 'The Subtitle',
+                            font: {
+                              size: '25'
+                            },
+                            color: 'grey'
+                          },
+                          {
+                            text: '$100.00',
+                            font: {
+                              size: '20'
+                            },
+                            color: 'red'
+                          },
+                          {
+                            font: {
+                              size: '20'
+                            },
+                            color: 'green'
+                          }
+                        ]
                       }
                     }
-                  },
-                  data: {
-                    labels: ['Red', 'Blue', 'Yellow'],
-                    datasets: [
-                      {
-                        data: [330, 30, 30],
-                        backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
-                      }
-                    ]
                   }
                 }}
               />
