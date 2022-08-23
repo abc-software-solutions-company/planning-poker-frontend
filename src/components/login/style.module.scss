@@ -1,8 +1,7 @@
 .login :global {
   @apply mx-auto bg-abc-light-grey;
   .container {
-    @apply fixed top-1/2 left-1/2;
-    transform: translate(-50%, -50%);
+    @apply pt-10 lg:py-24;
   }
   .content {
     @apply mx-auto grid max-w-xl gap-1 border border-black border-opacity-20 bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
