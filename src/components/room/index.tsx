@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import InputText from '@/core-ui/input-text';
+import Input from '@/core-ui/input';
 import ModalCreate from '@/core-ui/modal';
 import {createRoom} from '@/data/client/room.client';
 import {ICreateRoom} from '@/types';
@@ -35,7 +35,7 @@ const Room: React.FC = () => {
                 handleOnSubmit={handleOnSubmit}
               />
               <div className="input-right">
-                <InputText placeholder="Enter a link or ID"></InputText>
+                <Input type="text" placeholder="Enter a link or ID" />
                 <Button className="button-right">Join</Button>
               </div>
             </div>

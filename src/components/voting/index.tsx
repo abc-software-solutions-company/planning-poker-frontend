@@ -5,7 +5,7 @@ import LogoCopy from '@/components/icons/copy';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
-import InputText from '@/core-ui/input-text';
+import Input from '@/core-ui/input';
 import ModalCreate from '@/core-ui/modal';
 import {createStory} from '@/data/client/story.client';
 import {ICreateStory, IVoteUser} from '@/types';
@@ -107,7 +107,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">
-                  <InputText value="https://www.google.com.vn/"></InputText>
+                  <Input value="https://www.google.com.vn/" />
                   <button className="copy-btn" onClick={handleCopy}>
                     <LogoCopy />
                   </button>

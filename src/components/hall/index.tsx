@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import InputText from '@/core-ui/input-text';
+import InputText from '@/core-ui/input';
 import ModalCreate from '@/core-ui/modal';
 
 import styles from './style.module.scss';

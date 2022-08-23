@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Input from '@/core-ui/input';
 import {createUser} from '@/data/client/user.client';
 import {ICreateUser} from '@/types';
 
@@ -50,7 +51,6 @@ const LetsStart: React.FC = () => {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
-
   return (
     <>
       <div className={`${styles['lets-start']}`}>
@@ -60,7 +60,7 @@ const LetsStart: React.FC = () => {
               <Heading as="h1">PLANNING POKER</Heading>
               <form className="content" onSubmit={handleSubmit(onSubmit)}>
                 <Heading as="h4">Let&apos;s start !</Heading>
-                <input className="form-input" placeholder="Enter your name" {...register('name')} />
+                <Input placeholder="Enter your name" {...register('name')} />
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
                 <Button>Enter</Button>
               </form>
