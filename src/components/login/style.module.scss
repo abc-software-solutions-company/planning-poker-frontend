@@ -1,15 +1,16 @@
 .login :global {
   @apply mx-auto bg-abc-light-grey;
   .container {
-    @apply p-10 lg:py-24;
+    @apply fixed top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
   }
   .content {
-    @apply mx-auto grid max-w-xl gap-1 border border-black border-opacity-20 bg-white p-8 text-black lg:py-16 lg:px-20;
+    @apply mx-auto grid max-w-xl gap-1 border border-black border-opacity-20 bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
   }
   .form-input {
-    @apply mb-5 lg:mb-8;
+    @apply mb-4 lg:mb-8;
   }
   .footer {
-    @apply mt-7 text-center text-base lg:mt-36;
+    @apply mt-36 text-center text-base;
   }
 }

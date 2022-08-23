@@ -3,6 +3,7 @@ import React, {useRef} from 'react';
 import VoteCard from '@/components/cards';
 import LogoCopy from '@/components/icons/copy';
 import Button from '@/core-ui/button';
+import Heading from '@/core-ui/heading';
 import InputText from '@/core-ui/input-text';
 import ModalCreate from '@/core-ui/modal';
 import {IVoteUser} from '@/types';
@@ -24,10 +25,12 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
     <>
       <div className={styles['section-vote-room']}>
         <div className="container">
-          <h1 className="room-name">Room name</h1>
+          <Heading className="room-name" as="h4">
+            Room name
+          </Heading>
           <div className="content">
             <div className="left-content">
-              <h2 className="story-name">Story name</h2>
+              <Heading as="h4">Story name</Heading>
               <div className="card-holder">
                 <VoteCard>0</VoteCard>
                 <VoteCard>1</VoteCard>

@@ -1,19 +1,22 @@
 .section-vote-room :global {
-  @apply pt-32;
+  @apply py-10 lg:pt-32;
   p {
     @apply text-base;
   }
   .room-name {
-    @apply text-h4;
+    @apply justify-start;
+  }
+  h4 {
+    @apply font-normal;
   }
   .content {
-    @apply mt-9 flex justify-center;
+    @apply mt-9 justify-center lg:flex;
   }
   .border-line {
     @apply border-b-2 border-b-black border-opacity-20;
   }
   .right-content {
-    @apply w-auto border-2 border-black border-opacity-20;
+    @apply mt-8 w-auto border-2 border-black border-opacity-20 lg:mt-0;
     .sub-title {
       @apply py-4 px-4;
     }
@@ -51,15 +54,12 @@
     }
   }
   .left-content {
-    @apply mr-8 w-auto;
-    .story-name {
-      @apply text-center text-h4;
-    }
+    @apply w-auto lg:mr-8;
     .card-holder {
-      @apply mt-20 grid grid-cols-4 gap-10;
+      @apply mt-20 grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4;
     }
     .card-item {
-      @apply relative h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white transition-all duration-1000 ease-in;
+      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white transition-all duration-1000 ease-in;
       transform-style: preserve-3d;
       &:hover {
         transform: rotateY(180deg);

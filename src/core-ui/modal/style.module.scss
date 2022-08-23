@@ -1,7 +1,7 @@
 .modal-create :global {
-  @apply mx-auto;
+  @apply flex justify-center;
   .container {
-    @apply py-80;
+    @apply fixed top-1/2 -translate-y-1/2;
   }
   .content {
     @apply mx-auto max-w-xl bg-white;

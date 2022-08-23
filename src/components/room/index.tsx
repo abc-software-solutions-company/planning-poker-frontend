@@ -15,18 +15,16 @@ const Room: React.FC = () => {
     <>
       <div className={styles.room}>
         <div className="container">
-          <div>
-            <Heading as="h2">PLANNING POKER</Heading>
-            <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
-            <div className="input-button">
-              <Button className="button-left" onClick={handleOpen}>
-                Create Room
-              </Button>
-              <ModalCreate placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
-              <div className="input-right">
-                <InputText placeholder="Enter a link or ID"></InputText>
-                <Button className="button-right">Join</Button>
-              </div>
+          <Heading as="h2">PLANNING POKER</Heading>
+          <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
+          <div className="input-button">
+            <Button className="button-left" onClick={handleOpen}>
+              Create Room
+            </Button>
+            <ModalCreate placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
+            <div className="input-right">
+              <InputText placeholder="Enter a link or ID"></InputText>
+              <Button className="button-right">Join</Button>
             </div>
           </div>
         </div>
