@@ -10,7 +10,7 @@ import {ICreateUser} from '@/types';
 
 import styles from './style.module.scss';
 
-const Login: React.FC = () => {
+const LetsStart: React.FC = () => {
   const {register, handleSubmit} = useForm();
   const router = useRouter();
   const handleOnSubmit = (data: ICreateUser) => {
@@ -20,19 +20,23 @@ const Login: React.FC = () => {
   };
   return (
     <>
-      <form className={`${styles.login}`} onSubmit={handleSubmit(data => handleOnSubmit(data as ICreateUser))}>
+      <form className={`${styles['lets-start']}`} onSubmit={handleSubmit(data => handleOnSubmit(data as ICreateUser))}>
         <div className="container">
-          <Heading as="h1">PLANNING POKER</Heading>
-          <div className="content">
-            <Heading as="h4">Let&apos;s start !</Heading>
-            <input className="form-input" placeholder="Enter your name" {...register('name')} />
-            <Button className="btn">Enter</Button>
+          <div className="inner">
+            <div>
+              <Heading as="h1">PLANNING POKER</Heading>
+              <div className="content">
+                <Heading as="h4">Let&apos;s start !</Heading>
+                <input className="form-input" placeholder="Enter your name" {...register('name')} />
+                <Button>Enter</Button>
+              </div>
+              <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
+            </div>
           </div>
-          <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
         </div>
       </form>
     </>
   );
 };
 
-export default Login;
+export default LetsStart;
