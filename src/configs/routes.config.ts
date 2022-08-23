@@ -1,4 +1,5 @@
 export const ROUTES = {
   HOME: '/',
-  ROOM: 'create-room'
+  LOGIN: '/login',
+  ROOM: '/room'
 };

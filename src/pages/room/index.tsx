@@ -4,7 +4,7 @@ import Voting from '@/components/voting';
 import LayoutDefault from '@/layouts/default';
 import {IVoteUser} from '@/types';
 
-export default function PageAction() {
+export default function PageRoom() {
   const dataVoteUsers: IVoteUser[] = [
     {name: 'Khanh', host: true, vote: true},
     {name: 'Huy'},
@@ -19,4 +19,4 @@ export default function PageAction() {
   );
 }
 
-PageAction.Layout = LayoutDefault;
+PageRoom.Layout = LayoutDefault;
