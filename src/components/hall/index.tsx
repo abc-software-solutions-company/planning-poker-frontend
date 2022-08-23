@@ -7,13 +7,13 @@ import ModalCreate from '@/core-ui/modal';
 
 import styles from './style.module.scss';
 
-const Room: React.FC = () => {
+const Hall: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
     <>
-      <div className={styles.room}>
+      <div className={styles.hall}>
         <div className="container">
           <Heading as="h2">PLANNING POKER</Heading>
           <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
@@ -33,4 +33,4 @@ const Room: React.FC = () => {
   );
 };
 
-export default Room;
+export default Hall;
