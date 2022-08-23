@@ -1,7 +1,8 @@
 .room :global {
   @apply mx-auto bg-abc-light-grey;
   .container {
-    @apply py-80;
+    @apply fixed top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
   }
   .input-button {
     @apply mx-auto max-w-xl gap-8 space-y-4 lg:flex lg:space-y-0;
