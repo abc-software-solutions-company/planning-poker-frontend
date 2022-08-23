@@ -38,7 +38,7 @@ export class HttpClient {
 
   static async post<T>(url: string, data: unknown, options?: any) {
     const response = await AxiosInstance.post<T>(url, data, options);
-    return response.data;
+    return response;
   }
 
   static async put<T>(url: string, data: unknown) {
