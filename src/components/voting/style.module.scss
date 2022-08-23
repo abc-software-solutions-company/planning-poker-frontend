@@ -80,7 +80,27 @@
       box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
     }
     .chart-holder {
-      @apply mx-56 h-full;
+      @apply relative mx-72 text-center text-base;
+      canvas {
+        @apply mx-auto;
+      }
+      .chart-center-text {
+        @apply -mt-48 ml-6;
+        p:last-child {
+          @apply opacity-50;
+        }
+      }
+      .chart-info {
+        @apply absolute -left-32 top-1/2 h-full;
+        .label {
+          p {
+            @apply relative pb-8;
+          }
+          p::after {
+            @apply absolute top-1 -left-10 h-4 w-4 rounded-full bg-abc-light-red content-[''];
+          }
+        }
+      }
     }
   }
 }

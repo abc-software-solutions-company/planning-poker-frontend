@@ -34,7 +34,22 @@ const Chart: FC<IProps> = ({className, data}) => {
 
   return (
     <div className={className}>
-      <canvas ref={canvasRef}></canvas>
+      <canvas ref={canvasRef} width="340" height="340"></canvas>
+      <div className="chart-center-text">
+        <p>6/6 players</p>
+        <p>voted</p>
+      </div>
+      <div className="chart-info">
+        <div className="label">
+          <p>5</p>
+        </div>
+        <div className="label">
+          <p>3</p>
+        </div>
+        <div className="label">
+          <p>1</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -52,10 +52,10 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 data={{
                   type: 'doughnut',
                   data: {
-                    labels: ['Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 5', 'Level 8', 'Level 13', 'Level 21'],
+                    // labels: ['0', '1', '2', '3', '5', '8', '13', '21'],
                     datasets: [
                       {
-                        data: [1, 2, 3, 4, 5, 6, 7, 8],
+                        data: [0, 1, 2, 3, 5, 6, 7, 8],
                         backgroundColor: [
                           '#56CCF2',
                           '#4F4F4F',
@@ -70,59 +70,17 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                     ]
                   },
                   options: {
-                    rotation: 0.5 * Math.PI - (95 / 180) * Math.PI,
+                    aspectRatio: 1,
+                    cutout: 110,
                     responsive: false,
                     plugins: {
-                      title: {
-                        display: true,
-                        fullSize: true,
-                        text: 'Multiple Lines of Text',
-                        padding: {
-                          top: 20,
-                          bottom: 10
-                        }
-                      },
                       legend: {
-                        position: 'bottom',
+                        position: 'left',
                         fullWidth: true,
                         labels: {
                           usePointStyle: true,
                           boxWidth: 8
                         }
-                      },
-                      doughnutLabel: {
-                        labels: [
-                          {
-                            text: 'The Title',
-                            color: 'blue',
-                            font: {
-                              size: '35',
-                              family: 'Arial, Helvetica, sans-serif',
-                              style: 'italic',
-                              weight: 'bold'
-                            }
-                          },
-                          {
-                            text: 'The Subtitle',
-                            font: {
-                              size: '25'
-                            },
-                            color: 'grey'
-                          },
-                          {
-                            text: '$100.00',
-                            font: {
-                              size: '20'
-                            },
-                            color: 'red'
-                          },
-                          {
-                            font: {
-                              size: '20'
-                            },
-                            color: 'green'
-                          }
-                        ]
                       }
                     }
                   }
