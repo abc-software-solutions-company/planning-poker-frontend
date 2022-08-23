@@ -14,7 +14,7 @@ interface IProps {
   title: string;
   onClose: () => void;
   placeholder: string;
-  handleOnSubmit: (data: ICreateRoom | ICreateStory) => void;
+  handleOnSubmit?: (data: ICreateRoom | ICreateStory) => void;
 }
 
 const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder, handleOnSubmit}) => {
@@ -24,7 +24,9 @@ const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder, handl
       <Modal open={open} onClose={onClose}>
         <form
           className={styles['modal-create']}
-          onSubmit={handleSubmit(data => handleOnSubmit(data as ICreateRoom | ICreateStory))}
+          onSubmit={handleSubmit(data => {
+            console.log(data);
+          })}
         >
           <div className="container">
             <div className="content">

@@ -1,14 +1,22 @@
 import React from 'react';
 
-import PlanningPocker from '@/components/planning-pocker';
+import Voting from '@/components/voting';
 import LayoutDefault from '@/layouts/default';
+import {IVoteUser} from '@/types';
 
-export default function PageHome() {
+export default function PageRoom() {
+  const dataVoteUsers: IVoteUser[] = [
+    {name: 'Khanh', host: true, vote: true},
+    {name: 'Huy'},
+    {name: 'Linh'},
+    {name: 'Phuoc', vote: true}
+  ];
+
   return (
     <>
-      <PlanningPocker />
+      <Voting dataUsers={dataVoteUsers} />
     </>
   );
 }
 
-PageHome.Layout = LayoutDefault;
+PageRoom.Layout = LayoutDefault;
