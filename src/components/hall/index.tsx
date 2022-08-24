@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import InputText from '@/core-ui/input';
+import Input from '@/core-ui/input';
 import ModalCreate from '@/core-ui/modal';
 
 import styles from './style.module.scss';
@@ -23,7 +23,7 @@ const Hall: React.FC = () => {
             </Button>
             <ModalCreate placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
             <div className="input-right">
-              <InputText placeholder="Enter a link or ID"></InputText>
+              <Input placeholder="Enter a link or ID"></Input>
               <Button className="button-right">Join</Button>
             </div>
           </div>
