@@ -7,9 +7,7 @@ import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import ModalCreate from '@/core-ui/modal';
-import {createStory} from '@/data/client/story.client';
-import {ICreateStory, IVoteUser} from '@/types';
+import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';

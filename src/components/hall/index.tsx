@@ -4,7 +4,6 @@ import ModalRoom from '@/components/modal-room';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import ModalCreate from '@/core-ui/modal';
 
 import styles from './style.module.scss';
 
