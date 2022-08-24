@@ -10,13 +10,13 @@
     @apply font-normal;
   }
   .content {
-    @apply mt-9 justify-center lg:flex;
+    @apply mt-9 justify-between lg:flex;
   }
   .border-line {
     @apply border-b-2 border-b-black border-opacity-20;
   }
   .right-content {
-    @apply mt-8 w-auto border-2 border-black border-opacity-20 lg:mt-0;
+    @apply mt-10 w-auto border-2 border-black border-opacity-20 lg:mt-0;
     .sub-title {
       @apply py-4 px-4;
     }
@@ -54,7 +54,7 @@
     }
   }
   .left-content {
-    @apply w-auto lg:mr-8;
+    @apply w-auto;
     .card-holder {
       @apply mt-20 grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4;
     }
@@ -80,7 +80,7 @@
       box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
     }
     .chart-holder {
-      @apply relative mx-72 text-center text-base;
+      @apply relative text-center text-base lg:mx-44;
       canvas {
         @apply mx-auto;
       }
@@ -91,13 +91,15 @@
         }
       }
       .chart-info {
-        @apply absolute -left-32 top-1/2 h-full;
+        @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
         .label {
+          @apply relative;
           p {
-            @apply relative pb-8;
+            @apply relative pl-10 lg:pb-8 lg:pl-0;
           }
           p::after {
-            @apply absolute top-1 -left-10 h-4 w-4 rounded-full bg-abc-light-red content-[''];
+            @apply absolute top-1/2 left-1/2 h-5 w-5 rounded-full bg-abc-light-red content-[''] lg:top-2 lg:-left-10;
+            transform: translate(-50%, -50%);
           }
         }
       }

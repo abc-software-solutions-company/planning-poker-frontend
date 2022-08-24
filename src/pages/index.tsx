@@ -1,14 +1,10 @@
 import React from 'react';
 
-import Hall from '@/components/hall';
+import Lobby from '@/components/lobby';
 import LayoutDefault from '@/layouts/default';
 
 export default function PageHome() {
-  return (
-    <>
-      <Hall />
-    </>
-  );
+  return <Lobby />;
 }
 
 PageHome.Layout = LayoutDefault;
