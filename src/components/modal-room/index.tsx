@@ -11,7 +11,6 @@ import Heading from '@/core-ui/heading';
 import {createRoom} from '@/data/client/room.client';
 import {ICreateRoom} from '@/types';
 
-// import InputText from '@/core-ui/input-text';
 import styles from './style.module.scss';
 
 interface IProps {
@@ -40,8 +39,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateRoom) => {
-    const api = createRoom(data);
-    api.then((res: any) => {
+    createRoom(data).then((res: any) => {
       if (res.status === 201) router.push(ROUTES.ROOM);
     });
   };
@@ -71,7 +69,7 @@ const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={onClose}>Cancel</Button>
-                  <Button>Create</Button>
+                  <Button type="submit">Create</Button>
                 </div>
               </div>
             </div>

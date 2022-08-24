@@ -33,8 +33,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 const LetsStart: React.FC = () => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateUser) => {
-    const api = createUser(data);
-    api.then((res: any) => {
+    createUser(data).then((res: any) => {
       if (res.status === 201) router.push(ROUTES.ROOM);
     });
   };
