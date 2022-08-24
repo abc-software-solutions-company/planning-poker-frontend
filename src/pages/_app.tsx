@@ -10,23 +10,25 @@ import React from 'react';
 
 import DefaultSeo from '@/components/common/seo/default-seo';
 import GoogleTagManager from '@/components/common/third-party/google-analytics/gtag';
+import {AuthProvider} from '@/contexts/auth';
 import QueryProvider from '@/contexts/query.provider';
 
 const Noop: React.FC = ({children}: React.PropsWithChildren<any>) => <>{children}</>;
 
 const CustomApp = ({Component, pageProps}: AppProps) => {
   const router = useRouter();
-
   const Layout = (Component as any).Layout || Noop;
 
   return (
     <QueryProvider pageProps={pageProps}>
-      <DefaultSeo />
-      <NextNProgress color="#3D99D3" />
-      <GoogleTagManager />
-      <Layout pageProps={pageProps}>
-        <Component {...pageProps} key={router.route} />
-      </Layout>
+      <AuthProvider>
+        <DefaultSeo />
+        <NextNProgress color="#3D99D3" />
+        <GoogleTagManager />
+        <Layout pageProps={pageProps}>
+          <Component {...pageProps} key={router.route} />
+        </Layout>
+      </AuthProvider>
     </QueryProvider>
   );
 };

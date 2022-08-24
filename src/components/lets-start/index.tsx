@@ -5,6 +5,8 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
+import {AuthActions} from '@/contexts/auth';
+import {useDispatchAuth, useStateAuth} from '@/contexts/auth/context';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
@@ -19,7 +21,6 @@ const Schema = yup.object().shape({
     .required('Please fill in your name')
     .max(32, 'Your name must not exceed 32 letters')
     .min(1, 'Your name must be atleast 1 letter')
-    .matches(/^[aA-zZ\s]+$/, 'Use alphabets only')
 });
 
 interface IFormInputs {
@@ -32,9 +33,13 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 
 const LetsStart: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatchAuth();
   const handleOnSubmit = (data: ICreateUser) => {
-    createUser(data).then((res: any) => {
-      if (res.status === 201) router.push(ROUTES.ROOM);
+    createUser(data).then(res => {
+      if (res.status === 201) {
+        dispatch(AuthActions.login(res.data.id));
+        router.push(ROUTES.ROOM);
+      }
     });
   };
 
@@ -61,7 +66,7 @@ const LetsStart: React.FC = () => {
                 <Heading as="h4">Let&apos;s start !</Heading>
                 <Input placeholder="Enter your name" {...register('name')} />
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
-                <Button>Enter</Button>
+                <Button type="submit">Enter</Button>
               </form>
               <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
             </div>
