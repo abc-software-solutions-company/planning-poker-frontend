@@ -4,6 +4,7 @@ import ModalRoom from '@/components/modal-room';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
+import {useCheckLogin} from '@/hooks/check-login';
 
 import styles from './style.module.scss';
 
@@ -11,6 +12,7 @@ const Hall: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  useCheckLogin();
   return (
     <>
       <div className={styles.hall}>
