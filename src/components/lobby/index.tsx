@@ -8,14 +8,14 @@ import {useCheckLogin} from '@/hooks/check-login';
 
 import styles from './style.module.scss';
 
-const Hall: React.FC = () => {
+const Lobby: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useCheckLogin();
   return (
     <>
-      <div className={styles.hall}>
+      <div className={styles.lobby}>
         <div className="container">
           <Heading as="h2">PLANNING POKER</Heading>
           <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
@@ -35,4 +35,4 @@ const Hall: React.FC = () => {
   );
 };
 
-export default Hall;
+export default Lobby;

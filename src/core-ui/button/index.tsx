@@ -1,8 +1,17 @@
 import cn from 'classnames';
 import {ButtonHTMLAttributes} from 'react';
 
-const Button: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({className, type = 'button', ...rest}) => {
-  return <button className={cn('btn', className)} type={type} {...rest}></button>;
+import styles from './style.module.scss';
+
+interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'white';
+}
+
+const Button: React.FC<IProps> = ({className, type = 'button', variant, ...rest}) => {
+  const arrayClass = ['btn', className];
+
+  if (variant === 'white') arrayClass.push(styles['variant-white']);
+  return <button className={cn(arrayClass)} type={type} {...rest}></button>;
 };
 
 export default Button;

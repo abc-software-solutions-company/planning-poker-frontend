@@ -34,7 +34,7 @@ const Chart: FC<IProps> = ({className, data}) => {
 
   return (
     <div className={className}>
-      <canvas ref={canvasRef} width="340" height="340"></canvas>
+      <canvas ref={canvasRef} width="338" height="338"></canvas>
       <div className="chart-center-text">
         <p>6/6 players</p>
         <p>voted</p>
