@@ -4,9 +4,9 @@ import {useForm} from 'react-hook-form';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Input from '@/core-ui/input';
 import {ICreateRoom, ICreateStory} from '@/types';
 
-// import InputText from '@/core-ui/input-text';
 import styles from './style.module.scss';
 
 interface IProps {
@@ -32,7 +32,7 @@ const ModalCreate: React.FC<IProps> = ({open, onClose, title, placeholder, handl
             <div className="content">
               <Heading as="h5">{title}</Heading>
               <div className="input-button">
-                <input className="form-input" placeholder={placeholder} {...register('name')} />
+                <Input placeholder={placeholder} {...register('name')}></Input>
                 <div className="button">
                   <Button onClick={onClose}>Cancel</Button>
                   <Button>Create</Button>
