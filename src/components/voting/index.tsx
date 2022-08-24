@@ -2,13 +2,12 @@ import React, {useRef} from 'react';
 
 // import VoteCard from '@/components/cards';
 import LogoCopy from '@/components/icons/copy';
+import ModalStory from '@/components/modal-stories';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import ModalCreate from '@/core-ui/modal';
-import {createStory} from '@/data/client/story.client';
-import {ICreateStory, IVoteUser} from '@/types';
+import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -24,9 +23,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
   };
-  const handleOnSubmit = (data: ICreateStory) => {
-    createStory(data);
-  };
+
   return (
     <>
       <div className={styles['section-vote-room']}>
@@ -96,14 +93,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="action border-line">
                 <Button>Finish</Button>
               </div>
-              <ModalCreate
-                placeholder="Enter story "
-                title="Create New Story"
-                open={open}
-                onClose={handleClose}
-                handleOnSubmit={handleOnSubmit}
-              />
-
+              <ModalStory placeholder="Enter story " title="Create New Story" open={open} onClose={handleClose} />
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">

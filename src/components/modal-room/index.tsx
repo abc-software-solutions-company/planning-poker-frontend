@@ -1,4 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
+import {Modal} from '@mui/material';
 import {useRouter} from 'next/router';
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -7,19 +8,24 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import Input from '@/core-ui/input';
-import {createUser} from '@/data/client/user.client';
-import {ICreateUser} from '@/types';
+import {createRoom} from '@/data/client/room.client';
+import {ICreateRoom} from '@/types';
 
 import styles from './style.module.scss';
+
+interface IProps {
+  open: boolean;
+  title: string;
+  onClose: () => void;
+  placeholder: string;
+}
 
 const Schema = yup.object().shape({
   name: yup
     .string()
     .required('Please fill in your name')
-    .max(32, 'Your name must not exceed 32 letters')
+    .max(32, 'Your name must not exceed 10 letters')
     .min(1, 'Your name must be atleast 1 letter')
-    .matches(/^[aA-zZ\s]+$/, 'Use alphabets only')
 });
 
 interface IFormInputs {
@@ -30,10 +36,10 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
 
-const LetsStart: React.FC = () => {
+const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
   const router = useRouter();
-  const handleOnSubmit = (data: ICreateUser) => {
-    createUser(data).then((res: any) => {
+  const handleOnSubmit = (data: ICreateRoom) => {
+    createRoom(data).then((res: any) => {
       if (res.status === 201) router.push(ROUTES.ROOM);
     });
   };
@@ -50,26 +56,28 @@ const LetsStart: React.FC = () => {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
+
   return (
     <>
-      <div className={`${styles['lets-start']}`}>
-        <div className="container">
-          <div className="inner">
-            <div>
-              <Heading as="h1">PLANNING POKER</Heading>
-              <form className="content" onSubmit={handleSubmit(onSubmit)}>
-                <Heading as="h4">Let&apos;s start !</Heading>
-                <Input placeholder="Enter your name" {...register('name')} />
+      <Modal open={open} onClose={onClose}>
+        <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
+          <div className="container">
+            <div className="content">
+              <Heading as="h5">{title}</Heading>
+              <div className="input-button">
+                <input className="form-input" placeholder={placeholder} {...register('name')} />
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
-                <Button>Enter</Button>
-              </form>
-              <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
+                <div className="button">
+                  <Button onClick={onClose}>Cancel</Button>
+                  <Button type="submit">Create</Button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </form>
+      </Modal>
     </>
   );
 };
 
-export default LetsStart;
+export default ModalRoom;

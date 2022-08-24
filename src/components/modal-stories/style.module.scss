@@ -1,0 +1,15 @@
+.modal-create :global {
+  @apply flex justify-center;
+  .container {
+    @apply fixed top-1/2 -translate-y-1/2;
+  }
+  .content {
+    @apply mx-auto max-w-xl bg-white;
+  }
+  .input-button {
+    @apply space-y-4 bg-abc-light-grey p-6;
+  }
+  .button {
+    @apply flex gap-6;
+  }
+}
