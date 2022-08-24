@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ModalRoom from '@/components/modal-room';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
@@ -21,7 +22,7 @@ const Hall: React.FC = () => {
             <Button className="button-left" onClick={handleOpen}>
               Create Room
             </Button>
-            <ModalCreate placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
+            <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
             <div className="input-right">
               <Input placeholder="Enter a link or ID"></Input>
               <Button className="button-right">Join</Button>
