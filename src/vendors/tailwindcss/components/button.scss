@@ -1,5 +1,5 @@
 .btn {
-  @apply w-full border border-abc-blue bg-abc-blue p-3 text-base font-medium text-white;
+  @apply w-full border border-abc-blue bg-abc-blue py-3 px-3 text-base font-medium text-white;
   &:hover {
     @apply bg-abc-blue text-white;
   }

@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 
-// import VoteCard from '@/components/cards';
+import VoteCard from '@/components/cards';
 import LogoCopy from '@/components/icons/copy';
 import ModalStory from '@/components/modal-stories';
 import Button from '@/core-ui/button';
@@ -34,7 +34,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
           <div className="content">
             <div className="left-content">
               <Heading as="h4">Story name</Heading>
-              {/* <div className="card-holder">
+              <div className="card-holder">
                 <VoteCard>0</VoteCard>
                 <VoteCard>1</VoteCard>
                 <VoteCard>2</VoteCard>
@@ -43,8 +43,8 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 <VoteCard>8</VoteCard>
                 <VoteCard>13</VoteCard>
                 <VoteCard>21</VoteCard>
-              </div>  */}
-              <Chart
+              </div>
+              {/* <Chart
                 className="chart-holder"
                 data={{
                   type: 'doughnut',
@@ -82,7 +82,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                     }
                   }
                 }}
-              />
+              /> */}
             </div>
             <div className="right-content">
               <h5 className="title">Result</h5>
@@ -91,7 +91,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
               <div className="action border-line">
-                <Button variant="white">New Story</Button>
+                <Button variant="white">Finish</Button>
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">
