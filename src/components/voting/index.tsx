@@ -95,7 +95,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
               <div className="action border-line">
-                <Button variant="white">New Story</Button>
+                <Button variant="white">Finish</Button>
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">

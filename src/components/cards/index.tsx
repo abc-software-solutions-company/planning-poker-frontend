@@ -13,7 +13,6 @@ const VoteCard: React.FC<IProps> = ({children, className = ''}) => {
         <div className="card-number">
           <span>{children}</span>
         </div>
-        <div className="card-back"></div>
       </div>
     </>
   );
