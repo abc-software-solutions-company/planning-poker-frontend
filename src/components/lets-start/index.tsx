@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
 import {AuthActions} from '@/contexts/auth';
-import {useDispatchAuth, useStateAuth} from '@/contexts/auth/context';
+import {useDispatchAuth} from '@/contexts/auth/context';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
@@ -38,7 +38,7 @@ const LetsStart: React.FC = () => {
     createUser(data).then(res => {
       if (res.status === 201) {
         dispatch(AuthActions.login(res.data.id));
-        router.push(ROUTES.ROOM);
+        router.push(ROUTES.HOME);
       }
     });
   };
