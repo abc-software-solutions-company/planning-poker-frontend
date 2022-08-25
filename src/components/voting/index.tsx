@@ -85,8 +85,12 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               /> */}
             </div>
             <div className="right-content">
-              <h5 className="title">Result</h5>
-              <h5 className="sub-title border-line">Players:</h5>
+              <Heading className="title" as="h5">
+                Result
+              </Heading>
+              <Heading className="sub-title border-line" as="h5">
+                Players:
+              </Heading>
               {dataUsers.map(({name, host, vote}, index) => {
                 return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
@@ -95,7 +99,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">
-                <h5>Invite a teammate</h5>
+                <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input value="https://www.google.com.vn/" />
                   <button className="copy-btn" onClick={handleCopy}>
