@@ -85,13 +85,13 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               />
             </div>
             <div className="right-content">
-              <h5 className="title">Waiting for Admin vote</h5>
+              <h5 className="title">Result</h5>
               <h5 className="sub-title border-line">Players:</h5>
               {dataUsers.map(({name, host, vote}, index) => {
                 return <VoteUser className="border-line" key={index} name={name} host={host} vote={vote} />;
               })}
               <div className="action border-line">
-                <Button>Finish</Button>
+                <Button variant="white">New Story</Button>
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} onClose={handleClose} />
               <div className="sharing">
