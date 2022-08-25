@@ -1,24 +1,24 @@
 import cn from 'classnames';
 
-import LogoAvatar from '@/components/icons/avatar';
-import LogoCheckmark from '@/components/icons/checkmark';
+import Icon from '@/core-ui/icon';
 
 interface IProps {
   className?: string;
   name: string;
   host?: boolean;
   vote?: boolean;
+  color?: string;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, host, vote}) => {
+const VoteUser: React.FC<IProps> = ({name, className, host, vote, color}) => {
   return (
     <>
       <div className={cn('player-status', className)}>
         <div className="player-info">
-          <LogoAvatar host={host} />
+          <Icon className="abc-avatar" color={color} size={24} host={host} />
           <div className="name">{name}</div>
         </div>
-        {vote && <LogoCheckmark />}
+        {vote && <Icon className="abc-checkmark text-abc-blue" size={24} />}
       </div>
     </>
   );

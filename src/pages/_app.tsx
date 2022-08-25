@@ -1,6 +1,7 @@
 import '@/vendors/bootstrap/bootstrap.scss';
 import '@/vendors/tailwindcss/style.scss';
 import '@/vendors/menu/style.scss';
+import '@/vendors/abc-icons/dist/abc.scss';
 
 import type {AppProps} from 'next/app';
 import {useRouter} from 'next/router';
