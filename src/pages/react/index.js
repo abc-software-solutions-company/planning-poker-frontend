@@ -1,1 +1,0 @@
-import 'Vendors/abc-icons';

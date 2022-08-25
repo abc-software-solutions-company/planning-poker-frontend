@@ -1,11 +1,11 @@
 @font-face {
   font-family: "abc";
-  src: url('../fonts/abc.eot?t=1661330800101'); /* IE9*/
-  src: url('../fonts/abc.eot?t=1661330800101#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url("../fonts/abc.woff2?t=1661330800101") format("woff2"),
-  url("../fonts/abc.woff?t=1661330800101") format("woff"),
-  url('../fonts/abc.ttf?t=1661330800101') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../fonts/abc.svg?t=1661330800101#abc') format('svg'); /* iOS 4.1- */
+  src: url('/fonts/abc.eot?t=1661392476637'); /* IE9*/
+  src: url('/fonts/abc.eot?t=1661392476637#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url("/fonts/abc.woff2?t=1661392476637") format("woff2"),
+  url("/fonts/abc.woff?t=1661392476637") format("woff"),
+  url('/fonts/abc.ttf?t=1661392476637') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('/fonts/abc.svg?t=1661392476637#abc') format('svg'); /* iOS 4.1- */
 }
 
 [class^="abc-"], [class*=" abc-"] {
