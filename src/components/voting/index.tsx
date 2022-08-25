@@ -1,13 +1,15 @@
+import Image from 'next/image';
 import React, {useRef} from 'react';
 
 // import VoteCard from '@/components/cards';
-import LogoCopy from '@/components/icons/copy';
+// import LogoCopy from '@/components/icons/copy';
 import ModalStory from '@/components/modal-stories';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
 import {IVoteUser} from '@/types';
+import Copy from '@/vendors/abc-icons/input/copy.svg';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -99,7 +101,8 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 <div className="share-link">
                   <Input value="https://www.google.com.vn/" />
                   <button className="copy-btn" onClick={handleCopy}>
-                    <LogoCopy />
+                    {/* <LogoCopy /> */}
+                    <Image src={Copy} alt="Logo Copy" objectFit="contain" objectPosition="center" />
                   </button>
                 </div>
               </div>
