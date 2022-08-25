@@ -1,5 +1,7 @@
 const withPlugins = require('next-compose-plugins');
+const CopyPlugin = require('copy-webpack-plugin');
 const {i18n} = require('./next-i18next.config');
+const path = require('path');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
@@ -21,6 +23,21 @@ const nextConfig = {
       'abc-cms-stage.s3.ap-southeast-1.amazonaws.com',
       'abc-cms-production.s3.ap-southeast-1.amazonaws.com'
     ]
+  },
+  webpack: config => {
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, './src/vendors/abc-icons/dist'),
+            to: path.join(__dirname, './public/fonts'),
+            noErrorOnMissing: true
+          }
+        ]
+      })
+    );
+
+    return config;
   },
   output: 'standalone'
 };
