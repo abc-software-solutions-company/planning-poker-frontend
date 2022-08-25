@@ -11,12 +11,15 @@
     @apply lg:w-1/2;
   }
   .input-right {
-    @apply flex lg:w-1/2;
+    @apply relative flex lg:w-1/2;
   }
   .form-input {
     @apply lg:w-3/4;
   }
   .button-right {
     @apply w-1/4;
+  }
+  .error-validate {
+    @apply absolute -bottom-6 left-0;
   }
 }
