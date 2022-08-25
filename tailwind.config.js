@@ -52,7 +52,8 @@ module.exports = {
         'abc-light-yellow': '#FBE38E', //light yellow
         'abc-grey': '#D9D9D9',
         'abc-light-grey': '#EDF2F7',
-        'abc-dark-grey': '#4F4F4F' //dark grey
+        'abc-dark-grey': '#4F4F4F', //dark grey
+        'abc-red': '#FF0000'
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'
