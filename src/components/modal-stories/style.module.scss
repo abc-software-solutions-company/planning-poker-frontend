@@ -3,6 +3,9 @@
   .container {
     @apply fixed top-1/2 -translate-y-1/2;
   }
+  h5 {
+    @apply py-6 text-center;
+  }
   .content {
     @apply mx-auto max-w-xl bg-white;
   }

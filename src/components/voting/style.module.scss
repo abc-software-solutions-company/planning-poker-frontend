@@ -7,7 +7,7 @@
     @apply justify-start;
   }
   h4 {
-    @apply font-normal;
+    @apply mb-8 flex justify-center lg:mb-14;
   }
   .content {
     @apply mt-9 justify-between lg:flex;
