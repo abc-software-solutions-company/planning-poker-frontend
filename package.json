@@ -45,6 +45,7 @@
     "jsonp": "^0.2.1",
     "lodash-es": "^4.17.21",
     "next": "12.2.0",
+    "next-auth": "^4.10.3",
     "next-i18next": "^11.0.0",
     "next-seo": "^5.4.0",
     "next-share": "^0.17.0",

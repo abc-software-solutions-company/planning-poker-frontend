@@ -6,13 +6,8 @@ import {HttpClient} from '@/utils/http-client';
 
 class HttpBase {
   users = {
-    all: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IUser>(`${API_ENDPOINTS.USER}${query}`);
-    },
-    get: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IUser>(`${API_ENDPOINTS.USER}${query}`);
+    get: async (id: string) => {
+      return HttpClient.get<IUser>(`${API_ENDPOINTS.USER}/${id}`);
     },
     post: async (data: ICreateUser) => {
       return HttpClient.post<IUser>(`${API_ENDPOINTS.USER}`, data);
@@ -20,13 +15,8 @@ class HttpBase {
   };
 
   rooms = {
-    all: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IRoom>(`${API_ENDPOINTS.ROOM}${query}`);
-    },
-    get: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IRoom>(`${API_ENDPOINTS.ROOM}${query}`);
+    get: async (id: string) => {
+      return HttpClient.get<IRoom>(`${API_ENDPOINTS.ROOM}/${id}`);
     },
     post: async (data: ICreateRoom) => {
       return HttpClient.post<IRoom>(`${API_ENDPOINTS.ROOM}`, data);
