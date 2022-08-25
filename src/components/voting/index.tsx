@@ -17,7 +17,7 @@ interface IProps {
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const [open, setOpen] = React.useState(true);
-  const handleClose = () => setOpen(false);
+
   const inputLink = useRef<HTMLInputElement>(null);
 
   const handleCopy = () => {
@@ -93,7 +93,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="action border-line">
                 <Button variant="white">New Story</Button>
               </div>
-              <ModalStory placeholder="Enter story " title="Create New Story" open={open} onClose={handleClose} />
+              <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">
                 <h5>Invite a teammate</h5>
                 <div className="share-link">

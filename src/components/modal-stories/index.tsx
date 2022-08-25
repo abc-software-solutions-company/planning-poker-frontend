@@ -17,7 +17,7 @@ import styles from './style.module.scss';
 interface IProps {
   open: boolean;
   title: string;
-  onClose: () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   placeholder: string;
 }
 
@@ -37,12 +37,17 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
 
-const ModalStory: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
+const ModalStory: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateStory) => {
-    createStory(data).then((res: any) => {
-      if (res.status === 201) router.push(ROUTES.ROOM);
+    createStory(data).then(res => {
+      if (res.status === 201) setOpen(false);
     });
+  };
+
+  const onCancel = () => {
+    setOpen(false);
+    router.push(ROUTES.HOME);
   };
 
   const {
@@ -60,16 +65,16 @@ const ModalStory: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
 
   return (
     <>
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open}>
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
               <Heading as="h5">{title}</Heading>
               <div className="input-button">
                 <input className="form-input" placeholder={placeholder} {...register('name')} />
-                {errors.name && <p className="error-msg">{errors.name.message}</p>}
+                {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
-                  <Button onClick={onClose}>Cancel</Button>
+                  <Button onClick={onCancel}>Cancel</Button>
                   <Button type="submit">Create</Button>
                 </div>
               </div>

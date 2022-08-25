@@ -39,8 +39,8 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateRoom) => {
-    createRoom(data).then((res: any) => {
-      if (res.status === 201) router.push(ROUTES.ROOM);
+    createRoom(data).then(res => {
+      if (res.status === 201) router.push(ROUTES.ROOM + '/' + res.data.id);
     });
   };
 
@@ -66,7 +66,7 @@ const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
               <Heading as="h5">{title}</Heading>
               <div className="input-button">
                 <input className="form-input" placeholder={placeholder} {...register('name')} />
-                {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
+                {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={onClose}>Cancel</Button>
                   <Button type="submit">Create</Button>
