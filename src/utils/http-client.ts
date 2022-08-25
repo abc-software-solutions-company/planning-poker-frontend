@@ -9,31 +9,31 @@ const AxiosInstance = axios.create({
   }
 });
 
-const token = process.env.NEXT_STRAPI_API_TOKEN;
+// const token = process.env.NEXT_STRAPI_API_TOKEN;
 
-// Change request
-AxiosInstance.interceptors.request.use(config => {
-  config.headers = {
-    ...config.headers
-  };
+// // Change request
+// AxiosInstance.interceptors.request.use(config => {
+//   config.headers = {
+//     ...config.headers
+//   };
 
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+//   if (token) config.headers.Authorization = `Bearer ${token}`;
 
-  return config;
-});
+//   return config;
+// });
 
 // Change response
-AxiosInstance.interceptors.response.use(
-  response => response,
-  error => {
-    return Promise.reject(error);
-  }
-);
+// AxiosInstance.interceptors.response.use(
+//   response => response
+//   error => {
+//     return Promise.reject(error);
+//   }
+// );
 
 export class HttpClient {
-  static async get<T>(url: string, params?: unknown) {
-    const response = await AxiosInstance.get<T>(url, {params});
-    return response.data;
+  static async get<T>(url: string) {
+    const response = await AxiosInstance.get<T>(url);
+    return response;
   }
 
   static async post<T>(url: string, data: unknown, options?: any) {
@@ -43,11 +43,11 @@ export class HttpClient {
 
   static async put<T>(url: string, data: unknown) {
     const response = await AxiosInstance.put<T>(url, data);
-    return response.data;
+    return response;
   }
 
   static async delete<T>(url: string) {
     const response = await AxiosInstance.delete<T>(url);
-    return response.data;
+    return response;
   }
 }

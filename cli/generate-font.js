@@ -7,7 +7,7 @@ const options = {
   dist: path.resolve(process.cwd(), 'src/vendors/abc-icons/dist'),
   fontName: 'abc',
   css: {
-    cssPath: '../fonts/'
+    cssPath: '/fonts/'
   },
   startUnicode: 0xea01,
   svgicons2svgfont: {

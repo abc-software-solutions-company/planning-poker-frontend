@@ -1,4 +1,5 @@
-import React, {useRef} from 'react';
+import {useSession} from 'next-auth/react';
+import React, {useEffect, useRef} from 'react';
 
 import VoteCard from '@/components/cards';
 import ModalStory from '@/components/modal-stories';
@@ -8,7 +9,8 @@ import Heading from '@/core-ui/heading';
 // import VoteCard from '@/components/cards';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {IVoteUser} from '@/types';
+import {getUser} from '@/data/client/user.client';
+import {IUser, IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -17,13 +19,27 @@ interface IProps {
   dataUsers: IVoteUser[];
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const inputLink = useRef<HTMLInputElement>(null);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
   };
+
+  const session = useSession();
+  const [user, setUser] = React.useState<IUser | null>(null);
+  console.log('🚀 ~ file: index.tsx ~ line 31 ~ user', user);
+
+  useEffect(() => {
+    if (session.status === 'authenticated') {
+      const dataUser = getUser(session.data.user.id);
+      dataUser.then(res => {
+        setUser(res.data);
+        if (res.data.isHost) setOpen(true);
+      });
+    }
+  }, []);
 
   return (
     <>

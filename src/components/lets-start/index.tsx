@@ -1,16 +1,13 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useRouter} from 'next/router';
-import React from 'react';
+import {signIn, signOut, useSession} from 'next-auth/react';
+import React, {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
-import {AuthActions} from '@/contexts/auth';
-import {useDispatchAuth} from '@/contexts/auth/context';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import {createUser} from '@/data/client/user.client';
 import {ICreateUser} from '@/types';
 
 import styles from './style.module.scss';
@@ -32,14 +29,11 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 };
 
 const LetsStart: React.FC = () => {
-  const router = useRouter();
-  const dispatch = useDispatchAuth();
+  const {status} = useSession();
   const handleOnSubmit = (data: ICreateUser) => {
-    createUser(data).then(res => {
-      if (res.status === 201) {
-        dispatch(AuthActions.login(res.data.id));
-        router.push(ROUTES.HOME);
-      }
+    signIn('credentials', {
+      callbackUrl: ROUTES.HOME,
+      name: data.name
     });
   };
 
@@ -55,6 +49,10 @@ const LetsStart: React.FC = () => {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
+  useEffect(() => {
+    if (status === 'authenticated') signOut();
+  }, [status]);
+
   return (
     <>
       <div className={`${styles['lets-start']}`}>

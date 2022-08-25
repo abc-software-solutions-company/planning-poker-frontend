@@ -1,7 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Modal} from '@mui/material';
 import {useRouter} from 'next/router';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -15,8 +15,8 @@ import styles from './style.module.scss';
 
 interface IProps {
   open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
-  onClose: () => void;
   placeholder: string;
 }
 
@@ -36,7 +36,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
 
-const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
+const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateRoom) => {
     createRoom(data).then(res => {
@@ -59,7 +59,7 @@ const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
 
   return (
     <>
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open}>
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
@@ -68,7 +68,7 @@ const ModalRoom: React.FC<IProps> = ({open, onClose, title, placeholder}) => {
                 <input className="form-input" placeholder={placeholder} {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
-                  <Button onClick={onClose}>Cancel</Button>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
                   <Button type="submit">Create</Button>
                 </div>
               </div>

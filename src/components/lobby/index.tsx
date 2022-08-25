@@ -1,6 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useRouter} from 'next/router';
-import React from 'react';
+import {FC, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -8,39 +8,28 @@ import ModalRoom from '@/components/modal-room';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import {createRoom} from '@/data/client/room.client';
-// import Input from '@/core-ui/input';
-import {useCheckLogin} from '@/hooks/check-login';
-import {ICreateRoom} from '@/types';
+import {findRoom} from '@/data/client/room.client';
 
 import styles from './style.module.scss';
 
-const Lobby: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const Lobby: FC = () => {
+  const [open, setOpen] = useState(false);
 
   const router = useRouter();
 
   const Schema = yup.object().shape({
-    name: yup
-      .string()
-      .required('Please fill in the room id or link')
-      .max(32, 'Room link must not exceed 10 letters')
-      .min(1, 'Room link must be atleast 1 letter')
+    name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Room link must be atleast 1 letter')
   });
 
   interface IFormInputs {
     name: string;
   }
 
-  const FORM_DEFAULT_VALUES: IFormInputs = {
-    name: ''
-  };
+  const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
-  const handleOnSubmit = (data: ICreateRoom) => {
-    createRoom(data).then(res => {
-      if (res.status === 201) router.push(ROUTES.ROOM + '/' + res.data.id);
+  const handleOnSubmit = (idOrLink: string) => {
+    findRoom(idOrLink).then(res => {
+      if ((res.statusText = 'OK')) router.push(ROUTES.ROOM + res.data.id);
     });
   };
 
@@ -53,11 +42,10 @@ const Lobby: React.FC = () => {
     resolver: yupResolver(Schema)
   });
 
-  const onSubmit: SubmitHandler<ICreateRoom> = data => {
-    handleOnSubmit(data);
+  const onSubmit: SubmitHandler<IFormInputs> = data => {
+    handleOnSubmit(data.name);
   };
 
-  useCheckLogin();
   return (
     <>
       <div className={styles.lobby}>
@@ -65,10 +53,10 @@ const Lobby: React.FC = () => {
           <Heading as="h2">PLANNING POKER</Heading>
           <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
           <div className="input-button">
-            <Button className="button-left" onClick={handleOpen}>
+            <Button className="button-left" onClick={() => setOpen(true)}>
               Create Room
             </Button>
-            <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} onClose={handleClose} />
+            <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} setOpen={setOpen} />
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
               <input placeholder="Enter a link or ID" {...register('name')}></input>
               {errors.name && <p className="error-validate">{errors.name.message}</p>}
