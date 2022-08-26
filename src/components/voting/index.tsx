@@ -131,7 +131,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="sharing">
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input defaultValue={window.location.href} ref={inputLink} disabled />
+                  <Input defaultValue={window.location.href} ref={inputLink} readOnly />
                   <button className="copy-btn" onClick={handleCopy}>
                     Copy
                     {/* <Icon className="abc-copy text-black/[0.2]" size={16} /> */}
