@@ -18,7 +18,7 @@ const Lobby: FC = () => {
   const router = useRouter();
 
   const Schema = yup.object().shape({
-    name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Room link must be atleast 1 letter')
+    name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Please enter room link or Id')
   });
 
   interface IFormInputs {
@@ -58,7 +58,7 @@ const Lobby: FC = () => {
             </Button>
             <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} setOpen={setOpen} />
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
-              <input placeholder="Enter a link or ID" {...register('name')}></input>
+              <input className="form-input" placeholder="Enter a link or ID" {...register('name')}></input>
               {errors.name && <p className="error-validate">{errors.name.message}</p>}
               <Button className="button-right" type="submit">
                 Join

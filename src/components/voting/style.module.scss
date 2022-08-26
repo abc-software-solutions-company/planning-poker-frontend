@@ -43,11 +43,11 @@
     }
     .sharing {
       h5 {
-        @apply pt-2 pb-0;
+        @apply mt-4 pl-4;
       }
     }
     .share-link {
-      @apply mx-4 mb-4 mt-2 flex border border-black border-opacity-20;
+      @apply m-4 flex border border-black border-opacity-20;
       input {
         @apply h-12 w-full border-none;
       }

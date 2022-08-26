@@ -6,10 +6,10 @@ import {IVoteUser} from '@/types';
 
 export default function PageRoom() {
   const dataVoteUsers: IVoteUser[] = [
-    {name: 'Khanh', host: true, vote: true},
+    {name: 'Khanh', host: true, vote: 2},
     {name: 'Huy'},
     {name: 'Linh'},
-    {name: 'Phuoc', vote: true}
+    {name: 'Phuoc', vote: 13}
   ];
 
   return (
