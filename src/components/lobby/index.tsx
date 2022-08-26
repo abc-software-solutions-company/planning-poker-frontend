@@ -27,10 +27,10 @@ const Lobby: FC = () => {
 
   const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
-  const handleOnSubmit = (idOrLink: string) => {
-    findRoom(idOrLink).then(res => {
-      if ((res.statusText = 'OK')) router.push(ROUTES.ROOM + res.data.id);
-    });
+  const handleOnSubmit = async (idOrLink: string) => {
+    const room = await findRoom(idOrLink);
+    if (room && room.data) router.push(ROUTES.ROOM + room.data.id);
+    else alert('Id or Link not exist');
   };
 
   const {

@@ -9,8 +9,7 @@ import Heading from '@/core-ui/heading';
 // import VoteCard from '@/components/cards';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {getUser} from '@/data/client/user.client';
-import {IUser, IVoteUser} from '@/types';
+import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
 import VoteUser from './voters';
@@ -19,7 +18,7 @@ interface IProps {
   dataUsers: IVoteUser[];
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const inputLink = useRef<HTMLInputElement>(null);
 
@@ -28,16 +27,8 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   };
 
   const session = useSession();
-  const [user, setUser] = React.useState<IUser | null>(null);
-  console.log('🚀 ~ file: index.tsx ~ line 31 ~ user', user);
-
   useEffect(() => {
     if (session.status === 'authenticated') {
-      const dataUser = getUser(session.data.user.id);
-      dataUser.then(res => {
-        setUser(res.data);
-        if (res.data.isHost) setOpen(true);
-      });
     }
   }, []);
 
@@ -118,7 +109,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <div className="sharing">
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input value="https://www.google.com.vn/" />
+                  <Input value="https://www.google.com.vn/" ref={inputLink} />
                   <button className="copy-btn" onClick={handleCopy}>
                     <Icon className="abc-copy text-black/[0.2]" size={16} />
                   </button>

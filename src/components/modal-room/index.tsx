@@ -40,7 +40,7 @@ const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
   const router = useRouter();
   const handleOnSubmit = (data: ICreateRoom) => {
     createRoom(data).then(res => {
-      if (res.status === 201) router.push(ROUTES.ROOM + '/' + res.data.id);
+      if (res.status === 201) router.push(ROUTES.ROOM + res.data.id);
     });
   };
 

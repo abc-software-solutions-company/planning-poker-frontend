@@ -1,7 +1,5 @@
-import qs from 'qs';
-
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
-import {ICreateRoom, ICreateStory, ICreateUser, IRoom, IStory, IUser} from '@/types';
+import {ICreateRoom, ICreateStory, ICreateUser, IGetUSR, IRoom, IStory, IUser} from '@/types';
 import {HttpClient} from '@/utils/http-client';
 
 class HttpBase {
@@ -24,13 +22,15 @@ class HttpBase {
   };
 
   stories = {
-    all: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}${query}`);
-    },
-    get: async (params?: unknown) => {
-      const query = qs.stringify(params, {encodeValuesOnly: true});
-      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}${query}`);
+    post: async (data: ICreateStory) => {
+      return HttpClient.post<IStory>(`${API_ENDPOINTS.STORY}`, data);
+    }
+  };
+
+  usr = {
+    get: async (params: IGetUSR) => {
+      const {userId, storyId, roomId} = params;
+      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}/${userId}/${storyId}/${roomId}`);
     },
     post: async (data: ICreateStory) => {
       return HttpClient.post<IStory>(`${API_ENDPOINTS.STORY}`, data);
