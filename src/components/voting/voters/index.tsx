@@ -15,7 +15,7 @@ const VoteUser: React.FC<IProps> = ({name, className, host, vote, color}) => {
     <>
       <div className={cn('player-status', className)}>
         <div className="player-info">
-          <Icon className="abc-avatar" color={color} size={24} host={host} />
+          <Icon className="abc-avatar" size={24} host={host} color={color} />
           <div className="name">{name}</div>
         </div>
         {vote && <Icon className="abc-checkmark text-abc-blue" size={24} />}

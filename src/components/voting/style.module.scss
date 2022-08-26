@@ -30,7 +30,7 @@
       @apply border-0;
     }
     .player-info {
-      @apply flex;
+      @apply flex items-center;
     }
     .name {
       @apply pl-4;
