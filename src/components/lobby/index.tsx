@@ -8,11 +8,13 @@ import ModalRoom from '@/components/modal-room';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import useToast from '@/core-ui/toast';
 import {findRoom} from '@/data/client/room.client';
 
 import styles from './style.module.scss';
 
 const Lobby: FC = () => {
+  const toast = useToast();
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
@@ -60,7 +62,18 @@ const Lobby: FC = () => {
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
               <input className="form-input" placeholder="Enter a link or ID" {...register('name')}></input>
               {errors.name && <p className="error-validate">{errors.name.message}</p>}
-              <Button className="button-right" type="submit">
+              <Button
+                className="button-right"
+                type="submit"
+                onClick={() =>
+                  toast.show({
+                    type: 'danger',
+                    title: 'Error!',
+                    content: 'Please enter a link or ID',
+                    lifeTime: 3000
+                  })
+                }
+              >
                 Join
               </Button>
             </form>

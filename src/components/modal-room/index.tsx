@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import useToast from '@/core-ui/toast';
 import {createRoom} from '@/data/client/room.client';
 import {ICreateRoom} from '@/types';
 
@@ -33,6 +34,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 };
 
 const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
+  const toast = useToast();
   const router = useRouter();
   const handleOnSubmit = (data: ICreateRoom) => {
     createRoom(data).then(res => {
@@ -65,7 +67,19 @@ const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={() => setOpen(false)}>Cancel</Button>
-                  <Button type="submit">Create</Button>
+                  <Button
+                    type="submit"
+                    onClick={() =>
+                      toast.show({
+                        type: 'danger',
+                        title: 'Error!',
+                        content: 'Please enter room name',
+                        lifeTime: 3000
+                      })
+                    }
+                  >
+                    Create
+                  </Button>
                 </div>
               </div>
             </div>
