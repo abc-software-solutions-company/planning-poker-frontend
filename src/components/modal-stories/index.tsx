@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import useToast from '@/core-ui/toast';
 import {createStory} from '@/data/client/story.client';
 import {ICreateStory} from '@/types';
 
@@ -38,6 +39,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 };
 
 const ModalStory: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
+  const toast = useToast();
   const router = useRouter();
   const handleOnSubmit = (data: ICreateStory) => {
     createStory(data).then(res => {
@@ -75,7 +77,19 @@ const ModalStory: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={onCancel}>Cancel</Button>
-                  <Button type="submit">Create</Button>
+                  <Button
+                    type="submit"
+                    onClick={() =>
+                      toast.show({
+                        type: 'danger',
+                        title: 'Error!',
+                        content: 'Please enter story',
+                        lifeTime: 3000
+                      })
+                    }
+                  >
+                    Create
+                  </Button>
                 </div>
               </div>
             </div>

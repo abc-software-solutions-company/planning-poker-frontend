@@ -8,6 +8,7 @@ import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 // import VoteCard from '@/components/cards';
 import Input from '@/core-ui/input';
+import useToast from '@/core-ui/toast';
 import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
@@ -17,6 +18,8 @@ interface IProps {
   dataUsers: IVoteUser[];
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
+  const toast = useToast();
+
   const [open, setOpen] = React.useState(true);
 
   const inputLink = useRef<HTMLInputElement>(null);
@@ -123,7 +126,19 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 );
               })}
               <div className="action border-line">
-                <Button variant="white" type="button" onClick={toggleIsFinish}>
+                <Button
+                  variant="white"
+                  type="button"
+                  onClick={() => {
+                    toast.show({
+                      type: 'success',
+                      title: 'Success!',
+                      content: 'Show all votes',
+                      lifeTime: 3000
+                    });
+                    toggleIsFinish();
+                  }}
+                >
                   Finish
                 </Button>
               </div>
@@ -132,7 +147,18 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />
-                  <button className="copy-btn" onClick={handleCopy}>
+                  <button
+                    className="copy-btn"
+                    onClick={() => {
+                      toast.show({
+                        type: 'success',
+                        title: 'Success!',
+                        content: 'Copy success',
+                        lifeTime: 3000
+                      });
+                      handleCopy();
+                    }}
+                  >
                     Copy
                     {/* <Icon className="abc-copy text-black/[0.2]" size={16} /> */}
                   </button>

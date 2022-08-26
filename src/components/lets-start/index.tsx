@@ -8,6 +8,7 @@ import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
+import useToast from '@/core-ui/toast';
 import {ICreateUser} from '@/types';
 
 import styles from './style.module.scss';
@@ -29,6 +30,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 };
 
 const LetsStart: React.FC = () => {
+  const toast = useToast();
   const {status} = useSession();
   const handleOnSubmit = (data: ICreateUser) => {
     signIn('credentials', {
@@ -64,7 +66,19 @@ const LetsStart: React.FC = () => {
                 <Heading as="h4">Let&apos;s start!</Heading>
                 <Input placeholder="Enter your name" {...register('name')} />
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
-                <Button type="submit">Enter</Button>
+                <Button
+                  type="submit"
+                  onClick={() =>
+                    toast.show({
+                      type: 'danger',
+                      title: 'Error!',
+                      content: 'Please enter your name',
+                      lifeTime: 3000
+                    })
+                  }
+                >
+                  Enter
+                </Button>
               </form>
               <div className="footer">Copyright © 2022 By ABC Software Solutions Company.</div>
             </div>
