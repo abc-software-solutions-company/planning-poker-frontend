@@ -7,10 +7,10 @@ interface IProps extends InputHTMLAttributes<HTMLElement> {
 }
 
 const Button: React.FC<IProps> = ({className, size = 16, host, color}) => {
-  if (host === true) color = 'red';
+  if (host === true) color = 'text-abc-red';
   return (
     <>
-      <i className={['abc-icon', className, `text-abc-${color}`, `abc-${size}`].join(' ')}></i>
+      <i className={['abc-icon', className, color, `abc-${size}`].join(' ')}></i>
     </>
   );
 };
