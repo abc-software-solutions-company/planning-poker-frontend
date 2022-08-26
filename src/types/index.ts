@@ -27,11 +27,10 @@ interface IBastAttributes {
 export interface IUser extends IBastAttributes {
   id: string;
   name: string;
-  isHost: boolean;
 }
 
 export interface IRoom extends IBastAttributes {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -62,4 +61,18 @@ export interface IVoteUser {
   name: string;
   host?: boolean;
   vote?: boolean;
+}
+
+export interface IUSR extends IBastAttributes {
+  userId: string;
+  storyId: string;
+  roomId: number;
+  isOnline: boolean;
+  isHost: boolean;
+  storyPoint: number;
+}
+export interface IGetUSR {
+  userId: string;
+  storyId?: string;
+  roomId: number;
 }
