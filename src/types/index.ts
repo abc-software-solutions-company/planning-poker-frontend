@@ -60,7 +60,7 @@ export interface IpropsSVG {
 export interface IVoteUser {
   name: string;
   host?: boolean;
-  vote?: boolean;
+  vote?: number;
 }
 
 export interface IUSR extends IBastAttributes {

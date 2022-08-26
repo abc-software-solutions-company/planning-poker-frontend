@@ -21,11 +21,7 @@ interface IProps {
 }
 
 const Schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Please fill in your name')
-    .max(32, 'Your name must not exceed 10 letters')
-    .min(1, 'Your name must be atleast 1 letter')
+  name: yup.string().required('Please enter room name').max(256, 'Your name must not exceed 256 letters')
 });
 
 interface IFormInputs {
