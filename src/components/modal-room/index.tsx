@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
 import {createRoom} from '@/data/client/room.client';
 import {ICreateRoom} from '@/types';
@@ -63,7 +64,7 @@ const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
             <div className="content">
               <Heading as="h5">{title}</Heading>
               <div className="input-button">
-                <input className="form-input" placeholder={placeholder} {...register('name')} />
+                <Input className={errors.name && 'error'} placeholder={placeholder} {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={() => setOpen(false)}>Cancel</Button>
