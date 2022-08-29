@@ -6,6 +6,7 @@ import VoteCard from '@/components/voting/cards';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
+import Icon from '@/core-ui/icon';
 // import VoteCard from '@/components/cards';
 import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
@@ -67,7 +68,10 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
           </Heading>
           <div className="content">
             <div className="left-content">
-              <Heading as="h4">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
+              <div className="story-name">
+                <Heading as="h4">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
+                <Icon className="abc-pen" size={32} />
+              </div>
               {!isFinish && (
                 <div className="card-holder">
                   {FIBONACCI.map(num => {
@@ -85,11 +89,11 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               {isFinish && <Chart className="chart-holder" USRs={USRs} />}
             </div>
             <div className="right-content">
-              <Heading className="title" as="h5">
+              <Heading className="title" as="h6">
                 {!isFinish && 'Wait for voting'}
                 {isFinish && 'Result'}
               </Heading>
-              <Heading className="sub-title border-line" as="h5">
+              <Heading className="sub-title border-line" as="h6">
                 Players:
               </Heading>
               {USRs?.map(usr => {
@@ -130,7 +134,8 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               </div>
               <ModalStory open={open} setOpen={setOpen} dataRoom={dataRoom} setUSRs={setUSRs} />
               <div className="sharing">
-                <Heading as="h5">Invite a teammate</Heading>
+                {!isFinish && 'Wait for voting'}
+                <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />
                   <button
