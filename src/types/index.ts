@@ -62,7 +62,6 @@ export interface IVoteUser {
   host?: boolean;
   vote?: number;
 }
-
 export interface IUSR extends IBastAttributes {
   userId: string;
   storyId: string;
