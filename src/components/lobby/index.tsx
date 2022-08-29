@@ -8,6 +8,7 @@ import ModalRoom from '@/components/modal-room';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
 import {findRoom} from '@/data/client/room.client';
 
@@ -60,7 +61,7 @@ const Lobby: FC = () => {
             </Button>
             <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} setOpen={setOpen} />
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
-              <input className="form-input" placeholder="Enter a link or ID" {...register('name')}></input>
+              <Input className={errors.name && 'error'} placeholder="Enter a link or ID" {...register('name')} />
               {errors.name && <p className="error-validate">{errors.name.message}</p>}
               <Button
                 className="button-right"

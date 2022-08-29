@@ -64,8 +64,8 @@ const LetsStart: React.FC = () => {
               <Heading as="h1">PLANNING POKER</Heading>
               <form className="content" onSubmit={handleSubmit(onSubmit)}>
                 <Heading as="h4">Let&apos;s start!</Heading>
-                <Input placeholder="Enter your name" {...register('name')} />
-                {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
+                <Input className={errors.name && 'error'} placeholder="Enter your name" {...register('name')} />
+                {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <Button
                   type="submit"
                   onClick={() =>
