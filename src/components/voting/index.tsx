@@ -23,8 +23,8 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const toast = useToast();
   const router = useRouter();
   const {roomId} = router.query;
-
   const [open, setOpen] = React.useState(true);
+  const [active, setActive] = useState('');
   const [roomName, setRoomName] = useState<string>('');
 
   const inputLink = useRef<HTMLInputElement>(null);
@@ -63,14 +63,30 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <Heading as="h4">Story Name</Heading>
               {!isFinish && (
                 <div className="card-holder">
-                  <VoteCard>0</VoteCard>
-                  <VoteCard>1</VoteCard>
-                  <VoteCard>2</VoteCard>
-                  <VoteCard>3</VoteCard>
-                  <VoteCard>5</VoteCard>
-                  <VoteCard>8</VoteCard>
-                  <VoteCard>13</VoteCard>
-                  <VoteCard>21</VoteCard>
+                  <VoteCard value="0" onClick={() => setActive('0')} className={active === '0' ? 'active' : ''}>
+                    0
+                  </VoteCard>
+                  <VoteCard value="1" onClick={() => setActive('1')} className={active === '1' ? 'active' : ''}>
+                    1
+                  </VoteCard>
+                  <VoteCard value="2" onClick={() => setActive('2')} className={active === '2' ? 'active' : ''}>
+                    2
+                  </VoteCard>
+                  <VoteCard value="3" onClick={() => setActive('3')} className={active === '3' ? 'active' : ''}>
+                    3
+                  </VoteCard>
+                  <VoteCard value="5" onClick={() => setActive('5')} className={active === '5' ? 'active' : ''}>
+                    5
+                  </VoteCard>
+                  <VoteCard value="8" onClick={() => setActive('8')} className={active === '8' ? 'active' : ''}>
+                    8
+                  </VoteCard>
+                  <VoteCard value="13" onClick={() => setActive('13')} className={active === '13' ? 'active' : ''}>
+                    13
+                  </VoteCard>
+                  <VoteCard value="21" onClick={() => setActive('21')} className={active === '21' ? 'active' : ''}>
+                    21
+                  </VoteCard>
                 </div>
               )}
               {isFinish && (
@@ -161,7 +177,6 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">
-                {!isFinish && 'Wait for voting'}
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />

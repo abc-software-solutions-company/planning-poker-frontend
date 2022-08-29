@@ -73,6 +73,12 @@
         }
       }
     }
+    .active {
+      @apply bg-abc-blue transition-all duration-500 ease-in;
+      button {
+        @apply bg-white;
+      }
+    }
     .chart-holder {
       @apply relative text-center text-base lg:mx-44;
       canvas {
