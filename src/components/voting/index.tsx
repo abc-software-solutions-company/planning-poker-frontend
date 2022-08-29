@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router';
 import {useSession} from 'next-auth/react';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -9,6 +10,7 @@ import Heading from '@/core-ui/heading';
 // import VoteCard from '@/components/cards';
 import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
+import HttpBase from '@/data/http';
 import {IVoteUser} from '@/types';
 
 import styles from './style.module.scss';
@@ -19,8 +21,11 @@ interface IProps {
 }
 const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
   const toast = useToast();
+  const router = useRouter();
+  const {roomId} = router.query;
 
   const [open, setOpen] = React.useState(true);
+  const [roomName, setRoomName] = useState<string>('');
 
   const inputLink = useRef<HTMLInputElement>(null);
   const handleCopy = () => {
@@ -33,8 +38,13 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
     }
   }, []);
 
+  useEffect(() => {
+    HttpBase.rooms.get(roomId + '').then(res => {
+      setRoomName(res.data.name);
+    });
+  }, [roomId]);
+
   const [isFinish, setIsFinish] = useState(false);
-  console.log('🚀 ~ file: index.tsx ~ line 36 ~ isFinish', isFinish);
 
   const toggleIsFinish = () => {
     // 👇️ passed function to setState
@@ -46,11 +56,11 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
       <div className={styles['section-vote-room']}>
         <div className="container">
           <Heading className="room-name" as="h4">
-            Room name
+            {roomName}
           </Heading>
           <div className="content">
             <div className="left-content">
-              <Heading as="h4">Story name</Heading>
+              <Heading as="h4">Story Name</Heading>
               {!isFinish && (
                 <div className="card-holder">
                   <VoteCard>0</VoteCard>
@@ -126,24 +136,32 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                 );
               })}
               <div className="action border-line">
-                <Button
-                  variant="white"
-                  type="button"
-                  onClick={() => {
-                    toast.show({
-                      type: 'success',
-                      title: 'Success!',
-                      content: 'Show all votes',
-                      lifeTime: 3000
-                    });
-                    toggleIsFinish();
-                  }}
-                >
-                  Finish
-                </Button>
+                {!isFinish && (
+                  <Button
+                    variant="white"
+                    type="button"
+                    onClick={() => {
+                      toast.show({
+                        type: 'success',
+                        title: 'Success!',
+                        content: 'Show all votes',
+                        lifeTime: 3000
+                      });
+                      toggleIsFinish();
+                    }}
+                  >
+                    Finish
+                  </Button>
+                )}
+                {isFinish && (
+                  <Button variant="white" type="button" onClick={toggleIsFinish}>
+                    New Story
+                  </Button>
+                )}
               </div>
               <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
               <div className="sharing">
+                {!isFinish && 'Wait for voting'}
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />
