@@ -1,7 +1,7 @@
 .lets-start :global {
   @apply bg-abc-light-grey;
   .inner {
-    @apply flex h-screen items-center justify-center;
+    @apply flex min-h-screen items-center justify-center;
   }
   h1 {
     @apply mx-auto max-w-lg pb-6 text-center lg:pb-10;

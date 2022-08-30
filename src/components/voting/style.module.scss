@@ -6,17 +6,17 @@
   .room-name {
     @apply justify-start;
   }
-  h4 {
-    @apply mb-8 flex justify-center lg:mb-14;
+  .story-name {
+    @apply flex items-center justify-center gap-3 lg:mb-14;
   }
   .content {
-    @apply mt-9 justify-between lg:flex;
+    @apply mt-16 justify-between gap-8 lg:mt-8 lg:flex;
   }
   .border-line {
-    @apply border-b-2 border-b-black border-opacity-20;
+    @apply border-b-2 border-b-black/[0.2];
   }
   .right-content {
-    @apply mt-10 basis-3/12 border-2 border-black border-opacity-20 lg:mt-0;
+    @apply mt-8 basis-4/12 border-2 border-black/[0.2] lg:mt-0;
     .sub-title {
       @apply py-4 px-4;
     }
@@ -42,7 +42,7 @@
       @apply py-1;
     }
     .sharing {
-      h5 {
+      h6 {
         @apply mt-4 pl-4;
       }
     }
@@ -59,7 +59,7 @@
   .left-content {
     @apply basis-9/12;
     .card-holder {
-      @apply mt-20 grid grid-cols-2 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:mx-28 2xl:mx-48;
+      @apply mt-11 grid grid-cols-2 gap-x-5 gap-y-4 sm:px-40 md:grid-cols-3 md:px-36 lg:mt-20 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
     }
     .card-item {
       @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white;
