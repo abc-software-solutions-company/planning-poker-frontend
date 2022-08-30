@@ -10,7 +10,7 @@
     @apply mx-auto max-w-xl bg-white;
   }
   .input-button {
-    @apply bg-abc-light-grey p-6;
+    @apply border-t border-black/[0.2] bg-abc-light-grey p-6;
   }
   .button {
     @apply mt-4 flex gap-6;

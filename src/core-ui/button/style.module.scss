@@ -1,3 +1,6 @@
 .variant-white {
   @apply bg-white text-abc-blue;
+  &:hover {
+    @apply bg-abc-blue text-white;
+  }
 }

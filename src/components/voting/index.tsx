@@ -1,4 +1,3 @@
-import {isFunction} from 'lodash-es';
 import {getSession} from 'next-auth/react';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -88,13 +87,13 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
     <>
       <div className={styles['section-vote-room']}>
         <div className="container">
-          <Heading className="room-name" as="h4">
+          <Heading className="room-name" as="h5">
             {dataRoom.name}
           </Heading>
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <Heading as="h4">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
+                <Heading as="h5">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
                 <Icon className="abc-pen" size={32} />
               </div>
               {!isFinish && (
@@ -122,7 +121,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                 Players:
               </Heading>
               <div className="voter-list border-line">
-                {USRs?.sort((a, b) => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
+                {USRs?.sort(a => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
                   return (
                     <VoteUser
                       className="border-line"

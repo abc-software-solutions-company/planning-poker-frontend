@@ -81,7 +81,9 @@ const ModalStory: React.FC<IProps> = ({open, setOpen, setUSRs, dataRoom}) => {
                 <Input placeholder="Enter story" {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
-                  <Button onClick={onCancel}>Cancel</Button>
+                  <Button variant="white" onClick={onCancel}>
+                    Cancel
+                  </Button>
                   <Button type="submit">Create</Button>
                 </div>
               </div>

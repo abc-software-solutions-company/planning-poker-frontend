@@ -10,9 +10,9 @@
     @apply mx-auto max-w-xl bg-white;
   }
   .input-button {
-    @apply space-y-4 bg-abc-light-grey p-6;
+    @apply bg-abc-light-grey p-6;
   }
   .button {
-    @apply flex gap-6;
+    @apply mt-4  flex gap-6;
   }
 }
