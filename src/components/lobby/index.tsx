@@ -34,7 +34,7 @@ const Lobby: FC = () => {
       toast.show({
         type: 'danger',
         title: 'Error!',
-        content: 'Please enter a link or ID',
+        content: 'Room not exist',
         lifeTime: 3000
       });
   };
