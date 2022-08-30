@@ -62,19 +62,19 @@
       @apply mt-20 grid grid-cols-2 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:mx-28 2xl:mx-48;
     }
     .card-item {
-      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white transition-all duration-500 ease-in;
+      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white;
     }
     .card-number {
       @apply absolute z-50 h-full w-full p-5;
       button {
         @apply flex h-full w-full items-center justify-center rounded-md border border-black border-opacity-50 text-center text-h2;
         &:hover {
-          @apply bg-abc-blue text-white transition-all duration-300 ease-in-out;
+          @apply bg-abc-blue text-white;
         }
       }
     }
-    .active {
-      @apply bg-abc-blue transition-all duration-500 ease-in;
+    .selected {
+      @apply bg-abc-blue;
       button {
         @apply bg-white;
       }

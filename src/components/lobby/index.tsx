@@ -17,13 +17,10 @@ import styles from './style.module.scss';
 const Lobby: FC = () => {
   const toast = useToast();
   const [open, setOpen] = useState(false);
-
   const router = useRouter();
-
   const Schema = yup.object().shape({
     name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Please enter room link or Id')
   });
-
   interface IFormInputs {
     name: string;
   }
@@ -33,7 +30,13 @@ const Lobby: FC = () => {
   const handleOnSubmit = async (idOrLink: string) => {
     const room = await findRoom(idOrLink);
     if (room && room.data) router.push(ROUTES.ROOM + room.data.id);
-    else alert('Id or Link not exist');
+    else
+      toast.show({
+        type: 'danger',
+        title: 'Error!',
+        content: 'Please enter a link or ID',
+        lifeTime: 3000
+      });
   };
 
   const {
@@ -48,7 +51,6 @@ const Lobby: FC = () => {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data.name);
   };
-
   return (
     <>
       <div className={styles.lobby}>
@@ -63,18 +65,7 @@ const Lobby: FC = () => {
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
               <Input className={errors.name && 'error'} placeholder="Enter a link or ID" {...register('name')} />
               {errors.name && <p className="error-validate">{errors.name.message}</p>}
-              <Button
-                className="button-right"
-                type="submit"
-                onClick={() =>
-                  toast.show({
-                    type: 'danger',
-                    title: 'Error!',
-                    content: 'Please enter a link or ID',
-                    lifeTime: 3000
-                  })
-                }
-              >
+              <Button className="button-right" type="submit">
                 Join
               </Button>
             </form>

@@ -1,6 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {signIn, signOut, useSession} from 'next-auth/react';
-import React, {useEffect} from 'react';
+import {signIn} from 'next-auth/react';
+import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -14,11 +14,7 @@ import {ICreateUser} from '@/types';
 import styles from './style.module.scss';
 
 const Schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Please fill in your name')
-    .max(32, 'Your name must not exceed 32 letters')
-    .min(1, 'Your name must be atleast 1 letter')
+  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters')
 });
 
 interface IFormInputs {
@@ -31,7 +27,6 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 
 const LetsStart: React.FC = () => {
   const toast = useToast();
-  const {status} = useSession();
   const handleOnSubmit = (data: ICreateUser) => {
     signIn('credentials', {
       callbackUrl: ROUTES.HOME,
@@ -51,9 +46,6 @@ const LetsStart: React.FC = () => {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
-  useEffect(() => {
-    if (status === 'authenticated') signOut();
-  }, [status]);
 
   return (
     <>
