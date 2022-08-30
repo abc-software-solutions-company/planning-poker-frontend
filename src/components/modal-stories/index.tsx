@@ -9,7 +9,6 @@ import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import useToast from '@/core-ui/toast';
 import {createUSR} from '@/data/client/room.client';
 import {createStory} from '@/data/client/story.client';
 import {ICreateStory, IFullUSR, IRoom} from '@/types';
@@ -39,7 +38,6 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 const ModalStory: React.FC<IProps> = ({open, setOpen, setUSRs, dataRoom}) => {
   const {hostUserId: userId, id: roomId} = dataRoom;
   const {updateRoom} = useVoting();
-  const toast = useToast();
   const router = useRouter();
   const handleOnSubmit = async (data: ICreateStory) => {
     createStory(data).then(res => {
@@ -84,19 +82,7 @@ const ModalStory: React.FC<IProps> = ({open, setOpen, setUSRs, dataRoom}) => {
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={onCancel}>Cancel</Button>
-                  <Button
-                    type="submit"
-                    onClick={() =>
-                      toast.show({
-                        type: 'danger',
-                        title: 'Error!',
-                        content: 'Please enter story',
-                        lifeTime: 3000
-                      })
-                    }
-                  >
-                    Create
-                  </Button>
+                  <Button type="submit">Create</Button>
                 </div>
               </div>
             </div>

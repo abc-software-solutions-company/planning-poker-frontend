@@ -47,11 +47,24 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
   };
 
   const toggleIsFinish = () => {
+    // 👇️ passed function to setState
     setIsFinish(current => !current);
+    toast.show({
+      type: 'success',
+      title: 'Success!',
+      content: 'Show all votes',
+      lifeTime: 3000
+    });
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
+    toast.show({
+      type: 'success',
+      title: 'Success!',
+      content: 'Copy success',
+      lifeTime: 3000
+    });
   };
 
   useEffect(() => {
@@ -110,19 +123,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               })}
               <div className="action border-line">
                 {!isFinish && (
-                  <Button
-                    variant="white"
-                    type="button"
-                    onClick={() => {
-                      toast.show({
-                        type: 'success',
-                        title: 'Success!',
-                        content: 'Show all votes',
-                        lifeTime: 3000
-                      });
-                      toggleIsFinish();
-                    }}
-                  >
+                  <Button variant="white" type="button" onClick={toggleIsFinish}>
                     Finish
                   </Button>
                 )}
@@ -134,22 +135,10 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               </div>
               <ModalStory open={open} setOpen={setOpen} dataRoom={dataRoom} setUSRs={setUSRs} />
               <div className="sharing">
-                {!isFinish && 'Wait for voting'}
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />
-                  <button
-                    className="copy-btn"
-                    onClick={() => {
-                      toast.show({
-                        type: 'success',
-                        title: 'Success!',
-                        content: 'Copy success',
-                        lifeTime: 3000
-                      });
-                      handleCopy();
-                    }}
-                  >
+                  <button className="copy-btn" onClick={handleCopy}>
                     Copy
                     {/* <Icon className="abc-copy text-black/[0.2]" size={16} /> */}
                   </button>
