@@ -82,7 +82,7 @@ export interface ICreateUSR extends IGetUSR {
 export interface IUpdateUSR extends ICreateUSR {
   isOnline?: boolean;
   isHost?: boolean;
-  storyPoint?: number;
+  storyPoint?: number | null;
 }
 export interface IFullUSR extends IUSR {
   story: IStory;

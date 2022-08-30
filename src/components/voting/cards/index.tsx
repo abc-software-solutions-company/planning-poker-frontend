@@ -10,7 +10,7 @@ const VoteCard: React.FC<IProps> = ({value, className, ...rest}) => {
   return (
     <div className={cn('card-item', className)} {...rest}>
       <div className="card-number">
-        <span>{value}</span>
+        <button>{value}</button>
       </div>
     </div>
   );

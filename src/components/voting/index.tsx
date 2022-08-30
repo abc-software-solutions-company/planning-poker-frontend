@@ -32,8 +32,9 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
   const inputLink = useRef<HTMLInputElement>(null);
   const {updateRoom, checkRoom} = useVoting();
 
-  const handleSelectPoker = async (value: number) => {
+  const handleSelectPoker = async (value: number | null) => {
     const session = await getSession();
+    if (selectedPoker === value) value = null;
     if (session) {
       updateUSR({userId: session.user.id, roomId, storyId: String(USRs?.[0].storyId), storyPoint: value}).then(res => {
         if (res.status === 200) {
