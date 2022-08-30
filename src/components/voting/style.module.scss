@@ -1,5 +1,8 @@
 .section-vote-room :global {
-  @apply pt-10 pb-10 lg:pt-32 lg:pb-0;
+  @apply py-10;
+  .container {
+    @apply transform lg:fixed lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2;
+  }
   p {
     @apply text-base;
   }
@@ -10,13 +13,13 @@
     @apply flex items-center justify-center gap-3 lg:mb-14;
   }
   .content {
-    @apply mt-16 justify-between gap-8 lg:mt-8 lg:flex;
+    @apply mt-14 justify-between gap-8 lg:mt-8 lg:flex;
   }
   .border-line {
     @apply border-b-2 border-b-black/[0.2];
   }
   .right-content {
-    @apply mt-8 basis-4/12 border-2 border-black/[0.2] lg:mt-0;
+    @apply mt-10  basis-4/12 border-2 border-black/[0.2] lg:mt-0;
     .sub-title {
       @apply py-4 px-4;
     }
@@ -36,10 +39,10 @@
       @apply flex items-center;
     }
     .name {
-      @apply pl-4;
+      @apply pl-4 text-base;
     }
     .action {
-      @apply flex justify-center gap-4 p-4;
+      @apply flex justify-center gap-4 p-4 text-base;
     }
     .btn {
       @apply py-1;
@@ -86,15 +89,15 @@
   .left-content {
     @apply basis-9/12;
     .card-holder {
-      @apply mt-11 grid grid-cols-2 gap-x-5 gap-y-4 sm:px-40 md:grid-cols-3 md:px-36 lg:mt-20 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:px-40 md:grid-cols-3 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
     }
     .card-item {
-      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black border-opacity-20 bg-white;
+      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black/[0.2] bg-white;
     }
     .card-number {
-      @apply absolute z-50 h-full w-full p-5;
+      @apply absolute z-50 h-full w-full p-5 text-h2;
       button {
-        @apply flex h-full w-full items-center justify-center rounded-md border border-black border-opacity-50 text-center text-h2;
+        @apply flex h-full w-full items-center justify-center rounded-md border border-black/[0.5] text-center text-h2;
         &:hover {
           @apply bg-abc-blue text-white;
         }
@@ -107,7 +110,7 @@
       }
     }
     .chart-holder {
-      @apply relative text-center text-base lg:mx-44;
+      @apply relative mt-10 text-center text-base lg:mx-44;
       canvas {
         @apply mx-auto;
       }

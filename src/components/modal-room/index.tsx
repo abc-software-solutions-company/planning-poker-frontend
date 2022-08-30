@@ -70,7 +70,9 @@ const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
                 <Input className={errors.name && 'error'} placeholder={placeholder} {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
-                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  <Button variant="white" onClick={() => setOpen(false)}>
+                    Cancel
+                  </Button>
                   <Button type="submit">Create</Button>
                 </div>
               </div>
