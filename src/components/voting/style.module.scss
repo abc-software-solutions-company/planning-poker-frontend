@@ -95,10 +95,10 @@
         .label {
           @apply relative;
           p {
-            @apply relative pl-10 lg:pb-8 lg:pl-0;
+            @apply pl-10 lg:pb-8 lg:pl-0;
           }
-          p::after {
-            @apply absolute top-1/2 left-1/2 h-5 w-5 rounded-full bg-abc-light-red content-[''] lg:top-2 lg:-left-10;
+          span {
+            @apply absolute top-1/2 left-1/2 h-5 w-5 rounded-full content-[''] lg:top-3 lg:-left-10;
             transform: translate(-50%, -50%);
           }
         }

@@ -83,7 +83,8 @@ const Chart: FC<IProps> = ({className, USRs}) => {
           if (USRs?.filter(usr => usr.storyPoint === num).length != 0)
             return (
               <div key={index} className={`label`}>
-                <p className={`after:bg-[${backgroundColor[index]}]`}>{num}</p>
+                <p>{num}</p>
+                <span style={{backgroundColor: `${backgroundColor[index]}`}}></span>
               </div>
             );
         })}
