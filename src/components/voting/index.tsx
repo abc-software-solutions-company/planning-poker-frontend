@@ -45,6 +45,11 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
       });
     }
   };
+
+  const toggleIsFinish = () => {
+    setIsFinish(current => !current);
+  };
+
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
   };
@@ -53,11 +58,6 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
     updateRoom({roomId, setUSRs});
     checkRoom({roomId, setOpen});
   }, []);
-
-  const toggleIsFinish = () => {
-    // 👇️ passed function to setState
-    setIsFinish(current => !current);
-  };
 
   return (
     <>

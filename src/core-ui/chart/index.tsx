@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 
 import {IFullUSR} from '@/types';
 
@@ -8,11 +8,21 @@ interface IProps {
 }
 
 const Chart: FC<IProps> = ({className, USRs}) => {
+  const FIBONACCI: number[] = [0, 1, 2, 3, 5, 8, 13, 21];
   const [module, setModule] = useState<any>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const lenVotedUser = USRs?.filter(e => e.storyPoint !== null).length;
   const lenUsers = USRs?.length;
-
+  const backgroundColor: string[] = [
+    '#56CCF2',
+    '#4F4F4F',
+    '#FBE38E',
+    '#FED0EE',
+    '#BB6BD9',
+    '#F2994A',
+    '#D14F4F',
+    '#3B8260'
+  ];
   useEffect(() => {
     const chartJs = import('chart.js');
     chartJs.then(resp => setModule(resp));
@@ -29,8 +39,8 @@ const Chart: FC<IProps> = ({className, USRs}) => {
         // labels: ['0', '1', '2', '3', '5', '8', '13', '21'],
         datasets: [
           {
-            data: USRs?.map(e => e.storyPoint),
-            backgroundColor: ['#56CCF2', '#4F4F4F', '#FBE38E', '#FED0EE', '#BB6BD9', '#F2994A', '#D14F4F', '#3B8260']
+            data: FIBONACCI?.map(num => USRs?.filter(usr => usr.storyPoint === num).length),
+            backgroundColor
           }
         ]
       },
@@ -50,7 +60,6 @@ const Chart: FC<IProps> = ({className, USRs}) => {
         }
       }
     };
-    console.log(module);
     chartModule.Chart.register(...module.registerables);
     chartModule.Chart.register(module.plugins.Decimation);
     chartModule.Chart.register(module.plugins.Filler);
@@ -60,7 +69,7 @@ const Chart: FC<IProps> = ({className, USRs}) => {
     const chartInstance = new chartModule.Chart(ctx, data);
 
     return () => chartInstance.destroy();
-  }, [USRs]);
+  });
 
   return (
     <div className={className}>
@@ -70,18 +79,17 @@ const Chart: FC<IProps> = ({className, USRs}) => {
         <p>voted</p>
       </div>
       <div className="chart-info">
-        <div className="label">
-          <p>5</p>
-        </div>
-        <div className="label">
-          <p>3</p>
-        </div>
-        <div className="label">
-          <p>1</p>
-        </div>
+        {FIBONACCI.map((num, index) => {
+          if (USRs?.filter(usr => usr.storyPoint === num).length != 0)
+            return (
+              <div key={index} className={`label`}>
+                <p className={`after:bg-[${backgroundColor[index]}]`}>{num}</p>
+              </div>
+            );
+        })}
       </div>
     </div>
   );
 };
 
-export default memo(Chart);
+export default Chart;
