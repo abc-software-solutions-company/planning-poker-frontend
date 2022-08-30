@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
 import {IFullUSR} from '@/types';
+import {FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
@@ -8,7 +9,6 @@ interface IProps {
 }
 
 const Chart: FC<IProps> = ({className, USRs}) => {
-  const FIBONACCI: number[] = [0, 1, 2, 3, 5, 8, 13, 21];
   const [module, setModule] = useState<any>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const lenVotedUser = USRs?.filter(e => e.storyPoint !== null).length;
@@ -39,7 +39,7 @@ const Chart: FC<IProps> = ({className, USRs}) => {
         // labels: ['0', '1', '2', '3', '5', '8', '13', '21'],
         datasets: [
           {
-            data: FIBONACCI?.map(num => USRs?.filter(usr => usr.storyPoint === num).length),
+            data: FIBONACCI.map(num => USRs?.filter(usr => usr.storyPoint === num).length),
             backgroundColor
           }
         ]

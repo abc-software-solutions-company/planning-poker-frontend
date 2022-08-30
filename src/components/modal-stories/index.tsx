@@ -19,7 +19,7 @@ import styles from './style.module.scss';
 interface IProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setUSRs: React.Dispatch<React.SetStateAction<IFullUSR[] | undefined>>;
+  setUSRs: React.Dispatch<React.SetStateAction<IFullUSR[]>>;
   dataRoom: IRoom;
 }
 

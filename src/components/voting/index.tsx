@@ -1,3 +1,4 @@
+import {isFunction} from 'lodash-es';
 import {getSession} from 'next-auth/react';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -7,11 +8,10 @@ import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
-// import VoteCard from '@/components/cards';
 import Input from '@/core-ui/input';
-import useToast from '@/core-ui/toast';
-import {updateUSR} from '@/data/client/room.client';
+import {createUSR, FinishStory, updateUSR} from '@/data/client/room.client';
 import {IFullUSR, IRoom} from '@/types';
+import {FIBONACCI} from '@/utils/constant';
 
 import useVoting from './hooks';
 import styles from './style.module.scss';
@@ -22,22 +22,37 @@ interface IProps {
 }
 const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
   const {id: roomId} = dataRoom;
-  const FIBONACCI: number[] = [0, 1, 2, 3, 5, 8, 13, 21];
   const [selectedPoker, setSelectedPoker] = useState<number>();
-
-  const [USRs, setUSRs] = useState<IFullUSR[]>();
+  const [USRs, setUSRs] = useState<IFullUSR[]>([]);
   console.log('🚀 ~ file: index.tsx ~ line 24 ~ USRs', USRs);
-  const toast = useToast();
   const [isFinish, setIsFinish] = useState(false);
   const [open, setOpen] = React.useState(false);
   const inputLink = useRef<HTMLInputElement>(null);
-  const {updateRoom, checkRoom} = useVoting();
+  const {toast, handleCopy, updateRoom, checkRoom} = useVoting();
+
+  const handleNewUser = async () => {
+    if (USRs.length > 0) {
+      const session = await getSession();
+      if (session && !USRs.map(e => e.userId).includes(session.user.id)) {
+        createUSR({userId: session.user.id, roomId, storyId: String(USRs?.[USRs.length - 1].storyId)}).then(res => {
+          if (res.status === 201) {
+            updateRoom({roomId, setUSRs});
+          }
+        });
+      }
+    }
+  };
 
   const handleSelectPoker = async (value: number | null) => {
     const session = await getSession();
     if (selectedPoker === value) value = null;
-    if (session) {
-      updateUSR({userId: session.user.id, roomId, storyId: String(USRs?.[0].storyId), storyPoint: value}).then(res => {
+    if (session && USRs !== []) {
+      updateUSR({
+        userId: session.user.id,
+        roomId,
+        storyId: String(USRs?.[USRs.length - 1].storyId),
+        storyPoint: value
+      }).then(res => {
         if (res.status === 200) {
           setSelectedPoker(res.data.storyPoint);
           updateRoom({roomId, setUSRs});
@@ -46,32 +61,29 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
     }
   };
 
-  const toggleIsFinish = () => {
-    // 👇️ passed function to setState
-    setIsFinish(current => !current);
-    toast.show({
-      type: 'success',
-      title: 'Success!',
-      content: 'Show all votes',
-      lifeTime: 3000
-    });
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(inputLink.current!.value);
-    toast.show({
-      type: 'success',
-      title: 'Success!',
-      content: 'Copy success',
-      lifeTime: 3000
-    });
+  const handleFinish = () => {
+    if (!isFinish)
+      FinishStory(String(USRs?.[USRs.length - 1].storyId)).then(res => {
+        if (res.status === 200) {
+          toast.show({
+            type: 'success',
+            title: 'Success!',
+            content: 'Show all votes',
+            lifeTime: 3000
+          });
+        }
+      });
+    setIsFinish(!isFinish);
   };
 
   useEffect(() => {
     updateRoom({roomId, setUSRs});
     checkRoom({roomId, setOpen});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(() => {
+    handleNewUser();
+  }, [USRs]);
   return (
     <>
       <div className={styles['section-vote-room']}>
@@ -109,7 +121,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               <Heading className="sub-title border-line" as="h6">
                 Players:
               </Heading>
-              {USRs?.map(usr => {
+              {USRs?.sort((a, b) => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
                 return (
                   <VoteUser
                     className="border-line"
@@ -121,14 +133,15 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                   />
                 );
               })}
+
               <div className="action border-line">
                 {!isFinish && (
-                  <Button variant="white" type="button" onClick={toggleIsFinish}>
+                  <Button variant="white" type="button" onClick={handleFinish}>
                     Finish
                   </Button>
                 )}
                 {isFinish && (
-                  <Button variant="white" type="button" onClick={toggleIsFinish}>
+                  <Button variant="white" type="button" onClick={handleFinish}>
                     New Story
                   </Button>
                 )}
@@ -138,9 +151,8 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
                   <Input defaultValue={window.location.href} ref={inputLink} readOnly />
-                  <button className="copy-btn" onClick={handleCopy}>
+                  <button className="copy-btn" onClick={() => handleCopy(inputLink.current!.value)}>
                     Copy
-                    {/* <Icon className="abc-copy text-black/[0.2]" size={16} /> */}
                   </button>
                 </div>
               </div>

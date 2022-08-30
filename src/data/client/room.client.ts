@@ -18,15 +18,22 @@ export function findRoom(idOrLink: string) {
     return null;
   }
 }
+
+export function FinishStory(id: string) {
+  return http.stories.finish(id);
+}
+
 export function createUSR(data: ICreateUSR) {
   return http.usrs.post(data);
 }
 export function updateUSR(data: IUpdateUSR) {
   return http.usrs.patch(data);
 }
+
 export function getUSR(data: IGetUSR) {
   return http.usrs.get(data);
 }
+
 export function getUSRsbyRoom(data: IGetUSR) {
   return http.usrs.allbyRoom(data);
 }

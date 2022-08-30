@@ -42,6 +42,9 @@ class HttpBase {
     },
     post: async (data: ICreateStory) => {
       return HttpClient.post<IStory>(`${API_ENDPOINTS.STORY}`, data);
+    },
+    finish: async (id: string) => {
+      return HttpClient.get<IStory>(`${API_ENDPOINTS.STORY}/finish/${id}`);
     }
   };
 

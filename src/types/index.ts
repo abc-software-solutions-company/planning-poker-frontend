@@ -18,42 +18,6 @@ export interface IPagination {
   pageCount: number;
   total: number;
 }
-
-interface IBastAttributes {
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IUser extends IBastAttributes {
-  id: string;
-  name: string;
-}
-
-export interface IRoom extends IBastAttributes {
-  id: number;
-  name: string;
-  hostUserId: string;
-}
-
-export interface IStory extends IBastAttributes {
-  id: string;
-  name: string;
-}
-
-export interface ICreateUser {
-  name: string;
-  isHost?: boolean;
-}
-
-export interface ICreateRoom {
-  name: string;
-  hostUserId: string;
-}
-
-export interface ICreateStory {
-  name: string;
-}
-
 export interface IpropsSVG {
   className?: string;
   fill?: string;
@@ -64,12 +28,47 @@ export interface IVoteUser {
   host?: boolean;
   vote?: number;
 }
+interface IBastAttributes {
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IUser extends IBastAttributes {
+  id: string;
+  name: string;
+}
+export interface ICreateUser {
+  name: string;
+  isHost?: boolean;
+}
+export interface IRoom extends IBastAttributes {
+  id: number;
+  name: string;
+  hostUserId: string;
+}
+export interface ICreateRoom {
+  name: string;
+  hostUserId: string;
+}
+
+export interface IStory extends IBastAttributes {
+  id: string;
+  name: string;
+  avgPoint: number | null;
+}
+
+export interface ICreateStory {
+  name: string;
+}
+export interface IUpdateStory {
+  name?: string;
+  avgPoint?: number | null;
+}
 export interface IUSR extends IBastAttributes {
   userId: string;
   storyId: string;
   roomId: number;
   isOnline: boolean;
-  isHost: boolean;
   storyPoint: number;
 }
 export interface IGetUSR {
