@@ -121,19 +121,20 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
               <Heading className="sub-title border-line" as="h6">
                 Players:
               </Heading>
-              {USRs?.sort((a, b) => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
-                return (
-                  <VoteUser
-                    className="border-line"
-                    key={usr.user.id}
-                    name={usr.user.name}
-                    host={usr.user.id === usr.room.hostUserId}
-                    vote={usr.storyPoint}
-                    isFinish={isFinish}
-                  />
-                );
-              })}
-
+              <div className="voter-list border-line">
+                {USRs?.sort((a, b) => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
+                  return (
+                    <VoteUser
+                      className="border-line"
+                      key={usr.user.id}
+                      name={usr.user.name}
+                      host={usr.user.id === usr.room.hostUserId}
+                      vote={usr.storyPoint}
+                      isFinish={isFinish}
+                    />
+                  );
+                })}
+              </div>
               <div className="action border-line">
                 {!isFinish && (
                   <Button variant="white" type="button" onClick={handleFinish}>

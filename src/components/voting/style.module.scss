@@ -1,5 +1,5 @@
 .section-vote-room :global {
-  @apply py-10 lg:pt-32;
+  @apply pt-10 pb-10 lg:pt-32 lg:pb-0;
   p {
     @apply text-base;
   }
@@ -29,6 +29,9 @@
     .player-status:last-child {
       @apply border-0;
     }
+    .player-status:first-child {
+      @apply border-2;
+    }
     .player-info {
       @apply flex items-center;
     }
@@ -53,6 +56,30 @@
       }
       .copy-btn {
         @apply w-auto border border-y-0 border-r-0 border-l-2 border-black border-opacity-20 bg-white px-4;
+      }
+    }
+    .voter-list {
+      @apply min-h-[240px] overflow-y-scroll;
+      &::-webkit-scrollbar {
+        @apply h-[6px] w-[6px];
+      }
+      &::-webkit-scrollbar-track {
+        @apply bg-transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        @apply rounded-[10rem] border border-white bg-black bg-opacity-40;
+      }
+      &::-webkit-scrollbar-track-piece:start {
+        @apply bg-transparent;
+      }
+      &::-webkit-scrollbar-track-piece:end {
+        @apply bg-transparent;
+      }
+      &.scrolling-touch {
+        -webkit-overflow-scrolling: touch;
+      }
+      &.scrolling-auto {
+        -webkit-overflow-scrolling: auto;
       }
     }
   }
