@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {useSession} from 'next-auth/react';
+import {signOut, useSession} from 'next-auth/react';
 import React, {useEffect} from 'react';
 
 import {ROUTES} from '@/configs/routes.config';
@@ -10,8 +10,9 @@ export default function DefaultLayout({children}: React.PropsWithChildren<Record
 
   useEffect(() => {
     if (status === 'unauthenticated' && !router.asPath.includes(ROUTES.LOGIN)) {
-      router.push(ROUTES.LOGIN);
+      signOut({callbackUrl: ROUTES.LOGIN});
     }
+    if (status === 'authenticated' && router.asPath.includes(ROUTES.LOGIN)) signOut({callbackUrl: ROUTES.LOGIN});
   }, [status]);
 
   if (status !== 'authenticated' && !router.asPath.includes(ROUTES.LOGIN)) return null;

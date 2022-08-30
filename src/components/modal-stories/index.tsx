@@ -10,25 +10,22 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
+import {createUSR} from '@/data/client/room.client';
 import {createStory} from '@/data/client/story.client';
-import {ICreateStory} from '@/types';
+import {ICreateStory, IFullUSR, IRoom} from '@/types';
 
-// import InputText from '@/core-ui/input-text';
+import useVoting from '../voting/hooks';
 import styles from './style.module.scss';
 
 interface IProps {
   open: boolean;
-  title: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  placeholder: string;
+  setUSRs: React.Dispatch<React.SetStateAction<IFullUSR[] | undefined>>;
+  dataRoom: IRoom;
 }
 
 const Schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Please fill in your name')
-    .max(32, 'Your name must not exceed 10 letters')
-    .min(1, 'Your name must be atleast 1 letter')
+  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 10 letters')
 });
 
 interface IFormInputs {
@@ -39,12 +36,21 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
 
-const ModalStory: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
+const ModalStory: React.FC<IProps> = ({open, setOpen, setUSRs, dataRoom}) => {
+  const {hostUserId: userId, id: roomId} = dataRoom;
+  const {updateRoom} = useVoting();
   const toast = useToast();
   const router = useRouter();
-  const handleOnSubmit = (data: ICreateStory) => {
+  const handleOnSubmit = async (data: ICreateStory) => {
     createStory(data).then(res => {
-      if (res.status === 201) setOpen(false);
+      if (res.status === 201) {
+        createUSR({userId, storyId: res.data.id, roomId}).then(res1 => {
+          if (res1.status === 201) {
+            updateRoom({roomId, setUSRs});
+            setOpen(false);
+          }
+        });
+      }
     });
   };
 
@@ -72,9 +78,9 @@ const ModalStory: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
-              <Heading as="h5">{title}</Heading>
+              <Heading as="h5">Create New Story</Heading>
               <div className="input-button">
-                <Input className={errors.name && 'error'} placeholder={placeholder} {...register('name')} />
+                <Input placeholder="Enter story" {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
                   <Button onClick={onCancel}>Cancel</Button>

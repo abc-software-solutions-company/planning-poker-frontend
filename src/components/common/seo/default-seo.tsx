@@ -11,7 +11,7 @@ const DefaultSeo: React.FC = () => {
       description={siteSettings.description}
       openGraph={{
         type: 'website',
-        locale: 'en_IE',
+        locale: 'en',
         site_name: siteSettings.name,
         description: siteSettings.description,
         images: [

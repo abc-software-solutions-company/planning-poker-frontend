@@ -9,10 +9,15 @@ export default NextAuth({
   providers: [
     CredentialsProvider<any>({
       async authorize(credentials: any): Promise<any> {
-        const {name} = credentials;
-        const res = await http.users.post({name});
-        if (res.status === 201) return res.data;
-        else return null;
+        try {
+          const {name} = credentials;
+          const res = await http.users.post({name});
+          if (res.status === 201) {
+            return res.data;
+          } else throw new Error('Err');
+        } catch (e) {
+          console.log(e);
+        }
       },
       credentials: undefined
     })

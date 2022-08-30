@@ -1,5 +1,5 @@
 import {ROUTES} from '@/configs/routes.config';
-import {ICreateRoom, IGetUSR} from '@/types';
+import {ICreateRoom, ICreateUSR, IGetUSR, IUpdateUSR} from '@/types';
 
 import http from '../http';
 
@@ -12,17 +12,21 @@ export function findRoom(idOrLink: string) {
     if (Number(idOrLink)) return http.rooms.get(idOrLink);
     return null;
   } else {
-    const arr = idOrLink.split(ROUTES.ROOM);
+    const arr = idOrLink.split(window.location.origin + ROUTES.ROOM);
     const id = arr[arr.length - 1];
     if (Number(id)) return http.rooms.get(id);
     return null;
   }
 }
-
-export function checkHost(data: IGetUSR) {
-  try {
-    return http.usr.get(data);
-  } catch {
-    return null;
-  }
+export function createUSR(data: ICreateUSR) {
+  return http.usrs.post(data);
+}
+export function updateUSR(data: IUpdateUSR) {
+  return http.usrs.patch(data);
+}
+export function getUSR(data: IGetUSR) {
+  return http.usrs.get(data);
+}
+export function getUSRsbyRoom(data: IGetUSR) {
+  return http.usrs.allbyRoom(data);
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333',
   timeout: 30000,
   headers: {
     Accept: 'application/json',
@@ -23,12 +23,10 @@ const AxiosInstance = axios.create({
 // });
 
 // Change response
-// AxiosInstance.interceptors.response.use(
-//   response => response
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
+AxiosInstance.interceptors.response.use(
+  response => response,
+  error => error
+);
 
 export class HttpClient {
   static async get<T>(url: string) {
@@ -41,8 +39,8 @@ export class HttpClient {
     return response;
   }
 
-  static async put<T>(url: string, data: unknown) {
-    const response = await AxiosInstance.put<T>(url, data);
+  static async patch<T>(url: string, data: unknown) {
+    const response = await AxiosInstance.patch<T>(url, data);
     return response;
   }
 

@@ -1,6 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Modal} from '@mui/material';
 import {useRouter} from 'next/router';
+import {getSession} from 'next-auth/react';
 import React, {Dispatch, SetStateAction} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
@@ -37,10 +38,14 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
   const toast = useToast();
   const router = useRouter();
-  const handleOnSubmit = (data: ICreateRoom) => {
-    createRoom(data).then(res => {
-      if (res.status === 201) router.push(ROUTES.ROOM + res.data.id);
-    });
+  const handleOnSubmit = async (name: string) => {
+    const session = await getSession();
+    if (session != null) {
+      const data: ICreateRoom = {name, hostUserId: session?.user.id};
+      createRoom(data).then(res => {
+        if (res.status === 201) router.push(ROUTES.ROOM + res.data.id);
+      });
+    }
   };
 
   const {
@@ -53,7 +58,7 @@ const ModalRoom: React.FC<IProps> = ({open, setOpen, title, placeholder}) => {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data);
+    handleOnSubmit(data.name);
   };
 
   return (

@@ -1,50 +1,56 @@
-import {useRouter} from 'next/router';
-import {useSession} from 'next-auth/react';
+import {getSession} from 'next-auth/react';
 import React, {useEffect, useRef, useState} from 'react';
 
-import VoteCard from '@/components/cards';
 import ModalStory from '@/components/modal-stories';
+import VoteCard from '@/components/voting/cards';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 // import VoteCard from '@/components/cards';
 import Input from '@/core-ui/input';
 import useToast from '@/core-ui/toast';
-import HttpBase from '@/data/http';
-import {IVoteUser} from '@/types';
+import {updateUSR} from '@/data/client/room.client';
+import {IFullUSR, IRoom} from '@/types';
 
+import useVoting from './hooks';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
 interface IProps {
-  dataUsers: IVoteUser[];
+  dataRoom: IRoom;
 }
-const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
-  const toast = useToast();
-  const router = useRouter();
-  const {roomId} = router.query;
-  const [open, setOpen] = React.useState(true);
-  const [active, setActive] = useState('');
-  const [roomName, setRoomName] = useState<string>('');
+const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
+  const {id: roomId} = dataRoom;
+  const FIBONACCI: number[] = [0, 1, 2, 3, 5, 8, 13, 21];
+  const [selectedPoker, setSelectedPoker] = useState<number>();
 
+  const [USRs, setUSRs] = useState<IFullUSR[]>();
+  console.log('🚀 ~ file: index.tsx ~ line 24 ~ USRs', USRs);
+  const toast = useToast();
+  const [isFinish, setIsFinish] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const inputLink = useRef<HTMLInputElement>(null);
+  const {updateRoom, checkRoom} = useVoting();
+
+  const handleSelectPoker = async (value: number) => {
+    const session = await getSession();
+    if (session) {
+      updateUSR({userId: session.user.id, roomId, storyId: String(USRs?.[0].storyId), storyPoint: value}).then(res => {
+        if (res.status === 200) {
+          setSelectedPoker(res.data.storyPoint);
+          updateRoom({roomId, setUSRs});
+        }
+      });
+    }
+  };
   const handleCopy = () => {
     navigator.clipboard.writeText(inputLink.current!.value);
   };
 
-  const session = useSession();
   useEffect(() => {
-    if (session.status === 'authenticated') {
-    }
+    updateRoom({roomId, setUSRs});
+    checkRoom({roomId, setOpen});
   }, []);
-
-  useEffect(() => {
-    HttpBase.rooms.get(roomId + '').then(res => {
-      setRoomName(res.data.name);
-    });
-  }, [roomId]);
-
-  const [isFinish, setIsFinish] = useState(false);
 
   const toggleIsFinish = () => {
     // 👇️ passed function to setState
@@ -56,80 +62,26 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
       <div className={styles['section-vote-room']}>
         <div className="container">
           <Heading className="room-name" as="h4">
-            {roomName}
+            {dataRoom.name}
           </Heading>
           <div className="content">
             <div className="left-content">
-              <Heading as="h4">Story Name</Heading>
+              <Heading as="h4">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
               {!isFinish && (
                 <div className="card-holder">
-                  <VoteCard value="0" onClick={() => setActive('0')} className={active === '0' ? 'active' : ''}>
-                    0
-                  </VoteCard>
-                  <VoteCard value="1" onClick={() => setActive('1')} className={active === '1' ? 'active' : ''}>
-                    1
-                  </VoteCard>
-                  <VoteCard value="2" onClick={() => setActive('2')} className={active === '2' ? 'active' : ''}>
-                    2
-                  </VoteCard>
-                  <VoteCard value="3" onClick={() => setActive('3')} className={active === '3' ? 'active' : ''}>
-                    3
-                  </VoteCard>
-                  <VoteCard value="5" onClick={() => setActive('5')} className={active === '5' ? 'active' : ''}>
-                    5
-                  </VoteCard>
-                  <VoteCard value="8" onClick={() => setActive('8')} className={active === '8' ? 'active' : ''}>
-                    8
-                  </VoteCard>
-                  <VoteCard value="13" onClick={() => setActive('13')} className={active === '13' ? 'active' : ''}>
-                    13
-                  </VoteCard>
-                  <VoteCard value="21" onClick={() => setActive('21')} className={active === '21' ? 'active' : ''}>
-                    21
-                  </VoteCard>
+                  {FIBONACCI.map(num => {
+                    return (
+                      <VoteCard
+                        key={num}
+                        className={num === selectedPoker ? 'selected' : ''}
+                        value={num}
+                        onClick={() => handleSelectPoker(num)}
+                      />
+                    );
+                  })}
                 </div>
               )}
-              {isFinish && (
-                <Chart
-                  className="chart-holder"
-                  data={{
-                    type: 'doughnut',
-                    data: {
-                      // labels: ['0', '1', '2', '3', '5', '8', '13', '21'],
-                      datasets: [
-                        {
-                          data: [0, 1, 2, 3, 5, 6, 7, 9],
-                          backgroundColor: [
-                            '#56CCF2',
-                            '#4F4F4F',
-                            '#FBE38E',
-                            '#FED0EE',
-                            '#BB6BD9',
-                            '#F2994A',
-                            '#D14F4F',
-                            '#3B8260'
-                          ]
-                        }
-                      ]
-                    },
-                    options: {
-                      aspectRatio: 1,
-                      cutout: 110,
-                      responsive: false,
-                      plugins: {
-                        legend: {
-                          position: 'left',
-                          fullWidth: true,
-                          labels: {
-                            usePointStyle: true,
-                            boxWidth: 8
-                          }
-                        }
-                      }
-                    }
-                  }}
-                />
-              )}
+              {isFinish && <Chart className="chart-holder" USRs={USRs} />}
             </div>
             <div className="right-content">
               <Heading className="title" as="h5">
@@ -139,14 +91,14 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
               <Heading className="sub-title border-line" as="h5">
                 Players:
               </Heading>
-              {dataUsers.map(({name, host, vote}, index) => {
+              {USRs?.map(usr => {
                 return (
                   <VoteUser
                     className="border-line"
-                    key={index}
-                    name={name}
-                    host={host}
-                    vote={vote}
+                    key={usr.user.id}
+                    name={usr.user.name}
+                    host={usr.user.id === usr.room.hostUserId}
+                    vote={usr.storyPoint}
                     isFinish={isFinish}
                   />
                 );
@@ -175,7 +127,7 @@ const VoteRoom: React.FC<IProps> = ({dataUsers}) => {
                   </Button>
                 )}
               </div>
-              <ModalStory placeholder="Enter story " title="Create New Story" open={open} setOpen={setOpen} />
+              <ModalStory open={open} setOpen={setOpen} dataRoom={dataRoom} setUSRs={setUSRs} />
               <div className="sharing">
                 <Heading as="h5">Invite a teammate</Heading>
                 <div className="share-link">

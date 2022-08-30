@@ -73,7 +73,7 @@
         }
       }
     }
-    .active {
+    .selected {
       @apply bg-abc-blue transition-all duration-500 ease-in;
       button {
         @apply bg-white;

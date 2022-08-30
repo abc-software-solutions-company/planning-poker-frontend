@@ -32,6 +32,7 @@ export interface IUser extends IBastAttributes {
 export interface IRoom extends IBastAttributes {
   id: number;
   name: string;
+  hostUserId: string;
 }
 
 export interface IStory extends IBastAttributes {
@@ -46,6 +47,7 @@ export interface ICreateUser {
 
 export interface ICreateRoom {
   name: string;
+  hostUserId: string;
 }
 
 export interface ICreateStory {
@@ -71,7 +73,19 @@ export interface IUSR extends IBastAttributes {
   storyPoint: number;
 }
 export interface IGetUSR {
-  userId: string;
-  storyId?: string;
   roomId: number;
+}
+export interface ICreateUSR extends IGetUSR {
+  userId: string;
+  storyId: string;
+}
+export interface IUpdateUSR extends ICreateUSR {
+  isOnline?: boolean;
+  isHost?: boolean;
+  storyPoint?: number;
+}
+export interface IFullUSR extends IUSR {
+  story: IStory;
+  room: IRoom;
+  user: IUser;
 }

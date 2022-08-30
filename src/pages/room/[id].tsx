@@ -1,20 +1,17 @@
+import {InferGetStaticPropsType} from 'next';
 import React from 'react';
 
 import Voting from '@/components/voting';
+import {getStaticPaths, getStaticProps} from '@/data/ssr/room.ssr';
 import LayoutDefault from '@/layouts/default';
-import {IVoteUser} from '@/types';
 
-export default function PageRoom() {
-  const dataVoteUsers: IVoteUser[] = [
-    {name: 'Khanh', host: true, vote: 2},
-    {name: 'Huy'},
-    {name: 'Linh'},
-    {name: 'Phuoc', vote: 13}
-  ];
+export {getStaticPaths, getStaticProps};
+export default function PageRoom({room}: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log('🚀 ~ file: [id].tsx ~ line 11 ~ PageRoom ~ room', room);
 
   return (
     <>
-      <Voting dataUsers={dataVoteUsers} />
+      <Voting dataRoom={room} />
     </>
   );
 }
