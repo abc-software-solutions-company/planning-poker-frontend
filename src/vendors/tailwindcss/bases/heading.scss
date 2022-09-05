@@ -1,5 +1,5 @@
 h1 {
-  @apply text-hero font-extrabold text-abc-dark-blue lg:text-super;
+  @apply text-hero font-extrabold leading-none text-abc-dark-blue lg:text-super;
 }
 h2 {
   @apply text-hero font-extrabold leading-none text-abc-dark-blue;
