@@ -1,11 +1,34 @@
-import {ICreateStory} from '@/types';
+import {API_ENDPOINTS} from '@/configs/endpoint.config';
+import {IBaseResponse} from '@/types';
 
-import http from '../http';
+import API from '../API';
 
-export function createStory(data: ICreateStory) {
-  return http.stories.post(data);
+//type
+export interface ICompleteStory {
+  id: string;
 }
 
-export function getStory(id: string) {
-  return http.stories.get(id);
+export interface ICreateStory {
+  name: string;
+  roomId: number;
+}
+
+export interface IUpdateStory {
+  name?: string;
+  avgPoint?: number | null;
+}
+
+export interface IStoryResponse extends IBaseResponse, ICreateStory, ICompleteStory {
+  avgPoint: number | null;
+}
+
+//function
+export function createStory(data: ICreateStory) {
+  return API.post<IStoryResponse>(API_ENDPOINTS.STORY, data);
+}
+export function updateStory(data: IUpdateStory) {
+  return API.patch<IStoryResponse>(API_ENDPOINTS.STORY, data);
+}
+export function completeStory(data: ICompleteStory) {
+  return API.patch<IStoryResponse>(API_ENDPOINTS.STORY, data);
 }

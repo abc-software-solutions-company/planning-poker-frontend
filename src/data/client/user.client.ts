@@ -1,10 +1,27 @@
-import {ICreateUser} from '@/types';
+import {API_ENDPOINTS} from '@/configs/endpoint.config';
+import {IBaseResponse} from '@/types';
 
-import http from '../http';
+import API from '../API';
+import {IResultRespone} from './Result.client';
 
-export function createUser(data: ICreateUser) {
-  return http.users.post(data);
+//type
+export interface ICreateUser {
+  name: string;
 }
-export function getUser(id: string) {
-  return http.users.get(id);
+
+export interface IGetUser {
+  id: string;
+}
+
+export interface IUserResponse extends IBaseResponse, ICreateUser, IGetUser {
+  results: IResultRespone[];
+}
+
+//function
+export function createUser(data: ICreateUser) {
+  return API.post<IUserResponse>(API_ENDPOINTS.USER, data);
+}
+
+export function getUser({id}: IGetUser) {
+  return API.get<IUserResponse>(`${API_ENDPOINTS.USER}/${id}`);
 }

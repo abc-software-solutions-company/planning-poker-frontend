@@ -6,7 +6,7 @@ export default function reducer(state: IState, action: IAction): IState {
   const {type, payload} = action;
   switch (type) {
     case types.LOGIN: {
-      return {...state, userId: payload.userId};
+      return payload;
     }
     default:
       return state;

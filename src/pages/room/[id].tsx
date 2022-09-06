@@ -6,12 +6,11 @@ import {getStaticPaths, getStaticProps} from '@/data/ssr/room.ssr';
 import LayoutDefault from '@/layouts/default';
 
 export {getStaticPaths, getStaticProps};
-export default function PageRoom({room}: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log('🚀 ~ file: [id].tsx ~ line 11 ~ PageRoom ~ room', room);
 
+export default function PageRoom({room}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Voting dataRoom={room} />
+      <Voting data={room} />
     </>
   );
 }

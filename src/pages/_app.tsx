@@ -5,12 +5,12 @@ import '@/vendors/abc-icons/dist/abc.scss';
 
 import type {AppProps} from 'next/app';
 import {useRouter} from 'next/router';
-import {SessionProvider} from 'next-auth/react';
 import {appWithTranslation} from 'next-i18next';
 import NextNProgress from 'nextjs-progressbar';
 import React from 'react';
 
 import DefaultSeo from '@/components/common/seo/default-seo';
+import {AuthProvider} from '@/contexts/auth';
 import QueryProvider from '@/contexts/query.provider';
 
 const Noop: React.FC = ({children}: React.PropsWithChildren<any>) => <>{children}</>;
@@ -21,14 +21,14 @@ const CustomApp = ({Component, pageProps: {session, ...pageProps}}: AppProps) =>
 
   return (
     <QueryProvider pageProps={pageProps}>
-      <SessionProvider session={session}>
+      <AuthProvider>
         <DefaultSeo />
         <NextNProgress color="#3D99D3" />
         {/* <GoogleTagManager /> */}
         <Layout pageProps={pageProps}>
           <Component {...pageProps} key={router.route} />
         </Layout>
-      </SessionProvider>
+      </AuthProvider>
     </QueryProvider>
   );
 };
