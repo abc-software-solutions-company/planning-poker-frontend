@@ -4,6 +4,7 @@ import {Dispatch, FC, SetStateAction} from 'react';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
+import useToast from '@/core-ui/toast';
 
 import useModelRoom from './hook';
 import styles from './style.module.scss';
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
+  const toast = useToast();
   const {errors, register, handleSubmit, onSubmit} = useModelRoom();
   return (
     <>
@@ -29,7 +31,19 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
                   <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
-                  <Button type="submit">Create</Button>
+                  <Button
+                    type="submit"
+                    onClick={() =>
+                      toast.show({
+                        type: 'success',
+                        title: 'Success!',
+                        content: 'Create room success',
+                        lifeTime: 3000
+                      })
+                    }
+                  >
+                    Create
+                  </Button>
                 </div>
               </div>
             </div>

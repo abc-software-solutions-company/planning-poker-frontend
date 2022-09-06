@@ -4,6 +4,7 @@ import {Dispatch, FC, SetStateAction} from 'react';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
+import useToast from '@/core-ui/toast';
 import {IRoomResponse} from '@/data/client/room.client';
 
 import useModalStory from './hook';
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
+  const toast = useToast();
   const {errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
   return (
     <>
@@ -32,7 +34,19 @@ const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
                   <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
-                  <Button type="submit">Create</Button>
+                  <Button
+                    type="submit"
+                    onClick={() =>
+                      toast.show({
+                        type: 'success',
+                        title: 'Success!',
+                        content: 'Create story success',
+                        lifeTime: 3000
+                      })
+                    }
+                  >
+                    Create
+                  </Button>
                 </div>
               </div>
             </div>
