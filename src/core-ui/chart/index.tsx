@@ -1,18 +1,17 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
-import {IFullUSR} from '@/types';
 import {FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
-  USRs: IFullUSR[] | undefined;
+  voted: (number | null)[];
 }
 
-const Chart: FC<IProps> = ({className, USRs}) => {
+const Chart: FC<IProps> = ({className, voted}) => {
   const [module, setModule] = useState<any>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const lenVotedUser = USRs?.filter(e => e.storyPoint !== null).length;
-  const lenUsers = USRs?.length;
+  const lenVotedUser = voted.filter(v => v !== null).length;
+  const lenUsers = voted.length;
   const backgroundColor: string[] = [
     '#56CCF2',
     '#4F4F4F',
@@ -39,7 +38,7 @@ const Chart: FC<IProps> = ({className, USRs}) => {
         // labels: ['0', '1', '2', '3', '5', '8', '13', '21'],
         datasets: [
           {
-            data: FIBONACCI.map(num => USRs?.filter(usr => usr.storyPoint === num).length),
+            data: FIBONACCI.map(num => voted.filter(v => v === num).length),
             backgroundColor
           }
         ]
@@ -80,7 +79,7 @@ const Chart: FC<IProps> = ({className, USRs}) => {
       </div>
       <div className="chart-info">
         {FIBONACCI.map((num, index) => {
-          if (USRs?.filter(usr => usr.storyPoint === num).length != 0)
+          if (voted.filter(v => v === num).length != 0)
             return (
               <div key={index} className={`label`}>
                 <p>{num}</p>

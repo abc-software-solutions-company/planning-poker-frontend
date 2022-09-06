@@ -1,9 +1,25 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {ROUTES} from '@/configs/routes.config';
-import {ICreateRoom, IGetRoom, IRoomResponse} from '@/types';
+import {IBaseResponse} from '@/types';
 
 import API from '../API';
+import {IActResponse} from './Atc.client';
+import {IStoryResponse} from './story.client';
 
+//
+export interface ICreateRoom {
+  name: string;
+  hostUserId: string;
+}
+export interface IGetRoom {
+  id: number;
+}
+export interface IRoomResponse extends IBaseResponse, ICreateRoom, IGetRoom {
+  acts: IActResponse[];
+  stories: IStoryResponse[];
+}
+
+//function
 export function getRoom({id}: IGetRoom) {
   return API.get<IRoomResponse>(`${API_ENDPOINTS.ROOM}/${id}`);
 }

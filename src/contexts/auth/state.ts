@@ -1,4 +1,4 @@
-import {IUserResponse} from '@/types';
+import {IUserResponse} from '@/data/client/user.client';
 
 export type IState = IUserResponse | false | null;
 

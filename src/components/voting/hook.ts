@@ -1,38 +1,88 @@
+import {useState} from 'react';
+
+import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
-import {getUSR, getUSRsbyRoom} from '@/data/client/room.client';
-import {IFullUSR} from '@/types';
+import {createAtc} from '@/data/client/Atc.client';
+import {createResult, getResult, updateResult} from '@/data/client/Result.client';
+import {getRoom, IRoomResponse} from '@/data/client/room.client';
+import {completeStory} from '@/data/client/story.client';
 
-interface IupdateRoom {
-  roomId: number;
-  setUSRs: React.Dispatch<React.SetStateAction<IFullUSR[]>>;
-}
-interface IcheckRoom {
-  roomId: number;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface IHookParams {
+  room: IRoomResponse;
+  setRoom: React.Dispatch<React.SetStateAction<IRoomResponse>>;
 }
 
-export default function useVoting() {
+export default function useVoting({room, setRoom}: IHookParams) {
+  const auth = useStateAuth();
   const toast = useToast();
+  const story = room.stories?.filter(e => e.avgPoint === null)[0];
+  const [selectedPoker, setSelectedPoker] = useState<number>();
+  const [isFinish, setIsFinish] = useState<boolean>(Boolean(story?.avgPoint));
 
-  function updateRoom({roomId, setUSRs}: IupdateRoom) {
-    getUSRsbyRoom({roomId}).then(res => {
-      if (res.status === 200) {
-        setUSRs(res.data);
+  const updateRoom = () => {
+    getRoom({id: room.id}).then(res => {
+      if (res.status === 200 && res.data) {
+        setRoom(res.data);
       }
     });
-  }
-  async function checkRoom({roomId, setOpen}: IcheckRoom) {
-    const session = await getSession();
-    const userId = String(session?.user.id);
-    if (userId) {
-      const usr = getUSR({roomId});
-      usr.then(res => {
-        if (!res.data) {
-          setOpen(true);
+  };
+  const intialRoom = () => {
+    console.log('🚀 ~ file: hook.ts ~ line 31 ~ intialRoom ~ auth && story', auth);
+    if (auth && story) {
+      getResult({storyId: story.id, userId: auth.id}).then(res => {
+        if (res.status === 200) {
+          setSelectedPoker(res.data.votePoint);
         }
       });
     }
-  }
+  };
+  const handleSelectPoker = async (value: number) => {
+    if (auth && story) {
+      if (!selectedPoker) {
+        createResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+          if (res.status === 201) {
+            setSelectedPoker(res.data.votePoint);
+            updateRoom();
+          }
+        });
+      } else {
+        updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+          if (res.status === 200) {
+            setSelectedPoker(res.data.votePoint);
+            updateRoom();
+          }
+        });
+      }
+    }
+  };
+
+  const handleNewUser = () => {
+    if (auth) {
+      if (!room.acts.map(act => act.userId).includes(auth.id)) {
+        createAtc({roomId: room.id, userId: auth.id}).then(res => {
+          if (res.status === 201) {
+            updateRoom();
+          }
+        });
+      }
+    }
+  };
+
+  const handleFinish = () => {
+    if (!isFinish && auth && auth.id === room.hostUserId && story)
+      completeStory({id: story.id}).then(res => {
+        if (res.status === 200) {
+          setIsFinish(true);
+          toast.show({
+            type: 'success',
+            title: 'Success!',
+            content: 'Show all votes',
+            lifeTime: 3000
+          });
+        }
+      });
+  };
+
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.show({
@@ -42,5 +92,17 @@ export default function useVoting() {
       lifeTime: 3000
     });
   };
-  return {toast, updateRoom, checkRoom, handleCopy};
+
+  return {
+    story,
+    auth,
+    selectedPoker,
+    isFinish,
+    updateRoom,
+    intialRoom,
+    handleCopy,
+    handleNewUser,
+    handleSelectPoker,
+    handleFinish
+  };
 }

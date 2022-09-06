@@ -1,9 +1,7 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 
-import {IRoomResponse} from '@/types';
-
-import {allRoom, getRoom} from '../client/room.client';
+import {allRoom, getRoom, IRoomResponse} from '../client/room.client';
 
 type ParsedQueryParams = {
   id: string;

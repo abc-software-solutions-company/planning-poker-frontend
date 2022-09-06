@@ -2,10 +2,8 @@ import {useRouter} from 'next/router';
 import React, {FC, ReactNode, useEffect, useReducer} from 'react';
 import {getCookie} from 'typescript-cookie';
 
-import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {ROUTES} from '@/configs/routes.config';
-import API from '@/data/API';
-import {IUserResponse} from '@/types';
+import {getUser} from '@/data/client/user.client';
 
 import {AuthActions} from '.';
 import {Context, DispatchContext, useDispatchAuth, useStateAuth} from './context';
@@ -21,10 +19,16 @@ const Authentication: FC<IProps> = ({children}) => {
   const authDispatch = useDispatchAuth();
   useEffect(() => {
     const userIdCookie = getCookie('_userId');
-    API.get<IUserResponse>(`${API_ENDPOINTS.USER}/${userIdCookie}`).then(res => {
-      if (res.status === 200) authDispatch(AuthActions.login(res.data));
-      else authDispatch(AuthActions.login(false));
-    });
+    if (!userIdCookie) {
+      authDispatch(AuthActions.login(false));
+    } else {
+      if (!auth) {
+        getUser({id: userIdCookie}).then(res => {
+          if (res.status === 200) authDispatch(AuthActions.login(res.data));
+          else authDispatch(AuthActions.login(false));
+        });
+      }
+    }
     if (!router.asPath.includes(ROUTES.LOGIN) && auth === false) router.push(ROUTES.LOGIN);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);

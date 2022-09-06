@@ -1,25 +1,23 @@
 import {Modal} from '@mui/material';
-import React from 'react';
+import {Dispatch, FC, SetStateAction} from 'react';
 
-import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
+import {IRoomResponse} from '@/data/client/room.client';
 
 import useModalStory from './hook';
 import styles from './style.module.scss';
 
 interface IProps {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  room: IRoomResponse;
+  setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
 
-const ModalStory: React.FC<IProps> = ({open, setOpen}) => {
-  const {router, errors, register, handleSubmit, onSubmit} = useModalStory();
-  const onCancel = () => {
-    setOpen(false);
-    router.push(ROUTES.HOME);
-  };
+const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
+  const {errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
   return (
     <>
       <Modal open={open}>
@@ -31,7 +29,7 @@ const ModalStory: React.FC<IProps> = ({open, setOpen}) => {
                 <Input placeholder="Enter story" {...register('name')} />
                 {errors.name && <p className="error-validate">{errors.name.message}</p>}
                 <div className="button">
-                  <Button variant="white" onClick={onCancel}>
+                  <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
                   <Button type="submit">Create</Button>

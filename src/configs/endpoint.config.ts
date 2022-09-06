@@ -4,6 +4,6 @@ export const API_ENDPOINTS = {
   USER: `${PREFIX}/users`,
   ROOM: `${PREFIX}/rooms`,
   STORY: `${PREFIX}/stories`,
-  ATC: `${PREFIX}/atcs`,
+  ACT: `${PREFIX}/acts`,
   RESULT: `${PREFIX}/results`
 };

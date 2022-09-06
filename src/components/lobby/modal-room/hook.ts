@@ -5,8 +5,7 @@ import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
 import {useStateAuth} from '@/contexts/auth';
-import {createRoom} from '@/data/client/room.client';
-import {ICreateRoom} from '@/types';
+import {createRoom, ICreateRoom} from '@/data/client/room.client';
 
 interface IFormInputs {
   name: string;
@@ -38,7 +37,7 @@ export default function useModelRoom() {
       const data: ICreateRoom = {name, hostUserId: auth.id};
       createRoom(data).then(res => {
         if (res.status === 201) {
-          router.push(`${ROUTES.ROOM}/${res.data.id}`);
+          router.push(`${ROUTES.ROOM}${res.data.id}`);
         }
       });
     }

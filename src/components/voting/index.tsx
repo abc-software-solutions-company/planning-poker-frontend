@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
@@ -7,90 +7,49 @@ import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {IRoomResponse} from '@/types';
+import {IRoomResponse} from '@/data/client/room.client';
 import {FIBONACCI} from '@/utils/constant';
 
 import useVoting from './hook';
-import styles from './style.module.scss';
+import style from './style.module.scss';
 import VoteUser from './voters';
 
 interface IProps {
-  dataRoom: IRoomResponse;
+  data: IRoomResponse;
 }
-const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
-  const {id: roomId} = dataRoom;
-  const [USRs, setUSRs] = useState<IRoomResponse[]>([]);
-  const [isFinish, setIsFinish] = useState(false);
-  const [open, setOpen] = React.useState(false);
+const VoteRoom: FC<IProps> = ({data}) => {
+  const [room, setRoom] = useState<IRoomResponse>(data);
+  const {story, selectedPoker, isFinish, intialRoom, handleCopy, handleFinish, handleNewUser, handleSelectPoker} =
+    useVoting({
+      room,
+      setRoom
+    });
+  console.log('🚀 ~ file: index.tsx ~ line 25 ~ room', room);
+  const [openModal, setOpenModal] = useState<boolean>(!Boolean(story));
+
   const inputLink = useRef<HTMLInputElement>(null);
-  const {toast, handleCopy, updateRoom, checkRoom} = useVoting();
-
-  const handleNewUser = async () => {
-    // if (USRs.length > 0) {
-    //   const session = await getSession();
-    //   if (session && !USRs.map(e => e.userId).includes(session.user.id)) {
-    //     createUSR({userId: session.user.id, roomId, storyId: String(USRs?.[USRs.length - 1].storyId)}).then(res => {
-    //       if (res.status === 201) {
-    //         updateRoom({roomId, setUSRs});
-    //       }
-    //     });
-    //   }
-    // }
-  };
-
-  const handleSelectPoker = async (value: number | null) => {
-    // const session = await getSession();
-    // if (selectedPoker === value) value = null;
-    // if (session && USRs !== []) {
-    //   updateUSR({
-    //     userId: session.user.id,
-    //     roomId,
-    //     storyId: String(USRs?.[USRs.length - 1].storyId),
-    //     storyPoint: value
-    //   }).then(res => {
-    //     if (res.status === 200) {
-    //       setSelectedPoker(res.data.storyPoint);
-    //       updateRoom({roomId, setUSRs});
-    //     }
-    //   });
-    // }
-  };
-
-  const handleFinish = async () => {
-    // const session = await getSession();
-    // if (!isFinish && session?.user.id === dataRoom.hostUserId)
-    //   FinishStory(String(USRs?.[USRs.length - 1].storyId)).then(res => {
-    //     if (res.status === 200) {
-    //       setIsFinish(true);
-    //       toast.show({
-    //         type: 'success',
-    //         title: 'Success!',
-    //         content: 'Show all votes',
-    //         lifeTime: 3000
-    //       });
-    //     }
-    //   });
-  };
 
   useEffect(() => {
-    updateRoom({roomId, setUSRs});
-    checkRoom({roomId, setOpen});
+    intialRoom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    setOpenModal(!Boolean(story));
     handleNewUser();
-  }, [USRs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room]);
+
   return (
     <>
-      <div className={styles['section-vote-room']}>
+      <div className={style['section-vote-room']}>
         <div className="container">
-          <Heading className="room-name" as="h5">
-            {dataRoom.name}
+          <Heading className="setRoom-name" as="h5">
+            {data.name}
           </Heading>
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <Heading as="h5">{USRs?.[0] ? USRs[0].story.name : 'Story name'}</Heading>
+                <Heading as="h5">{story?.name || 'Story name'}</Heading>
                 <Icon className="abc-pen" size={32} />
               </div>
               {!isFinish && (
@@ -107,7 +66,14 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                   })}
                 </div>
               )}
-              {isFinish && <Chart className="chart-holder" USRs={USRs} />}
+              {isFinish && (
+                <Chart
+                  className="chart-holder"
+                  voted={room.acts.map(
+                    atc => atc.user.results.filter(result => result.storyId === story?.id)[0].votePoint || null
+                  )}
+                />
+              )}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
@@ -118,18 +84,20 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                 Players:
               </Heading>
               <div className="voter-list border-line">
-                {/* {USRs?.sort(a => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
-                  return (
-                    <VoteUser
-                      className="border-line"
-                      key={usr.user.id}
-                      name={usr.user.name}
-                      host={usr.user.id === usr.room.hostUserId}
-                      vote={usr.storyPoint}
-                      isFinish={isFinish}
-                    />
-                  );
-                })} */}
+                {room.acts
+                  ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
+                  .map(act => {
+                    return (
+                      <VoteUser
+                        className="border-line"
+                        key={act.userId}
+                        name={act.user.name}
+                        host={act.userId === room.hostUserId}
+                        vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
+                        isFinish={isFinish}
+                      />
+                    );
+                  })}
               </div>
               <div className="action border-line">
                 {!isFinish && (
@@ -143,7 +111,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                   </Button>
                 )}
               </div>
-              <ModalStory open={open} setOpen={setOpen} dataRoom={dataRoom} setUSRs={setUSRs} />
+              <ModalStory open={openModal} setOpen={setOpenModal} room={room} setRoom={setRoom} />
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
