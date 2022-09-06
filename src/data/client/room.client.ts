@@ -1,39 +1,26 @@
+import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {ROUTES} from '@/configs/routes.config';
-import {ICreateRoom, ICreateUSR, IGetUSR, IUpdateUSR} from '@/types';
+import {ICreateRoom, IGetRoom, IRoomResponse} from '@/types';
 
-import http from '../http';
+import API from '../API';
 
-export function createRoom(data: ICreateRoom) {
-  return http.rooms.post(data);
+export function getRoom({id}: IGetRoom) {
+  return API.get<IRoomResponse>(`${API_ENDPOINTS.ROOM}/${id}`);
 }
-
+export function allRoom() {
+  return API.get<IRoomResponse[]>(API_ENDPOINTS.ROOM);
+}
+export function createRoom(data: ICreateRoom) {
+  return API.post<IRoomResponse>(API_ENDPOINTS.ROOM, data);
+}
 export function findRoom(idOrLink: string) {
   if (!idOrLink.includes('/')) {
-    if (Number(idOrLink)) return http.rooms.get(idOrLink);
+    if (Number(idOrLink)) return getRoom({id: Number(idOrLink)});
     return null;
   } else {
     const arr = idOrLink.split(window.location.origin + ROUTES.ROOM);
     const id = arr[arr.length - 1];
-    if (Number(id)) return http.rooms.get(id);
+    if (Number(id)) return getRoom({id: Number(id)});
     return null;
   }
-}
-
-export function FinishStory(id: string) {
-  return http.stories.finish(id);
-}
-
-export function createUSR(data: ICreateUSR) {
-  return http.usrs.post(data);
-}
-export function updateUSR(data: IUpdateUSR) {
-  return http.usrs.patch(data);
-}
-
-export function getUSR(data: IGetUSR) {
-  return http.usrs.get(data);
-}
-
-export function getUSRsbyRoom(data: IGetUSR) {
-  return http.usrs.allbyRoom(data);
 }

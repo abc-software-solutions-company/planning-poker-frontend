@@ -1,5 +1,3 @@
-import {getSession} from 'next-auth/react';
-
 import useToast from '@/core-ui/toast';
 import {getUSR, getUSRsbyRoom} from '@/data/client/room.client';
 import {IFullUSR} from '@/types';

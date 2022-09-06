@@ -1,12 +1,10 @@
+import {IState} from './state';
 import * as types from './types';
 
 export interface IAction {
   type: typeof types.LOGIN;
-  payload: {
-    userId?: string;
-  };
+  payload: IState;
 }
-
-export const login = (userId?: string): IAction => {
-  return {type: types.LOGIN, payload: {userId}};
+export const login = (payload: IState): IAction => {
+  return {type: types.LOGIN, payload};
 };

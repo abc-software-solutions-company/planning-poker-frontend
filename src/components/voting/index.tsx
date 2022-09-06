@@ -1,78 +1,75 @@
-import {getSession} from 'next-auth/react';
 import React, {useEffect, useRef, useState} from 'react';
 
-import ModalStory from '@/components/modal-stories';
 import VoteCard from '@/components/voting/cards';
+import ModalStory from '@/components/voting/modal-story';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {createUSR, FinishStory, updateUSR} from '@/data/client/room.client';
-import {IFullUSR, IRoom} from '@/types';
+import {IRoomResponse} from '@/types';
 import {FIBONACCI} from '@/utils/constant';
 
-import useVoting from './hooks';
+import useVoting from './hook';
 import styles from './style.module.scss';
 import VoteUser from './voters';
 
 interface IProps {
-  dataRoom: IRoom;
+  dataRoom: IRoomResponse;
 }
 const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
   const {id: roomId} = dataRoom;
-  const [selectedPoker, setSelectedPoker] = useState<number>();
-  const [USRs, setUSRs] = useState<IFullUSR[]>([]);
-  console.log('🚀 ~ file: index.tsx ~ line 24 ~ USRs', USRs);
+  const [USRs, setUSRs] = useState<IRoomResponse[]>([]);
   const [isFinish, setIsFinish] = useState(false);
   const [open, setOpen] = React.useState(false);
   const inputLink = useRef<HTMLInputElement>(null);
   const {toast, handleCopy, updateRoom, checkRoom} = useVoting();
 
   const handleNewUser = async () => {
-    if (USRs.length > 0) {
-      const session = await getSession();
-      if (session && !USRs.map(e => e.userId).includes(session.user.id)) {
-        createUSR({userId: session.user.id, roomId, storyId: String(USRs?.[USRs.length - 1].storyId)}).then(res => {
-          if (res.status === 201) {
-            updateRoom({roomId, setUSRs});
-          }
-        });
-      }
-    }
+    // if (USRs.length > 0) {
+    //   const session = await getSession();
+    //   if (session && !USRs.map(e => e.userId).includes(session.user.id)) {
+    //     createUSR({userId: session.user.id, roomId, storyId: String(USRs?.[USRs.length - 1].storyId)}).then(res => {
+    //       if (res.status === 201) {
+    //         updateRoom({roomId, setUSRs});
+    //       }
+    //     });
+    //   }
+    // }
   };
 
   const handleSelectPoker = async (value: number | null) => {
-    const session = await getSession();
-    if (selectedPoker === value) value = null;
-    if (session && USRs !== []) {
-      updateUSR({
-        userId: session.user.id,
-        roomId,
-        storyId: String(USRs?.[USRs.length - 1].storyId),
-        storyPoint: value
-      }).then(res => {
-        if (res.status === 200) {
-          setSelectedPoker(res.data.storyPoint);
-          updateRoom({roomId, setUSRs});
-        }
-      });
-    }
+    // const session = await getSession();
+    // if (selectedPoker === value) value = null;
+    // if (session && USRs !== []) {
+    //   updateUSR({
+    //     userId: session.user.id,
+    //     roomId,
+    //     storyId: String(USRs?.[USRs.length - 1].storyId),
+    //     storyPoint: value
+    //   }).then(res => {
+    //     if (res.status === 200) {
+    //       setSelectedPoker(res.data.storyPoint);
+    //       updateRoom({roomId, setUSRs});
+    //     }
+    //   });
+    // }
   };
 
-  const handleFinish = () => {
-    if (!isFinish)
-      FinishStory(String(USRs?.[USRs.length - 1].storyId)).then(res => {
-        if (res.status === 200) {
-          toast.show({
-            type: 'success',
-            title: 'Success!',
-            content: 'Show all votes',
-            lifeTime: 3000
-          });
-        }
-      });
-    setIsFinish(!isFinish);
+  const handleFinish = async () => {
+    // const session = await getSession();
+    // if (!isFinish && session?.user.id === dataRoom.hostUserId)
+    //   FinishStory(String(USRs?.[USRs.length - 1].storyId)).then(res => {
+    //     if (res.status === 200) {
+    //       setIsFinish(true);
+    //       toast.show({
+    //         type: 'success',
+    //         title: 'Success!',
+    //         content: 'Show all votes',
+    //         lifeTime: 3000
+    //       });
+    //     }
+    //   });
   };
 
   useEffect(() => {
@@ -121,7 +118,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                 Players:
               </Heading>
               <div className="voter-list border-line">
-                {USRs?.sort(a => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
+                {/* {USRs?.sort(a => (a.userId !== a.room.hostUserId ? 1 : -1)).map(usr => {
                   return (
                     <VoteUser
                       className="border-line"
@@ -132,7 +129,7 @@ const VoteRoom: React.FC<IProps> = ({dataRoom}) => {
                       isFinish={isFinish}
                     />
                   );
-                })}
+                })} */}
               </div>
               <div className="action border-line">
                 {!isFinish && (

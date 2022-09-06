@@ -1,56 +1,16 @@
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useRouter} from 'next/router';
-import {FC, useState} from 'react';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import * as yup from 'yup';
+import {FC} from 'react';
 
-import ModalRoom from '@/components/modal-room';
-import {ROUTES} from '@/configs/routes.config';
+import ModalRoom from '@/components/lobby/modal-room';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import useToast from '@/core-ui/toast';
-import {findRoom} from '@/data/client/room.client';
 
+import useLobby from './hook';
 import styles from './style.module.scss';
 
 const Lobby: FC = () => {
-  const toast = useToast();
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const Schema = yup.object().shape({
-    name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Please enter room link or Id')
-  });
-  interface IFormInputs {
-    name: string;
-  }
+  const {openModal, setOpenModal, register, handleSubmit, errors, onSubmit} = useLobby();
 
-  const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
-
-  const handleOnSubmit = async (idOrLink: string) => {
-    const room = await findRoom(idOrLink);
-    if (room && room.data) router.push(ROUTES.ROOM + room.data.id);
-    else
-      toast.show({
-        type: 'danger',
-        title: 'Error!',
-        content: 'Room not exist',
-        lifeTime: 3000
-      });
-  };
-
-  const {
-    register,
-    handleSubmit,
-    formState: {errors}
-  } = useForm<IFormInputs>({
-    defaultValues: FORM_DEFAULT_VALUES,
-    resolver: yupResolver(Schema)
-  });
-
-  const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data.name);
-  };
   return (
     <>
       <div className={styles.lobby}>
@@ -58,10 +18,10 @@ const Lobby: FC = () => {
           <Heading as="h2">PLANNING POKER</Heading>
           <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
           <div className="input-button">
-            <Button className="button-left" onClick={() => setOpen(true)}>
+            <Button className="button-left" onClick={() => setOpenModal(true)}>
               Create Room
             </Button>
-            <ModalRoom placeholder="Enter room name" title="Create New Room" open={open} setOpen={setOpen} />
+            <ModalRoom open={openModal} setOpen={setOpenModal} />
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
               <Input className={errors.name && 'error'} placeholder="Enter a link or ID" {...register('name')} />
               {errors.name && <p className="error-validate">{errors.name.message}</p>}

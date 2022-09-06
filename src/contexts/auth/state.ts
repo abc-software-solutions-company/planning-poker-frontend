@@ -1,7 +1,7 @@
-export interface IState {
-  userId?: string;
-}
+import {IUserResponse} from '@/types';
 
-const initialState: IState = {};
+export type IState = IUserResponse | false | null;
+
+const initialState: IState = null;
 
 export default initialState;

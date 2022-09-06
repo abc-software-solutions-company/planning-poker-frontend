@@ -1,23 +1,3 @@
-export interface IPropsBase {
-  className?: string;
-  theme?: 'dark' | 'light';
-}
-
-export interface IAnyObj {
-  [k: string]: any;
-}
-
-export interface IQueryOptions {
-  page: number;
-  pageSize: number;
-}
-
-export interface IPagination {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-}
 export interface IpropsSVG {
   className?: string;
   fill?: string;
@@ -28,63 +8,66 @@ export interface IVoteUser {
   host?: boolean;
   vote?: number;
 }
-interface IBastAttributes {
-  created_at: string;
-  updated_at: string;
+interface IBaseResponse {
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface IUser extends IBastAttributes {
-  id: string;
-  name: string;
-}
+//User
 export interface ICreateUser {
   name: string;
-  isHost?: boolean;
 }
-export interface IRoom extends IBastAttributes {
-  id: number;
-  name: string;
-  hostUserId: string;
+export interface IGetUser {
+  id: string;
 }
+export interface IUserResponse extends IBaseResponse, ICreateUser, IGetUser {}
+
+//Room
 export interface ICreateRoom {
   name: string;
   hostUserId: string;
 }
-
-export interface IStory extends IBastAttributes {
-  id: string;
-  name: string;
-  avgPoint: number | null;
+export interface IGetRoom {
+  id: number;
+}
+export interface IRoomResponse extends IBaseResponse, ICreateRoom, IGetRoom {
+  atc?: IAtcResponse[];
+  stories?: IStoryResponse[];
 }
 
+//Story
 export interface ICreateStory {
   name: string;
+  roomId: number;
 }
 export interface IUpdateStory {
   name?: string;
   avgPoint?: number | null;
 }
-export interface IUSR extends IBastAttributes {
+export interface IStoryResponse extends IBaseResponse, ICreateStory {
+  id: string;
+  avgPoint: number | null;
+}
+
+//Act
+export interface ICreateAtc {
   userId: string;
-  storyId: string;
-  roomId: number;
-  isOnline: boolean;
-  storyPoint: number;
-}
-export interface IGetUSR {
   roomId: number;
 }
-export interface ICreateUSR extends IGetUSR {
-  userId: string;
-  storyId: string;
-}
-export interface IUpdateUSR extends ICreateUSR {
+export interface IUpdateAtc extends ICreateAtc {
   isOnline?: boolean;
-  isHost?: boolean;
-  storyPoint?: number | null;
+  votePoint?: number | null;
 }
-export interface IFullUSR extends IUSR {
-  story: IStory;
-  room: IRoom;
-  user: IUser;
+
+export interface IAtcResponse extends IBaseResponse, ICreateAtc {
+  isOnline: boolean;
+  votePoint: number;
 }
+
+//Result
+export interface ICreateResult {
+  userId: string;
+  storyId: string;
+  votePoint: string;
+}
+export interface IResultRespone extends IBaseResponse, ICreateResult {}

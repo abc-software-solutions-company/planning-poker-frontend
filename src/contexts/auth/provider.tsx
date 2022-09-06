@@ -1,19 +1,45 @@
-import React, {FC, ReactNode, useReducer} from 'react';
+import {useRouter} from 'next/router';
+import React, {FC, ReactNode, useEffect, useReducer} from 'react';
+import {getCookie} from 'typescript-cookie';
 
-import {Context, DispatchContext} from './context';
+import {API_ENDPOINTS} from '@/configs/endpoint.config';
+import {ROUTES} from '@/configs/routes.config';
+import API from '@/data/API';
+import {IUserResponse} from '@/types';
+
+import {AuthActions} from '.';
+import {Context, DispatchContext, useDispatchAuth, useStateAuth} from './context';
 import reducer from './reducer';
 import initialState from './state';
 
 interface IProps {
   children: ReactNode;
 }
+const Authentication: FC<IProps> = ({children}) => {
+  const auth = useStateAuth();
+  const router = useRouter();
+  const authDispatch = useDispatchAuth();
+  useEffect(() => {
+    const userIdCookie = getCookie('_userId');
+    API.get<IUserResponse>(`${API_ENDPOINTS.USER}/${userIdCookie}`).then(res => {
+      if (res.status === 200) authDispatch(AuthActions.login(res.data));
+      else authDispatch(AuthActions.login(false));
+    });
+    if (!router.asPath.includes(ROUTES.LOGIN) && auth === false) router.push(ROUTES.LOGIN);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
+  if (!router.asPath.includes(ROUTES.LOGIN) && (auth === null || auth === false)) return null;
+  return <>{children}</>;
+};
 
 const Provider: FC<IProps> = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <DispatchContext.Provider value={dispatch}>
-      <Context.Provider value={state}>{children}</Context.Provider>
+      <Context.Provider value={state}>
+        <Authentication>{children}</Authentication>
+      </Context.Provider>
     </DispatchContext.Provider>
   );
 };

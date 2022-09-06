@@ -1,53 +1,17 @@
-import {yupResolver} from '@hookform/resolvers/yup';
-import {signIn} from 'next-auth/react';
 import React from 'react';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import * as yup from 'yup';
 
-import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import {ICreateUser} from '@/types';
 
-import styles from './style.module.scss';
-
-const Schema = yup.object().shape({
-  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters')
-});
-
-interface IFormInputs {
-  name: string;
-}
-
-const FORM_DEFAULT_VALUES: IFormInputs = {
-  name: ''
-};
+import useLetsStart from './hook';
+import style from './style.module.scss';
 
 const LetsStart: React.FC = () => {
-  const handleOnSubmit = (data: ICreateUser) => {
-    signIn('credentials', {
-      callbackUrl: ROUTES.HOME,
-      name: data.name
-    });
-  };
-
-  const {
-    register,
-    handleSubmit,
-    formState: {errors}
-  } = useForm<IFormInputs>({
-    defaultValues: FORM_DEFAULT_VALUES,
-    resolver: yupResolver(Schema)
-  });
-
-  const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data);
-  };
-
+  const {register, errors, handleSubmit, onSubmit} = useLetsStart();
   return (
     <>
-      <div className={`${styles['lets-start']}`}>
+      <div className={`${style['lets-start']}`}>
         <div className="container">
           <div className="inner">
             <div>
