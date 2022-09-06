@@ -16,6 +16,7 @@ interface IHookParams {
   room: IRoomResponse;
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
+
 export default function useModalStory({room, setRoom}: IHookParams) {
   const router = useRouter();
 

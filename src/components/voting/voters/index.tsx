@@ -6,7 +6,7 @@ interface IProps {
   className?: string;
   name: string;
   host?: boolean;
-  vote?: number;
+  vote: number | null;
   color?: string;
   isFinish: boolean;
 }

@@ -68,7 +68,8 @@ const Chart: FC<IProps> = ({className, voted}) => {
     const chartInstance = new chartModule.Chart(ctx, data);
 
     return () => chartInstance.destroy();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [module, voted]);
 
   return (
     <div className={className}>

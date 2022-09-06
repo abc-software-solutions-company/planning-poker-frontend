@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
@@ -9,15 +9,16 @@ import {completeStory} from '@/data/client/story.client';
 
 interface IHookParams {
   room: IRoomResponse;
-  setRoom: React.Dispatch<React.SetStateAction<IRoomResponse>>;
+  setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
 
 export default function useVoting({room, setRoom}: IHookParams) {
+  const story = room.stories.length > 0 ? room.stories[room.stories.length - 1] : null;
   const auth = useStateAuth();
   const toast = useToast();
-  const story = room.stories?.filter(e => e.avgPoint === null)[0];
-  const [selectedPoker, setSelectedPoker] = useState<number>();
-  const [isFinish, setIsFinish] = useState<boolean>(Boolean(story?.avgPoint));
+  const [selectedPoker, setSelectedPoker] = useState<number | null>(null);
+  const [isFinish, setIsFinish] = useState<(number | null)[]>();
+  const [openModal, setOpenModal] = useState<boolean>(!Boolean(story));
 
   const updateRoom = () => {
     getRoom({id: room.id}).then(res => {
@@ -26,16 +27,21 @@ export default function useVoting({room, setRoom}: IHookParams) {
       }
     });
   };
-  const intialRoom = () => {
-    console.log('🚀 ~ file: hook.ts ~ line 31 ~ intialRoom ~ auth && story', auth);
+
+  const initialRoom = () => {
     if (auth && story) {
-      getResult({storyId: story.id, userId: auth.id}).then(res => {
-        if (res.status === 200) {
-          setSelectedPoker(res.data.votePoint);
-        }
-      });
+      if (story.avgPoint) {
+        setIsFinish(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+      } else {
+        getResult({storyId: story.id, userId: auth.id}).then(res => {
+          if (res.status === 200) {
+            setSelectedPoker(res.data.votePoint);
+          }
+        });
+      }
     }
   };
+
   const handleSelectPoker = async (value: number) => {
     if (auth && story) {
       if (!selectedPoker) {
@@ -56,6 +62,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
     }
   };
 
+  const handleNewStory = () => {
+    if (auth && story && story.avgPoint != null) {
+      setOpenModal(true);
+    }
+  };
+
   const handleNewUser = () => {
     if (auth) {
       if (!room.acts.map(act => act.userId).includes(auth.id)) {
@@ -65,14 +77,27 @@ export default function useVoting({room, setRoom}: IHookParams) {
           }
         });
       }
+      if (story && story.avgPoint === null) {
+        createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
+          if (res.status === 201) {
+            updateRoom();
+          }
+        });
+      }
     }
   };
 
-  const handleFinish = () => {
-    if (!isFinish && auth && auth.id === room.hostUserId && story)
+  const isHost = () => {
+    if (auth) return auth.id === room.hostUserId;
+    return false;
+  };
+
+  const handleComplete = () => {
+    if (!isFinish && isHost() && story)
       completeStory({id: story.id}).then(res => {
         if (res.status === 200) {
-          setIsFinish(true);
+          setIsFinish(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+          updateRoom();
           toast.show({
             type: 'success',
             title: 'Success!',
@@ -93,16 +118,30 @@ export default function useVoting({room, setRoom}: IHookParams) {
     });
   };
 
+  useEffect(() => {
+    initialRoom();
+    handleNewUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    setOpenModal(story === null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room]);
+
   return {
     story,
     auth,
-    selectedPoker,
     isFinish,
+    openModal,
+    selectedPoker,
+    isHost,
     updateRoom,
-    intialRoom,
     handleCopy,
+    initialRoom,
+    setOpenModal,
     handleNewUser,
-    handleSelectPoker,
-    handleFinish
+    handleNewStory,
+    handleComplete,
+    handleSelectPoker
   };
 }
