@@ -17,6 +17,9 @@
   }
   .border-line {
     @apply border-b-2 border-b-black/[0.2];
+    &:last-child {
+      @apply border-none;
+    }
   }
   .right-content {
     @apply mt-10  basis-4/12 border-2 border-black/[0.2] lg:mt-0;
@@ -54,6 +57,7 @@
     }
     .share-link {
       @apply m-4 flex border border-black border-opacity-20;
+
       input {
         @apply h-12 w-full border-none;
       }
@@ -62,7 +66,7 @@
       }
     }
     .voter-list {
-      @apply mr-1 h-[288px] overflow-y-auto;
+      @apply mr-1 min-h-fit;
       scrollbar-width: thin;
       scrollbar-color: rgba(0, 0, 0, 0.2);
       &::-webkit-scrollbar {
@@ -91,7 +95,7 @@
   .left-content {
     @apply basis-9/12;
     .card-holder {
-      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:px-40 md:grid-cols-3 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:grid-cols-3 sm:px-20 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
     }
     .card-item {
       @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black/[0.2] bg-white;
@@ -114,16 +118,17 @@
     .chart-holder {
       @apply relative mt-10 text-center text-base lg:mx-44;
       canvas {
-        @apply mx-auto;
+        @apply mx-auto object-contain object-center pr-5;
       }
       .chart-center-text {
-        @apply -mt-48 ml-6;
+        @apply -mt-48;
         p:last-child {
           @apply opacity-50;
         }
       }
       .chart-info {
-        @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
+        @apply mx-auto mt-52 flex h-full max-w-md flex-wrap justify-center gap-y-10 gap-x-24 lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
+        // @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
         .label {
           @apply relative;
           p {
