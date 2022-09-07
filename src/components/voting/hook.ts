@@ -15,6 +15,7 @@ interface IHookParams {
 
 export default function useVoting({room, setRoom}: IHookParams) {
   const story = room.stories.length > 0 ? room.stories[room.stories.length - 1] : null;
+  console.log('🚀 ~ file: hook.ts ~ line 18 ~ useVoting ~ story', story);
   const auth = useStateAuth();
   const toast = useToast();
   const [selectedPoker, setSelectedPoker] = useState<number | null>(null);
@@ -46,12 +47,21 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleSelectPoker = async (value: number) => {
     if (auth && story) {
-      updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
-        if (res.status === 200) {
-          setSelectedPoker(res.data.votePoint);
-          socket.emit('update');
-        }
-      });
+      if (!selectedPoker) {
+        createResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+          if (res.status === 201) {
+            setSelectedPoker(res.data.votePoint);
+            socket.emit('update');
+          }
+        });
+      } else {
+        updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+          if (res.status === 200) {
+            setSelectedPoker(res.data.votePoint);
+            socket.emit('update');
+          }
+        });
+      }
     }
   };
 
@@ -66,16 +76,17 @@ export default function useVoting({room, setRoom}: IHookParams) {
       if (!room.acts.map(act => act.userId).includes(auth.id)) {
         createAtc({roomId: room.id, userId: auth.id}).then(res => {
           if (res.status === 201) {
-            if (story && story.avgPoint === null) {
-              createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res1 => {
-                if (res1.status === 201) {
-                  socket.emit('update');
-                }
-              });
-            }
+            socket.emit('update');
           }
         });
       }
+      // if (story && story.avgPoint === null) {
+      //   createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
+      //     if (res.status === 201) {
+      //       updateRoom();
+      //     }
+      //   });
+      // }
     }
   };
 
@@ -88,8 +99,10 @@ export default function useVoting({room, setRoom}: IHookParams) {
     if (!dataVote && isHost() && story)
       completeStory({id: story.id}).then(res => {
         if (res.status === 200) {
-          setDataVote(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
-          updateRoom();
+          // setDataVote(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+          // updateRoom();
+          socket.emit('complete');
+          socket.emit('update');
           toast.show({
             type: 'success',
             title: 'Success!',
@@ -125,6 +138,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
     socket.on('update', function () {
       console.log('update');
       updateRoom();
+    });
+    socket.on('complete', function () {
+      console.log('complete');
+      if (story) {
+        setDataVote(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+      }
     });
     socket.on('disconnect', function () {
       console.log('Disconnected');
