@@ -6,12 +6,12 @@ interface IProps {
   className?: string;
   name: string;
   host?: boolean;
-  vote?: number;
+  vote: number | null;
   color?: string;
-  isFinish: boolean;
+  isComplete: boolean;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, host, vote, color, isFinish = false}) => {
+const VoteUser: React.FC<IProps> = ({name, className, host, vote, color, isComplete = false}) => {
   return (
     <>
       <div className={cn('player-status', className)}>
@@ -19,8 +19,8 @@ const VoteUser: React.FC<IProps> = ({name, className, host, vote, color, isFinis
           <Icon className="abc-avatar" size={24} host={host} color={color} />
           <div className="name">{name}</div>
         </div>
-        {vote != undefined && isFinish === false && <Icon className="abc-checkmark text-abc-blue" size={24} />}
-        {vote != undefined && isFinish === true && vote}
+        {vote != undefined && isComplete === false && <Icon className="abc-checkmark text-abc-blue" size={24} />}
+        {vote != undefined && isComplete === true && vote}
       </div>
     </>
   );

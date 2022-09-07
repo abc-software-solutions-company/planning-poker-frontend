@@ -6,8 +6,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import {AuthActions} from '@/contexts/auth';
 import {useDispatchAuth} from '@/contexts/auth/context';
-import {createUser} from '@/data/client/user.client';
-import {ICreateUser} from '@/types';
+import {createUser, ICreateUser} from '@/data/client/user.client';
 import Cookie from '@/utils/cookie';
 
 interface IFormInputs {
@@ -26,7 +25,8 @@ export default function useLetsStart() {
   const handleOnSubmit = (data: ICreateUser) => {
     createUser(data).then(res => {
       if (res.status === 201) {
-        Cookie.set('_userId', res.data.id, {expires: 7, sameSite: 'strict'});
+        Cookie.remove('_userId');
+        Cookie.set('_userId', res.data.id, {expires: 7, sameSite: 'strict', path: '/'});
         dispatchAuth(AuthActions.login(res.data));
         router.push(ROUTES.HOME);
       }

@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useRef, useState} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
@@ -19,25 +19,23 @@ interface IProps {
 }
 const VoteRoom: FC<IProps> = ({data}) => {
   const [room, setRoom] = useState<IRoomResponse>(data);
-  const {story, selectedPoker, isFinish, intialRoom, handleCopy, handleFinish, handleNewUser, handleSelectPoker} =
-    useVoting({
-      room,
-      setRoom
-    });
-  console.log('🚀 ~ file: index.tsx ~ line 25 ~ room', room);
-  const [openModal, setOpenModal] = useState<boolean>(!Boolean(story));
+  console.log('🚀 ~ file: index.tsx ~ line 22 ~ room', room);
+
+  const {
+    auth,
+    story,
+    dataVote,
+    openModal,
+    selectedPoker,
+    isHost,
+    handleCopy,
+    setOpenModal,
+    handleComplete,
+    handleNewStory,
+    handleSelectPoker
+  } = useVoting({room, setRoom});
 
   const inputLink = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    intialRoom();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    setOpenModal(!Boolean(story));
-    handleNewUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [room]);
 
   return (
     <>
@@ -52,7 +50,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 <Heading as="h5">{story?.name || 'Story name'}</Heading>
                 <Icon className="abc-pen" size={32} />
               </div>
-              {!isFinish && (
+              {!dataVote && (
                 <div className="card-holder">
                   {FIBONACCI.map(num => {
                     return (
@@ -66,51 +64,47 @@ const VoteRoom: FC<IProps> = ({data}) => {
                   })}
                 </div>
               )}
-              {isFinish && (
-                <Chart
-                  className="chart-holder"
-                  voted={room.acts.map(
-                    atc => atc.user.results.filter(result => result.storyId === story?.id)[0].votePoint || null
-                  )}
-                />
-              )}
+              {dataVote && <Chart className="chart-holder" voted={dataVote} />}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
-                {!isFinish && 'Wait for voting'}
-                {isFinish && 'Result'}
+                {!dataVote && 'Wait for voting'}
+                {dataVote && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
                 Players:
               </Heading>
               <div className="voter-list border-line">
-                {room.acts
-                  ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
-                  .map(act => {
-                    return (
-                      <VoteUser
-                        className="border-line"
-                        key={act.userId}
-                        name={act.user.name}
-                        host={act.userId === room.hostUserId}
-                        vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
-                        isFinish={isFinish}
-                      />
-                    );
-                  })}
+                {auth &&
+                  room.acts
+                    ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
+                    .map(act => {
+                      return (
+                        <VoteUser
+                          className="border-line"
+                          key={act.userId}
+                          name={act.user.name}
+                          host={act.userId === room.hostUserId}
+                          vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
+                          isComplete={dataVote === null}
+                        />
+                      );
+                    })}
               </div>
-              <div className="action border-line">
-                {!isFinish && (
-                  <Button variant="white" type="button" onClick={handleFinish}>
-                    Finish
-                  </Button>
-                )}
-                {isFinish && (
-                  <Button variant="white" type="button" onClick={handleFinish}>
-                    New Story
-                  </Button>
-                )}
-              </div>
+              {isHost() && (
+                <div className="action border-line">
+                  {!dataVote && (
+                    <Button variant="white" type="button" onClick={handleComplete}>
+                      Finish
+                    </Button>
+                  )}
+                  {dataVote && (
+                    <Button variant="white" type="button" onClick={handleNewStory}>
+                      New Story
+                    </Button>
+                  )}
+                </div>
+              )}
               <ModalStory open={openModal} setOpen={setOpenModal} room={room} setRoom={setRoom} />
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
