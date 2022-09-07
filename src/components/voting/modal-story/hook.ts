@@ -20,7 +20,7 @@ interface IHookParams {
 export default function useModalStory({room, setRoom}: IHookParams) {
   const router = useRouter();
 
-  const {updateRoom} = useVoting({room, setRoom});
+  const {toast, updateRoom} = useVoting({room, setRoom});
 
   const Schema = yup.object().shape({
     name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
@@ -41,6 +41,12 @@ export default function useModalStory({room, setRoom}: IHookParams) {
     createStory({roomId: room.id, name}).then(res => {
       if (res.status === 201) {
         updateRoom();
+        toast.show({
+          type: 'success',
+          title: 'Success!',
+          content: 'Create success story',
+          lifeTime: 3000
+        });
       }
     });
   };

@@ -1,4 +1,5 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import {io} from 'socket.io-client';
 
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
@@ -17,8 +18,9 @@ export default function useVoting({room, setRoom}: IHookParams) {
   const auth = useStateAuth();
   const toast = useToast();
   const [selectedPoker, setSelectedPoker] = useState<number | null>(null);
-  const [isFinish, setIsFinish] = useState<(number | null)[]>();
+  const [dataVote, setDataVote] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(!Boolean(story));
+  const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3334');
 
   const updateRoom = () => {
     getRoom({id: room.id}).then(res => {
@@ -31,7 +33,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
   const initialRoom = () => {
     if (auth && story) {
       if (story.avgPoint) {
-        setIsFinish(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+        setDataVote(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
       } else {
         getResult({storyId: story.id, userId: auth.id}).then(res => {
           if (res.status === 200) {
@@ -44,21 +46,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleSelectPoker = async (value: number) => {
     if (auth && story) {
-      if (!selectedPoker) {
-        createResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
-          if (res.status === 201) {
-            setSelectedPoker(res.data.votePoint);
-            updateRoom();
-          }
-        });
-      } else {
-        updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
-          if (res.status === 200) {
-            setSelectedPoker(res.data.votePoint);
-            updateRoom();
-          }
-        });
-      }
+      updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+        if (res.status === 200) {
+          setSelectedPoker(res.data.votePoint);
+          socket.emit('update');
+        }
+      });
     }
   };
 
@@ -73,14 +66,13 @@ export default function useVoting({room, setRoom}: IHookParams) {
       if (!room.acts.map(act => act.userId).includes(auth.id)) {
         createAtc({roomId: room.id, userId: auth.id}).then(res => {
           if (res.status === 201) {
-            updateRoom();
-          }
-        });
-      }
-      if (story && story.avgPoint === null) {
-        createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
-          if (res.status === 201) {
-            updateRoom();
+            if (story && story.avgPoint === null) {
+              createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res1 => {
+                if (res1.status === 201) {
+                  socket.emit('update');
+                }
+              });
+            }
           }
         });
       }
@@ -93,15 +85,22 @@ export default function useVoting({room, setRoom}: IHookParams) {
   };
 
   const handleComplete = () => {
-    if (!isFinish && isHost() && story)
+    if (!dataVote && isHost() && story)
       completeStory({id: story.id}).then(res => {
         if (res.status === 200) {
-          setIsFinish(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
+          setDataVote(room.stories.filter(s => (s.id = story.id))[0].results.map(r => r.votePoint));
           updateRoom();
           toast.show({
             type: 'success',
             title: 'Success!',
             content: 'Show all votes',
+            lifeTime: 3000
+          });
+        } else {
+          toast.show({
+            type: 'warning',
+            title: 'Success!',
+            content: 'No users have voted yet',
             lifeTime: 3000
           });
         }
@@ -119,24 +118,41 @@ export default function useVoting({room, setRoom}: IHookParams) {
   };
 
   useEffect(() => {
-    initialRoom();
     handleNewUser();
+    socket.on('connect', function () {
+      console.log('Connected');
+    });
+    socket.on('update', function () {
+      console.log('update');
+      updateRoom();
+    });
+    socket.on('disconnect', function () {
+      console.log('Disconnected');
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    initialRoom();
     setOpenModal(story === null);
+    if (story && story.avgPoint === null) {
+      setDataVote(undefined);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);
 
   return {
-    story,
     auth,
-    isFinish,
+    story,
+    toast,
+    dataVote,
     openModal,
     selectedPoker,
     isHost,
     updateRoom,
     handleCopy,
+    setDataVote,
     initialRoom,
     setOpenModal,
     handleNewUser,

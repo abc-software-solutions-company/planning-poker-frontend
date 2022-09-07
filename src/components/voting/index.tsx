@@ -19,10 +19,12 @@ interface IProps {
 }
 const VoteRoom: FC<IProps> = ({data}) => {
   const [room, setRoom] = useState<IRoomResponse>(data);
+  console.log('🚀 ~ file: index.tsx ~ line 22 ~ room', room);
+
   const {
     auth,
     story,
-    isFinish,
+    dataVote,
     openModal,
     selectedPoker,
     isHost,
@@ -48,7 +50,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 <Heading as="h5">{story?.name || 'Story name'}</Heading>
                 <Icon className="abc-pen" size={32} />
               </div>
-              {!isFinish && (
+              {!dataVote && (
                 <div className="card-holder">
                   {FIBONACCI.map(num => {
                     return (
@@ -62,12 +64,12 @@ const VoteRoom: FC<IProps> = ({data}) => {
                   })}
                 </div>
               )}
-              {isFinish && <Chart className="chart-holder" voted={isFinish} />}
+              {dataVote && <Chart className="chart-holder" voted={dataVote} />}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
-                {!isFinish && 'Wait for voting'}
-                {isFinish && 'Result'}
+                {!dataVote && 'Wait for voting'}
+                {dataVote && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
                 Players:
@@ -84,19 +86,19 @@ const VoteRoom: FC<IProps> = ({data}) => {
                           name={act.user.name}
                           host={act.userId === room.hostUserId}
                           vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
-                          isFinish={isFinish === null}
+                          isComplete={dataVote === null}
                         />
                       );
                     })}
               </div>
               {isHost() && (
                 <div className="action border-line">
-                  {!isFinish && (
+                  {!dataVote && (
                     <Button variant="white" type="button" onClick={handleComplete}>
                       Finish
                     </Button>
                   )}
-                  {isFinish && (
+                  {dataVote && (
                     <Button variant="white" type="button" onClick={handleNewStory}>
                       New Story
                     </Button>

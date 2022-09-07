@@ -1,5 +1,5 @@
-import {getCookie, getCookies, setCookie} from 'typescript-cookie';
+import {getCookie, getCookies, removeCookie, setCookie} from 'typescript-cookie';
 
-const Cookie = {get: getCookie, all: getCookies, set: setCookie};
+const Cookie = {get: getCookie, all: getCookies, set: setCookie, remove: removeCookie};
 
 export default Cookie;
