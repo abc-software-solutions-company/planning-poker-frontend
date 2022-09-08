@@ -8,19 +8,20 @@ import {ROUTES} from '@/configs/routes.config';
 import useToast from '@/core-ui/toast';
 import {findRoom} from '@/data/client/room.client';
 
+const Schema = yup.object().shape({
+  name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Please enter room link or Id')
+});
+
 interface IFormInputs {
   name: string;
 }
+
+const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
+
 export default function useLobby() {
   const toast = useToast();
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
-
-  const Schema = yup.object().shape({
-    name: yup.string().max(256, 'Room link must not exceed 256 letters').min(1, 'Please enter room link or Id')
-  });
-
-  const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
   const handleOnSubmit = async (idOrLink: string) => {
     const room = await findRoom(idOrLink);

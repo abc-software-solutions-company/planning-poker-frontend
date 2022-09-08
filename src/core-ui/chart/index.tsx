@@ -22,6 +22,12 @@ const Chart: FC<IProps> = ({className, voted}) => {
     '#D14F4F',
     '#3B8260'
   ];
+  const sortedArray: {value: number; len: number; color: string}[] = FIBONACCI.map((item, index) => {
+    return {value: item, len: voted.filter(v => v === item).length, color: backgroundColor[index]};
+  }).sort((a, b) => b.len - a.len);
+
+  useEffect(() => {}, [voted]);
+
   useEffect(() => {
     const chartJs = import('chart.js');
     chartJs.then(resp => setModule(resp));
@@ -79,15 +85,19 @@ const Chart: FC<IProps> = ({className, voted}) => {
         <p>voted</p>
       </div>
       <div className="chart-info">
-        {FIBONACCI.map((num, index) => {
-          if (voted.filter(v => v === num).length != 0)
+        {sortedArray
+          .filter(item => item.len > 0)
+          .map((item, index) => {
             return (
-              <div key={index} className={`label`}>
-                <p>{num}</p>
-                <span style={{backgroundColor: `${backgroundColor[index]}`}}></span>
+              <div key={index} className={'label'}>
+                <div className="circle" style={{backgroundColor: `${item.color}`}}></div>
+                <div className="result">
+                  <div>{item.value}</div>
+                  {item.len === sortedArray[0].len && <div className="most">Most</div>}
+                </div>
               </div>
             );
-        })}
+          })}
       </div>
     </div>
   );
