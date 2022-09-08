@@ -19,14 +19,12 @@ interface IProps {
 }
 const VoteRoom: FC<IProps> = ({data}) => {
   const [room, setRoom] = useState<IRoomResponse>(data);
-  console.log('🚀 ~ file: index.tsx ~ line 22 ~ room', room);
 
   const {
     auth,
     story,
-    dataVote,
+    dataVoted,
     openModal,
-    selectedPoker,
     isHost,
     handleCopy,
     setOpenModal,
@@ -50,13 +48,15 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 <Heading as="h5">{story?.name || 'Story name'}</Heading>
                 <Icon className="abc-pen" size={32} />
               </div>
-              {!dataVote && (
+              {auth && (story === null || story.avgPoint === null) && (
                 <div className="card-holder">
                   {FIBONACCI.map(num => {
                     return (
                       <VoteCard
                         key={num}
-                        className={num === selectedPoker ? 'selected' : ''}
+                        className={
+                          num === story?.results.filter(r => r.userId === auth.id)[0]?.votePoint ? 'selected' : ''
+                        }
                         value={num}
                         onClick={() => handleSelectPoker(num)}
                       />
@@ -64,12 +64,14 @@ const VoteRoom: FC<IProps> = ({data}) => {
                   })}
                 </div>
               )}
-              {dataVote && <Chart className="chart-holder" voted={dataVote} />}
+              {auth && story && story.avgPoint !== null && dataVoted && (
+                <Chart className="chart-holder" voted={dataVoted} />
+              )}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
-                {!dataVote && 'Wait for voting'}
-                {dataVote && 'Result'}
+                {auth && (story === null || story.avgPoint === null) && 'Wait for voting'}
+                {auth && story && story.avgPoint !== null && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
                 Players:
@@ -86,19 +88,19 @@ const VoteRoom: FC<IProps> = ({data}) => {
                           name={act.user.name}
                           host={act.userId === room.hostUserId}
                           vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
-                          isComplete={dataVote === null}
+                          isComplete={Boolean(auth && story && story.avgPoint !== null)}
                         />
                       );
                     })}
               </div>
               {isHost() && (
                 <div className="action border-line">
-                  {!dataVote && (
+                  {auth && (story === null || story.avgPoint === null) && (
                     <Button variant="white" type="button" onClick={handleComplete}>
                       Finish
                     </Button>
                   )}
-                  {dataVote && (
+                  {auth && story && story.avgPoint !== null && (
                     <Button variant="white" type="button" onClick={handleNewStory}>
                       New Story
                     </Button>

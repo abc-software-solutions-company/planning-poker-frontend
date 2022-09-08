@@ -1,7 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useRouter} from 'next/router';
 import {Dispatch, SetStateAction} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {io} from 'socket.io-client';
 import * as yup from 'yup';
 
 import {IRoomResponse} from '@/data/client/room.client';
@@ -17,10 +17,10 @@ interface IHookParams {
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
 
-export default function useModalStory({room, setRoom}: IHookParams) {
-  const router = useRouter();
+const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3334');
 
-  const {toast, updateRoom} = useVoting({room, setRoom});
+export default function useModalStory({room, setRoom}: IHookParams) {
+  const {toast} = useVoting({room, setRoom});
 
   const Schema = yup.object().shape({
     name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
@@ -31,6 +31,7 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: {errors}
   } = useForm<IFormInputs>({
     defaultValues: FORM_DEFAULT_VALUES,
@@ -38,9 +39,10 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   });
 
   const handleOnSubmit = async ({name}: IFormInputs) => {
-    createStory({roomId: room.id, name}).then(res => {
+    createStory({roomId: room.id, name}).then(async res => {
       if (res.status === 201) {
-        updateRoom();
+        socket.emit('update');
+        reset();
         toast.show({
           type: 'success',
           title: 'Success!',
@@ -55,5 +57,5 @@ export default function useModalStory({room, setRoom}: IHookParams) {
     handleOnSubmit(data);
   };
 
-  return {router, errors, register, handleSubmit, onSubmit};
+  return {errors, register, handleSubmit, onSubmit};
 }

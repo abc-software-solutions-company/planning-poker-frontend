@@ -22,7 +22,7 @@ const Authentication: FC<IProps> = ({children}) => {
     if (!userIdCookie) {
       authDispatch(AuthActions.login(false));
     } else {
-      if (!auth) {
+      if (auth === null) {
         getUser({id: userIdCookie}).then(res => {
           if (res.status === 200) authDispatch(AuthActions.login(res.data));
           else authDispatch(AuthActions.login(false));

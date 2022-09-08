@@ -1,5 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useRouter} from 'next/router';
+import {Dispatch, SetStateAction} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -11,7 +12,10 @@ interface IFormInputs {
   name: string;
 }
 
-export default function useModelRoom() {
+interface IHookParams {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}
+export default function useModelRoom({setOpen}: IHookParams) {
   const router = useRouter();
   const auth = useStateAuth();
 
@@ -26,6 +30,7 @@ export default function useModelRoom() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: {errors}
   } = useForm<IFormInputs>({
     defaultValues: FORM_DEFAULT_VALUES,
@@ -37,6 +42,8 @@ export default function useModelRoom() {
       const data: ICreateRoom = {name, hostUserId: auth.id};
       createRoom(data).then(res => {
         if (res.status === 201) {
+          setOpen(false);
+          reset();
           router.push(`${ROUTES.ROOM}${res.data.id}`);
         }
       });
