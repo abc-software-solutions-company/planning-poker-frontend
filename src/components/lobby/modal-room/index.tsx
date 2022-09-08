@@ -16,7 +16,7 @@ interface IProps {
 
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
   const toast = useToast();
-  const {errors, register, handleSubmit, onSubmit} = useModelRoom();
+  const {errors, register, handleSubmit, onSubmit} = useModelRoom({setOpen});
   return (
     <>
       <Modal open={open}>
