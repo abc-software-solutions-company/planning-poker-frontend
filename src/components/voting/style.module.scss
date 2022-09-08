@@ -18,14 +18,34 @@
   p {
     @apply text-base;
   }
+
+  .topbar {
+    @apply flex items-center justify-end;
+    @apply mb-5 lg:mb-14;
+
+    .abc-icon {
+      @apply mx-2 lg:mx-3 lg:text-[28px];
+    }
+    .user-name {
+      @apply lg:text-h3;
+    }
+  }
+
   .room-name {
     @apply justify-start;
   }
   .story-name {
-    @apply flex items-center justify-center gap-3 lg:mb-14;
+    @apply flex items-center justify-center gap-2;
+    @apply mt-8;
+    @apply text-h5;
+
+    .abc-icon {
+      @apply lg:text-[32px];
+    }
   }
+
   .content {
-    @apply mt-14 justify-between gap-8 lg:mt-8 lg:flex;
+    @apply mt-8 justify-between gap-8 lg:mt-8 lg:flex;
   }
   .border-line {
     @apply border-b-2 border-b-black/[0.2];

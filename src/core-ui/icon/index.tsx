@@ -1,7 +1,7 @@
 import React, {InputHTMLAttributes} from 'react';
 
 interface IProps extends InputHTMLAttributes<HTMLElement> {
-  size?: 16 | 24 | 32 | 48 | 20;
+  size?: 16 | 24 | 32 | 48 | 28 | 20;
   host?: boolean;
   color?: string;
 }
