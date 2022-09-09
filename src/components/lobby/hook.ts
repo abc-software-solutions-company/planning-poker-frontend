@@ -25,12 +25,19 @@ export default function useLobby() {
 
   const handleOnSubmit = async (idOrLink: string) => {
     const room = await findRoom(idOrLink);
-    if (room && room.data) router.push(ROUTES.ROOM + room.data.id);
-    else
+    if (room && room.status === 200) {
+      router.push(ROUTES.ROOM + room.data.id);
+      toast.show({
+        type: 'success',
+        title: 'Success',
+        content: 'Join the success room',
+        lifeTime: 3000
+      });
+    } else
       toast.show({
         type: 'danger',
         title: 'Error!',
-        content: 'Room not exist',
+        content: 'Room does not exist',
         lifeTime: 3000
       });
   };

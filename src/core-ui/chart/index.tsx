@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
-import {FIBONACCI} from '@/utils/constant';
+import {COLORVOTE, FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
@@ -12,16 +12,7 @@ const Chart: FC<IProps> = ({className, voted}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const lenVotedUser = voted.filter(v => v !== null).length;
   const lenUsers = voted.length;
-  const backgroundColor: string[] = [
-    '#56CCF2',
-    '#4F4F4F',
-    '#FBE38E',
-    '#FED0EE',
-    '#BB6BD9',
-    '#F2994A',
-    '#D14F4F',
-    '#3B8260'
-  ];
+  const backgroundColor: string[] = Object.values(COLORVOTE);
   const sortedArray: {value: number; len: number; color: string}[] = FIBONACCI.map((item, index) => {
     return {value: item, len: voted.filter(v => v === item).length, color: backgroundColor[index]};
   }).sort((a, b) => b.len - a.len);
@@ -90,7 +81,7 @@ const Chart: FC<IProps> = ({className, voted}) => {
           .map((item, index) => {
             return (
               <div key={index} className={'label'}>
-                <div className="circle" style={{backgroundColor: `${item.color}`}}></div>
+                <div className="circle" style={{backgroundColor: item.color}}></div>
                 <div className="result">
                   <div>{item.value}</div>
                   {item.len === sortedArray[0].len && <div className="most">Most</div>}

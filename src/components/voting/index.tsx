@@ -91,7 +91,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                           name={act.user.name}
                           host={act.userId === room.hostUserId}
                           vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
-                          isComplete={Boolean(auth && story && story.avgPoint !== null)}
+                          isCompleted={Boolean(auth && story && story.avgPoint !== null)}
                         />
                       );
                     })}
