@@ -12,19 +12,20 @@ module.exports = {
     },
     screens: Object.fromEntries(Object.entries(defaultTheme.screens).filter(([key, value]) => key !== '2xl')),
     fontFamily: {
-      sans: ['Montserrat', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans']
+      sans: ['Mulish', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans']
     },
     extend: {
       fontSize: {
         none: ['0', '0'],
-        super: ['5rem', {lineHeight: '6rem', letterSpacing: '0.03em'}], //80/96
-        hero: ['3.5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], // 56/88
-        h1: ['2.5rem', {lineHeight: '3.75rem', letterSpacing: '0.03em'}], // 40/60
-        h2: ['2rem', {lineHeight: '2.5rem', letterSpacing: '0.03em'}], // 32/40
-        h3: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
-        h4: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
+        super: ['5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], //80/88
+        hero: ['3.5rem', {lineHeight: '4rem', letterSpacing: '0.03em'}], //56/64
+        h1: ['2.5rem', {lineHeight: '3rem', letterSpacing: '0.03em'}], // 40/48
+        h2: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
+        h3: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
+        h4: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
         h5: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
-        base: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0.03em'}] // 16/24
+        base: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0.03em'}], // 16/24
+        caption: ['0.75rem', {lineHeight: '1.25rem', letterSpacing: '0.03em'}] // 12/20
       },
       lineHeight: {
         0: '0'
@@ -53,7 +54,21 @@ module.exports = {
         'abc-grey': '#D9D9D9',
         'abc-light-grey': '#EDF2F7',
         'abc-dark-grey': '#4F4F4F', //dark grey
-        'abc-red': '#FF0000'
+        'abc-red': '#FF0000',
+        colors: {
+          blue: {
+            50: '#f6fafe',
+            100: '#edf5fd',
+            200: '#d2e6f9',
+            300: '#b7d7f6',
+            400: '#81b8ef',
+            500: '#4b9ae8',
+            600: '#448bd1',
+            700: '#3874ae',
+            800: '#2d5c8b',
+            900: '#254b72'
+          }
+        }
       },
       backgroundImage: {
         'gradient-45deg': 'linear-gradient(45deg, var(--tw-gradient-stops))'

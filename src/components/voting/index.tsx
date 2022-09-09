@@ -40,7 +40,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
       <div className={style['section-vote-room']}>
         <div className="container">
           <div className="topbar">
-            <Icon className="abc-user" size={20} />
+            <Icon className="abc-user" size={24} />
             <p className="user-name">{auth && auth.name}</p>
           </div>
           <Heading className="setRoom-name" as="h5">
@@ -50,6 +50,9 @@ const VoteRoom: FC<IProps> = ({data}) => {
             <div className="left-content">
               <div className="story-name">
                 <Heading as="h5">{story?.name || 'Story name'}</Heading>
+                <button onClick={() => handleNewStory()}>
+                  <Icon className="abc-edit" size={28} />
+                </button>
               </div>
               {auth && (story === null || story.avgPoint === null) && (
                 <div className="card-holder">

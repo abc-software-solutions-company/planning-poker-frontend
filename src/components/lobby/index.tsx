@@ -17,7 +17,7 @@ const Lobby: FC = () => {
         <div className="container">
           <Heading as="h2">PLANNING POKER</Heading>
           <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
-          <div className="input-button">
+          <div className="input-group">
             <Button className="button-left" onClick={() => setOpenModal(true)}>
               Create Room
             </Button>

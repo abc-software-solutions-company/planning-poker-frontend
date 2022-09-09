@@ -1,16 +1,22 @@
 .lets-start :global {
   @apply bg-abc-light-grey;
-  .inner {
-    @apply flex min-h-screen items-center justify-center;
+  .container {
+    @apply max-w-xl p-0;
+    @apply flex flex-col justify-between;
   }
+
+  // .inner {
+  //   @apply min-h-screen;
+  // }
   h1 {
-    @apply mx-auto max-w-lg pb-6 text-center leading-none lg:pb-10;
+    @apply mx-auto max-w-lg pb-6 text-center leading-none lg:pb-9;
   }
   h4 {
     @apply mb-7 flex justify-center lg:mb-14;
   }
   .content {
-    @apply mx-auto grid max-w-xl gap-1 border border-black/[0.2] bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
+    @apply mx-auto bg-white py-9 px-4 lg:py-16 lg:px-20;
+    @apply rounded-lg;
   }
   .input {
     @apply relative;
@@ -22,12 +28,17 @@
     }
   }
   .btn {
-    @apply mt-5 lg:mt-8;
+    @apply mt-6 lg:mt-8;
   }
+
   .footer {
-    @apply pt-44 text-center text-base text-black/50 lg:pt-36;
-  }
-  .website {
-    @apply hover:text-abc-blue;
+    @apply mt-52 text-center;
+    .copy-right {
+      @apply block md:inline-block;
+    }
+    .website {
+      @apply block text-slate-700 md:inline-block;
+      @apply hover:text-abc-blue;
+    }
   }
 }

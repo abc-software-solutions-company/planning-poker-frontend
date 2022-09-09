@@ -14,9 +14,8 @@ export interface ICreateStory {
   roomId: number;
 }
 
-export interface IUpdateStory {
-  name?: string;
-  avgPoint?: number | null;
+export interface IUpdateStory extends ICompleteStory {
+  name: string;
 }
 
 export interface IStoryResponse extends IBaseResponse, ICreateStory, ICompleteStory {

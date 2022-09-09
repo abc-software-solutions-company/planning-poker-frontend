@@ -8,16 +8,18 @@
     @apply pb-7 text-center lg:pb-10;
   }
   h3 {
-    @apply pb-7 text-center;
+    @apply pb-8 text-center;
   }
-  .input-button {
+  .input-group {
     @apply mx-auto max-w-xl gap-8 space-y-4 lg:flex lg:space-y-0;
   }
   .button-left {
     @apply lg:w-1/2;
+    @apply mb-1;
   }
   .input-right {
-    @apply relative flex lg:w-1/2;
+    @apply relative flex;
+    // @apply bg-red-200;
 
     .error {
       @apply placeholder:text-red-400;
@@ -25,11 +27,14 @@
   }
   .form-input {
     @apply lg:w-3/4;
+    @apply rounded-r-none;
+    @apply border-r-0;
   }
   .button-right {
     @apply w-1/4;
+    @apply rounded-l-none;
   }
   .error-validate {
-    @apply absolute -bottom-6 left-0;
+    @apply absolute -bottom-5 left-0;
   }
 }
