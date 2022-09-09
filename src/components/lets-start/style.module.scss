@@ -10,7 +10,7 @@
     @apply mb-7 flex justify-center lg:mb-14;
   }
   .content {
-    @apply mx-auto grid max-w-xl gap-1 border border-black/[0.2] bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
+    @apply mx-auto max-w-xl border border-black/[0.2] bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
   }
   .input {
     @apply relative;

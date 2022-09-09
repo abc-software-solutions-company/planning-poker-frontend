@@ -18,5 +18,8 @@
     "LICENSE": true,
     "Makefile": true,
     "CHANGELOG.md": true
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
   }
 }

@@ -49,6 +49,11 @@ export default function useVoting({room, setRoom}: IHookParams) {
     if (auth && story && story.avgPoint !== null) {
       setOpenModal(true);
     }
+
+    // PLAN-84.
+    if (auth) {
+      setOpenModal(true);
+    }
   };
 
   const handleStart = () => {

@@ -11,20 +11,21 @@ import styles from './style.module.scss';
 
 interface IProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
   room: IRoomResponse;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
 
-const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
-  const {errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
+const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
+  const {story, errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
+  const title = story && story.avgPoint === null ? 'Update' : 'Create';
   return (
     <>
       <Modal open={open}>
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
-              <Heading as="h5">Create New Story</Heading>
+              <Heading as="h5">{title} New Story</Heading>
               <div className="input-button">
                 <div className="input-name">
                   <Input className={errors.name && 'error'} placeholder="Enter story" {...register('name')} />
@@ -34,7 +35,7 @@ const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
                   <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
-                  <Button type="submit">Create</Button>
+                  <Button type="submit">{title}</Button>
                 </div>
               </div>
             </div>

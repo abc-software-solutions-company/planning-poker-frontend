@@ -24,8 +24,10 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
               <Heading as="h5">Create New Room</Heading>
               <div className="input-button">
                 <div className="input-name">
-                  <Input className={errors.name && 'error'} placeholder="Enter room name" {...register('name')} />
-                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                  <div className="input-name">
+                    <Input className={errors.name && 'error'} placeholder="Enter room name" {...register('name')} />
+                    {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                  </div>
                 </div>
                 <div className="button">
                   <Button variant="white" onClick={() => setOpen(false)}>
