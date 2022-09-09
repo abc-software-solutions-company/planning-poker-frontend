@@ -17,12 +17,12 @@ module.exports = {
     extend: {
       fontSize: {
         none: ['0', '0'],
-        super: ['5rem', {lineHeight: '6rem', letterSpacing: '0.03em'}], //80/96
-        hero: ['2.5rem', {lineHeight: '3rem', letterSpacing: '0.03em'}], // 40/48
-        h1: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
-        h2: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
-        h3: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
-        h4: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
+        super: ['5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], //80/88
+        hero: ['3.5rem', {lineHeight: '4rem', letterSpacing: '0.03em'}], //56/64
+        h1: ['2.5rem', {lineHeight: '3rem', letterSpacing: '0.03em'}], // 40/48
+        h2: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
+        h3: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
+        h4: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
         h5: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
         base: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0.03em'}], // 16/24
         caption: ['0.75rem', {lineHeight: '1.25rem', letterSpacing: '0.03em'}] // 12/20

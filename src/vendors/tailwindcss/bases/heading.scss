@@ -1,14 +1,19 @@
 h1 {
-  @apply text-hero font-extrabold text-abc-dark-blue lg:text-super;
+  @apply font-extrabold text-abc-dark-blue;
+  @apply text-hero lg:text-super;
 }
 h2 {
-  @apply text-hero font-extrabold leading-none text-abc-dark-blue;
+  @apply font-extrabold text-abc-dark-blue;
+  @apply text-hero;
 }
 h3 {
-  @apply text-h3 text-abc-dark-blue lg:text-h1 lg:font-medium;
+  @apply text-abc-dark-blue;
+  @apply lg:font-medium;
+  @apply text-h2 lg:text-h1;
 }
 h4 {
-  @apply text-h3 font-medium;
+  @apply font-medium lg:font-medium;
+  @apply text-h3 lg:text-h2;
 }
 h5 {
   @apply text-h5 font-medium lg:text-h4;

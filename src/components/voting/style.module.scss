@@ -40,7 +40,7 @@
     @apply text-h5;
 
     .abc-icon {
-      @apply lg:text-[32px];
+      @apply flex items-center lg:text-[32px];
     }
   }
 
@@ -55,11 +55,15 @@
   }
   .right-content {
     @apply mt-10  basis-4/12 border-2 border-black/[0.2] lg:mt-0;
+    @apply rounded-lg;
+    @apply h-fit;
+
     .sub-title {
       @apply py-4 px-4;
     }
     .title {
       @apply bg-abc-blue px-16 py-5 text-center text-white;
+      @apply rounded-t-lg;
     }
     .player-status {
       @apply flex items-center justify-between px-3 py-4;
@@ -104,30 +108,30 @@
       }
     }
     .voter-list {
-      @apply mr-1 h-[280px] overflow-y-auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0, 0, 0, 0.2);
-      &::-webkit-scrollbar {
-        @apply h-[6px] w-[6px];
-      }
-      &::-webkit-scrollbar-track {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        @apply rounded-[10rem] border border-white bg-black bg-opacity-20;
-      }
-      &::-webkit-scrollbar-track-piece:start {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-track-piece:end {
-        @apply bg-transparent;
-      }
-      &.scrolling-touch {
-        -webkit-overflow-scrolling: touch;
-      }
-      &.scrolling-auto {
-        -webkit-overflow-scrolling: auto;
-      }
+      @apply min-h-fit;
+      // scrollbar-width: thin;
+      // scrollbar-color: rgba(0, 0, 0, 0.2);
+      // &::-webkit-scrollbar {
+      //   @apply h-[6px] w-[6px];
+      // }
+      // &::-webkit-scrollbar-track {
+      //   @apply bg-transparent;
+      // }
+      // &::-webkit-scrollbar-thumb {
+      //   @apply rounded-[10rem] border border-white bg-black bg-opacity-20;
+      // }
+      // &::-webkit-scrollbar-track-piece:start {
+      //   @apply bg-transparent;
+      // }
+      // &::-webkit-scrollbar-track-piece:end {
+      //   @apply bg-transparent;
+      // }
+      // &.scrolling-touch {
+      //   -webkit-overflow-scrolling: touch;
+      // }
+      // &.scrolling-auto {
+      //   -webkit-overflow-scrolling: auto;
+      // }
     }
   }
   .left-content {
