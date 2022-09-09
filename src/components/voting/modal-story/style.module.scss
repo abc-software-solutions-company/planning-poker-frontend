@@ -11,8 +11,20 @@
   }
   .input-button {
     @apply bg-abc-light-grey p-6;
+    @apply border-t border-abc-grey;
+
+    .input-name {
+      @apply relative;
+
+      .error {
+        @apply placeholder:text-red-300;
+      }
+      .error-validate {
+        @apply absolute;
+      }
+    }
   }
   .button {
-    @apply mt-4  flex gap-6;
+    @apply mt-6 flex gap-6;
   }
 }

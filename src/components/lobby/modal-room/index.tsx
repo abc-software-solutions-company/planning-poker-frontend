@@ -4,7 +4,6 @@ import {Dispatch, FC, SetStateAction} from 'react';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import useToast from '@/core-ui/toast';
 
 import useModelRoom from './hook';
 import styles from './style.module.scss';
@@ -15,7 +14,6 @@ interface IProps {
 }
 
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
-  const toast = useToast();
   const {errors, register, handleSubmit, onSubmit} = useModelRoom({setOpen});
   return (
     <>
@@ -25,25 +23,15 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
             <div className="content">
               <Heading as="h5">Create New Room</Heading>
               <div className="input-button">
-                <Input className={errors.name && 'error'} placeholder="Enter room name" {...register('name')} />
-                {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                <div className="input-name">
+                  <Input className={errors.name && 'error'} placeholder="Enter room name" {...register('name')} />
+                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                </div>
                 <div className="button">
                   <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
                   </Button>
-                  <Button
-                    type="submit"
-                    onClick={() =>
-                      toast.show({
-                        type: 'success',
-                        title: 'Success!',
-                        content: 'Create room success',
-                        lifeTime: 3000
-                      })
-                    }
-                  >
-                    Create
-                  </Button>
+                  <Button type="submit">Create</Button>
                 </div>
               </div>
             </div>

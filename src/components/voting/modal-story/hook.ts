@@ -9,6 +9,10 @@ import {createStory} from '@/data/client/story.client';
 
 import useVoting from '../hook';
 
+const Schema = yup.object().shape({
+  name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
+});
+
 interface IFormInputs {
   name: string;
 }
@@ -17,16 +21,12 @@ interface IHookParams {
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
 
+const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
+
 const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3334');
 
 export default function useModalStory({room, setRoom}: IHookParams) {
   const {toast} = useVoting({room, setRoom});
-
-  const Schema = yup.object().shape({
-    name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
-  });
-
-  const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
   const {
     register,

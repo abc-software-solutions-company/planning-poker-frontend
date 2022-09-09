@@ -1,7 +1,19 @@
 .section-vote-room :global {
   @apply py-10;
   .container {
+    @apply px-4;
     @apply transform lg:fixed lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2;
+  }
+  .topbar {
+    @apply flex items-center justify-end;
+
+    .abc-icon {
+      @apply mx-2;
+    }
+
+    .user-name {
+      @apply md:text-h5;
+    }
   }
   p {
     @apply text-base;
@@ -17,6 +29,9 @@
   }
   .border-line {
     @apply border-b-2 border-b-black/[0.2];
+    &:last-child {
+      @apply border-none;
+    }
   }
   .right-content {
     @apply mt-10  basis-4/12 border-2 border-black/[0.2] lg:mt-0;
@@ -27,8 +42,14 @@
       @apply bg-abc-blue px-16 py-5 text-center text-white;
     }
     .player-status {
-      @apply flex items-center justify-between px-4 py-4;
+      @apply flex items-center justify-between px-3 py-4;
+
+      .voted {
+        @apply flex items-center gap-1 text-abc-blue;
+        @apply ml-auto pr-1;
+      }
     }
+
     // .player-status:last-child {
     //   @apply border-0;
     // }
@@ -39,7 +60,7 @@
       @apply flex items-center;
     }
     .name {
-      @apply pl-4 text-base;
+      @apply pl-4 text-base drop-shadow-md;
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;
@@ -54,6 +75,7 @@
     }
     .share-link {
       @apply m-4 flex border border-black border-opacity-20;
+
       input {
         @apply h-12 w-full border-none;
       }
@@ -62,7 +84,7 @@
       }
     }
     .voter-list {
-      @apply mr-1 h-[288px] overflow-y-auto;
+      @apply mr-1 h-[280px] overflow-y-auto;
       scrollbar-width: thin;
       scrollbar-color: rgba(0, 0, 0, 0.2);
       &::-webkit-scrollbar {
@@ -91,7 +113,7 @@
   .left-content {
     @apply basis-9/12;
     .card-holder {
-      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:px-40 md:grid-cols-3 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:grid-cols-3 sm:px-20 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
     }
     .card-item {
       @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black/[0.2] bg-white;
@@ -114,24 +136,32 @@
     .chart-holder {
       @apply relative mt-10 text-center text-base lg:mx-44;
       canvas {
-        @apply mx-auto;
+        @apply mx-auto object-contain object-center pr-5;
       }
       .chart-center-text {
-        @apply -mt-48 ml-6;
+        @apply -mt-48;
         p:last-child {
           @apply opacity-50;
         }
       }
       .chart-info {
-        @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
+        @apply flex flex-wrap justify-center gap-x-16 gap-y-10;
+        @apply mx-auto mt-52 h-full max-w-md lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
+        // @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
         .label {
           @apply relative;
-          p {
-            @apply pl-10 lg:pb-8 lg:pl-0;
+          @apply flex items-center justify-between;
+          @apply lg:items-start;
+          @apply w-24;
+          .result {
+            @apply flex gap-3;
+            @apply lg:pb-5 lg:pl-0;
           }
-          span {
-            @apply absolute top-1/2 left-1/2 h-5 w-5 rounded-full content-[''] lg:top-3 lg:-left-10;
-            transform: translate(-50%, -50%);
+          .circle {
+            @apply h-5 w-5 rounded-full;
+          }
+          .most {
+            @apply border-2 border-[#6EDDA9] bg-[#9FE5C7];
           }
         }
       }

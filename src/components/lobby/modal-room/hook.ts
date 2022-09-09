@@ -6,11 +6,18 @@ import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
 import {useStateAuth} from '@/contexts/auth';
+import useToast from '@/core-ui/toast';
 import {createRoom, ICreateRoom} from '@/data/client/room.client';
 
+const Schema = yup.object().shape({
+  name: yup.string().required('Please enter room name').max(256, 'Your name must not exceed 256 letters')
+});
 interface IFormInputs {
   name: string;
 }
+const FORM_DEFAULT_VALUES: IFormInputs = {
+  name: ''
+};
 
 interface IHookParams {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -18,14 +25,7 @@ interface IHookParams {
 export default function useModelRoom({setOpen}: IHookParams) {
   const router = useRouter();
   const auth = useStateAuth();
-
-  const Schema = yup.object().shape({
-    name: yup.string().required('Please enter room name').max(256, 'Your name must not exceed 256 letters')
-  });
-
-  const FORM_DEFAULT_VALUES: IFormInputs = {
-    name: ''
-  };
+  const toast = useToast();
 
   const {
     register,
@@ -44,6 +44,12 @@ export default function useModelRoom({setOpen}: IHookParams) {
         if (res.status === 201) {
           setOpen(false);
           reset();
+          toast.show({
+            type: 'success',
+            title: 'Success!',
+            content: 'Create success story',
+            lifeTime: 3000
+          });
           router.push(`${ROUTES.ROOM}${res.data.id}`);
         }
       });

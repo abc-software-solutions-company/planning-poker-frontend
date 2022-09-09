@@ -18,6 +18,10 @@
   }
   .input-right {
     @apply relative flex lg:w-1/2;
+
+    .error {
+      @apply placeholder:text-red-400;
+    }
   }
   .form-input {
     @apply lg:w-3/4;

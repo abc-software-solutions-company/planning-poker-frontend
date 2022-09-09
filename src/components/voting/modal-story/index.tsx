@@ -26,8 +26,10 @@ const ModalStory: FC<IProps> = ({open, setOpen, room, setRoom}) => {
             <div className="content">
               <Heading as="h5">Create New Story</Heading>
               <div className="input-button">
-                <Input placeholder="Enter story" {...register('name')} />
-                {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                <div className="input-name">
+                  <Input className={errors.name && 'error'} placeholder="Enter story" {...register('name')} />
+                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                </div>
                 <div className="button">
                   <Button variant="white" onClick={() => setOpen(false)}>
                     Cancel
