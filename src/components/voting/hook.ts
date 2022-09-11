@@ -1,5 +1,4 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {Manager} from 'socket.io-client';
 
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
@@ -7,9 +6,9 @@ import {createAtc} from '@/data/client/Atc.client';
 import {createResult, updateResult} from '@/data/client/Result.client';
 import {getRoom, IRoomResponse} from '@/data/client/room.client';
 import {completeStory} from '@/data/client/story.client';
-import {ISocketUpdate} from '@/types';
+import socket from '@/data/socket';
+// import {ISocketUpdate} from '@/types';
 
-const manager = new Manager(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3334');
 interface IHookParams {
   room: IRoomResponse;
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
@@ -17,8 +16,6 @@ interface IHookParams {
 
 export default function useVoting({room, setRoom}: IHookParams) {
   const story = room.stories.length > 0 ? room.stories[room.stories.length - 1] : null;
-  console.log('🚀 ~ file: hook.ts ~ line 19 ~ useVoting ~ story', story);
-  const socket = manager.socket('/').;
 
   const auth = useStateAuth();
   const toast = useToast();
@@ -125,26 +122,24 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   useEffect(() => {
     handleStart();
-    socket.on('connection', socket => {
-      socket.join(room.id);
-    });
-    socket.on('online', function () {
+    socket.on('connect', () => {
       console.log('online');
     });
+    socket.emit('room', {roomId: room.id});
 
-    socket.on('update', function ({roomId}: ISocketUpdate) {
+    socket.on('update', function () {
       console.log('update');
-      updateRoom(roomId);
+      updateRoom(room.id);
     });
 
-    socket.on('offline', function () {
-      console.log('offline');
+    socket.on('disconnect', function () {
+      console.log('disconnected');
     });
 
     return () => {
-      socket.off('online');
+      socket.off('connect');
       socket.off('update');
-      socket.off('offline');
+      socket.off('disconnect');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -164,7 +159,6 @@ export default function useVoting({room, setRoom}: IHookParams) {
     openModal,
     isHost,
     handleCopy,
-    socketUpdate,
     setOpenModal,
     handleNewStory,
     handleComplete,
