@@ -35,7 +35,7 @@ export default function useLobby() {
   };
 
   const handleOnSubmit = ({idOrLink}: IFormInputs) => {
-    getRoom({id: Number(detectId(idOrLink))}).then(res => {
+    getRoom({id: detectId(idOrLink)}).then(res => {
       if (res.status === 200) {
         router.push(ROUTES.ROOM + res.data.id);
         toast.show({

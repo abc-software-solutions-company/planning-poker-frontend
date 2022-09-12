@@ -7,7 +7,7 @@ import {IUserResponse} from './user.client';
 //type
 export interface ICreateAtc {
   userId: string;
-  roomId: number;
+  roomId: string;
 }
 export interface IUpdateAtc extends ICreateAtc {
   isOnline?: boolean;

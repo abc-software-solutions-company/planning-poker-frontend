@@ -11,7 +11,7 @@ export interface ICreateRoom {
   hostUserId: string;
 }
 export interface IGetRoom {
-  id: number;
+  id: string;
 }
 export interface IRoomResponse extends IBaseResponse, ICreateRoom, IGetRoom {
   acts: IActResponse[];

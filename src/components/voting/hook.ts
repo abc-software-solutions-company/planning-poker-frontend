@@ -22,7 +22,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
   const [dataVoted, setDataVoted] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const updateRoom = (id: number) => {
+  const updateRoom = (id: string) => {
     getRoom({id}).then(res => {
       if (res.status === 200 && res.data) {
         setRoom(res.data);
@@ -123,7 +123,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
   useEffect(() => {
     handleStart();
     socket.on('connect', () => {
-      console.log('online');
+      console.log('connect');
     });
     socket.emit('room', {roomId: room.id});
 
