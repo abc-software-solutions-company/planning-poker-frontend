@@ -4,13 +4,16 @@
     @apply fixed top-1/2 -translate-y-1/2;
   }
   h5 {
-    @apply py-6 text-center;
+    @apply text-center;
+    @apply pt-4 lg:pt-6;
   }
   .content {
-    @apply mx-auto max-w-xl bg-white;
+    @apply mx-auto max-w-xl bg-abc-soft-blue;
+    @apply rounded-lg;
   }
   .input-button {
-    @apply border-t border-black/[0.2] bg-abc-light-grey p-6;
+    @apply p-4;
+    @apply lg:px-5 lg:pb-6;
 
     .input-name {
       @apply relative;
@@ -24,6 +27,6 @@
     }
   }
   .button {
-    @apply mt-7 flex gap-6;
+    @apply mt-6 flex gap-6;
   }
 }

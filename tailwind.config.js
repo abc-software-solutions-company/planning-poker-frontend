@@ -55,6 +55,7 @@ module.exports = {
         'abc-light-grey': '#EDF2F7',
         'abc-dark-grey': '#4F4F4F', //dark grey
         'abc-red': '#FF0000',
+        'abc-soft-blue': '#F5FAFD', // soft blue
         colors: {
           blue: {
             50: '#f6fafe',
