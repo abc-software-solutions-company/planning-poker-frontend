@@ -1,12 +1,11 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Dispatch, SetStateAction} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import { io } from 'socket.io-client';
+import {io} from 'socket.io-client';
 import * as yup from 'yup';
 
 import {IRoomResponse} from '@/data/client/room.client';
 import {createStory, updateStory} from '@/data/client/story.client';
-import socket from '@/data/socket';
 
 import useVoting from '../hook';
 
