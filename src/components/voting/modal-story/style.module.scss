@@ -7,11 +7,11 @@
     @apply py-6 text-center;
   }
   .content {
-    @apply mx-auto max-w-xl bg-white;
+    @apply mx-auto max-w-xl bg-blue-50;
+    @apply rounded-md;
   }
   .input-button {
-    @apply bg-abc-light-grey p-6;
-    @apply border-t border-abc-grey;
+    @apply p-5 pb-6 pt-0;
 
     .input-name {
       @apply relative;
