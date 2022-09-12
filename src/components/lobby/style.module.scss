@@ -24,10 +24,10 @@
     }
   }
   .form-input {
-    @apply lg:w-3/4;
+    @apply rounded-r-none border border-r-0 lg:w-3/4;
   }
   .button-right {
-    @apply w-1/4;
+    @apply w-1/4 rounded-l-none;
   }
   .error-validate {
     @apply absolute -bottom-6 left-0;
