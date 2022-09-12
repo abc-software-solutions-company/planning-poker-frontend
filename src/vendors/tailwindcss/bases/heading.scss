@@ -6,13 +6,16 @@ h2 {
   @apply text-hero font-extrabold leading-none text-abc-dark-blue;
 }
 h3 {
-  @apply text-h3 text-abc-dark-blue lg:text-h1 lg:font-medium;
+  @apply text-abc-dark-blue;
+  @apply font-normal lg:font-medium;
+  @apply text-h2 lg:text-h1;
 }
 h4 {
   @apply text-h3 font-medium;
 }
 h5 {
-  @apply text-h5 font-medium lg:text-h4;
+  @apply font-medium;
+  @apply text-h5 lg:text-h3;
 }
 h6 {
   @apply text-h5 font-normal;
