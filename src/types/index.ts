@@ -13,12 +13,7 @@ export interface IBaseResponse {
   updatedAt: string;
 }
 
-//User
-
-//Room
-
-//Story
-
-//Act
-
-//Result
+//Socket
+export interface ISocketUpdate {
+  roomId: number;
+}

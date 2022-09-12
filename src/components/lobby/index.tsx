@@ -23,8 +23,12 @@ const Lobby: FC = () => {
             </Button>
             <ModalRoom open={openModal} setOpen={setOpenModal} />
             <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
-              <Input className={errors.name && 'error'} placeholder="Enter a link or ID" {...register('name')} />
-              {errors.name && <p className="error-validate">{errors.name.message}</p>}
+              <Input
+                className={errors.idOrLink && 'error'}
+                placeholder="Enter a link or ID"
+                {...register('idOrLink')}
+              />
+              {errors.idOrLink && <p className="error-validate">{errors.idOrLink.message}</p>}
               <Button className="button-right" type="submit">
                 Join
               </Button>

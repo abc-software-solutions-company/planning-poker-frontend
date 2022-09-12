@@ -11,7 +11,7 @@ export interface ICompleteStory {
 
 export interface ICreateStory {
   name: string;
-  roomId: number;
+  roomId: string;
 }
 
 export interface IUpdateStory extends ICompleteStory {

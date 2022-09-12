@@ -1,5 +1,4 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {io} from 'socket.io-client';
 
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
@@ -7,27 +6,32 @@ import {createAtc} from '@/data/client/Atc.client';
 import {createResult, updateResult} from '@/data/client/Result.client';
 import {getRoom, IRoomResponse} from '@/data/client/room.client';
 import {completeStory} from '@/data/client/story.client';
+import socket from '@/data/socket';
+// import {ISocketUpdate} from '@/types';
 
 interface IHookParams {
   room: IRoomResponse;
   setRoom: Dispatch<SetStateAction<IRoomResponse>>;
 }
-const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3334');
 
 export default function useVoting({room, setRoom}: IHookParams) {
   const story = room.stories.length > 0 ? room.stories[room.stories.length - 1] : null;
-  console.log('🚀 ~ file: hook.ts ~ line 19 ~ useVoting ~ story', story);
+
   const auth = useStateAuth();
   const toast = useToast();
   const [dataVoted, setDataVoted] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const updateRoom = () => {
-    getRoom({id: room.id}).then(res => {
+  const updateRoom = (id: string) => {
+    getRoom({id}).then(res => {
       if (res.status === 200 && res.data) {
         setRoom(res.data);
       }
     });
+  };
+
+  const socketUpdate = () => {
+    socket.emit('update', {roomId: room.id});
   };
 
   const isHost = () => {
@@ -35,33 +39,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
     return false;
   };
 
-  const handleSelectPoker = async (value: number) => {
-    if (auth && story) {
-      updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
-        if (res.status === 200) {
-          socket.emit('update');
-        }
-      });
-    }
-  };
-
-  const handleNewStory = () => {
-    if (auth && story && story.avgPoint !== null) {
-      setOpenModal(true);
-    }
-
-    // PLAN-84.
-    if (auth) {
-      setOpenModal(true);
-    }
-  };
-
   const handleStart = () => {
     if (auth) {
       if (room.acts.filter(atc => atc.userId === auth.id).length === 0) {
         createAtc({roomId: room.id, userId: auth.id}).then(res => {
           if (res.status === 201) {
-            socket.emit('update');
+            socketUpdate();
           }
         });
       }
@@ -73,11 +56,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
       if (story && story.avgPoint === null && story.results.filter(s => s.userId === auth.id).length === 0) {
         createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
           if (res.status === 201) {
-            socket.emit('update');
+            socketUpdate();
           }
         });
       }
-      setOpenModal(!story);
+      if (isHost()) setOpenModal(!story);
+
       if (story) {
         if (story.avgPoint) {
           setDataVoted(story.results.map(r => r.votePoint));
@@ -88,11 +72,27 @@ export default function useVoting({room, setRoom}: IHookParams) {
     }
   };
 
+  const handleSelectPoker = async (value: number) => {
+    if (auth && story) {
+      updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+        if (res.status === 200) {
+          socketUpdate();
+        }
+      });
+    }
+  };
+
+  const handleNewStory = () => {
+    if (isHost() && story && story.avgPoint !== null) {
+      setOpenModal(true);
+    }
+  };
+
   const handleComplete = () => {
     if (isHost() && story)
       completeStory({id: story.id}).then(res => {
         if (res.status === 200) {
-          socket.emit('update');
+          socketUpdate();
           toast.show({
             type: 'success',
             title: 'Success!',
@@ -122,20 +122,24 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   useEffect(() => {
     handleStart();
-    socket.on('connect', function () {
-      console.log('Connected');
+    socket.on('connect', () => {
+      console.log('connect');
     });
+    socket.emit('room', {roomId: room.id});
+
     socket.on('update', function () {
       console.log('update');
-      updateRoom();
+      updateRoom(room.id);
     });
+
     socket.on('disconnect', function () {
-      console.log('Disconnected');
+      console.log('disconnected');
     });
+
     return () => {
       socket.off('connect');
-      socket.off('disconnect');
       socket.off('update');
+      socket.off('disconnect');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -144,6 +148,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
     handleUpdateRoom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);
+  console.log(socket);
 
   return {
     auth,

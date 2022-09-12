@@ -14,9 +14,9 @@ type PageProps = {
 export const getStaticProps: GetStaticProps<PageProps, ParsedQueryParams> = async ({locale, params}) => {
   try {
     const {id} = params!;
-    const room = await getRoom({id: Number(id)});
+    const room = await getRoom({id: id});
     if (!room.data) throw new Error('');
-    room.data.id = Number(room.data.id);
+    room.data.id = room.data.id;
     return {
       props: {
         room: room.data,
