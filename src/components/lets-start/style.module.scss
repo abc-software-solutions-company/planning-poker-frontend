@@ -1,33 +1,39 @@
 .lets-start :global {
-  @apply bg-abc-light-grey;
-  .inner {
-    @apply flex min-h-screen items-center justify-center;
+  .container {
+    @apply max-w-[343px] lg:max-w-[576px];
+    @apply flex flex-col justify-between;
+    @apply h-screen p-0 py-5;
   }
-  h1 {
-    @apply mx-auto max-w-lg pb-6 text-center leading-none lg:pb-10;
+  .section-content {
+    @apply lg:mt-16;
   }
-  h4 {
-    @apply mb-7 flex justify-center lg:mb-14;
-  }
-  .content {
-    @apply mx-auto max-w-xl border border-black/[0.2] bg-white py-9 px-4 text-black lg:py-16 lg:px-20;
-  }
-  .input {
-    @apply relative;
-    .error-validate {
-      @apply absolute;
+  .enter-your-name {
+    @apply rounded-lg bg-white;
+    @apply py-8 px-4 lg:py-16 lg:px-20;
+    @apply flex flex-col text-center;
+    @apply mt-8 lg:mt-9;
+    .input {
+      .form-input {
+        @apply mt-6 lg:mt-14;
+      }
+      .error {
+        @apply placeholder:text-red-400;
+      }
+      @apply relative;
+      .error-validate {
+        @apply absolute;
+      }
     }
-    .error {
-      @apply placeholder:text-red-400;
+    .btn {
+      @apply mt-6 lg:mt-8;
     }
-  }
-  .btn {
-    @apply mt-5 lg:mt-8;
   }
   .footer {
-    @apply pt-44 text-center text-base text-black/50 lg:pt-36;
-  }
-  .website {
-    @apply hover:text-abc-blue;
+    @apply text-center;
+
+    .website {
+      @apply text-stone-700 hover:text-abc-blue;
+      @apply block lg:inline;
+    }
   }
 }
