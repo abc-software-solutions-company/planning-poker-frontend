@@ -26,12 +26,6 @@ const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 export default function useModalStory({room, setRoom}: IHookParams) {
   const {toast, story} = useVoting({room, setRoom});
 
-  const Schema = yup.object().shape({
-    name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
-  });
-
-  const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
-
   const {
     register,
     handleSubmit,
