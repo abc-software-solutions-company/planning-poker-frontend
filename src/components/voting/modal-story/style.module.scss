@@ -4,14 +4,14 @@
     @apply fixed top-1/2 -translate-y-1/2;
   }
   h5 {
-    @apply py-6 text-center;
+    @apply pt-4 text-center;
   }
   .content {
-    @apply mx-auto max-w-xl bg-white;
+    @apply mx-auto max-w-xl rounded-lg;
+    @apply bg-abc-soft-blue;
   }
   .input-button {
-    @apply bg-abc-light-grey p-6;
-    @apply border-t border-abc-grey;
+    @apply p-4 lg:p-5 lg:pb-6;
 
     .input-name {
       @apply relative;
