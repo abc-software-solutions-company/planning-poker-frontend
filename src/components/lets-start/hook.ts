@@ -1,6 +1,8 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useRouter} from 'next/router';
+import {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {Cookies} from 'typescript-cookie';
 import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
@@ -33,7 +35,7 @@ export default function useLetsStart() {
         const linkRoom = Cookie.get('_room');
         if (linkRoom) {
           Cookie.remove('_room');
-          router.push(linkRoom);
+          router.push('/', linkRoom, {locale: 'en'});
         } else {
           router.push(ROUTES.HOME);
         }
@@ -53,6 +55,10 @@ export default function useLetsStart() {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
+
+  useEffect(() => {
+    Cookies.remove('_userId');
+  }, []);
 
   return {register, errors, handleSubmit, onSubmit};
 }
