@@ -14,16 +14,23 @@
     .text {
       @apply font-normal lg:text-h4;
     }
+
     .left {
       @apply flex items-center;
     }
 
     .right {
       @apply flex items-center;
+
+      .user-name {
+        @apply w-40 break-words;
+      }
     }
   }
   .setRoom-name {
     @apply mt-5 lg:mt-14;
+    @apply w-1/2;
+    @apply break-words;
   }
   .room-name {
     @apply justify-start;
@@ -31,6 +38,10 @@
   .story-name {
     @apply flex items-center justify-center;
     @apply mt-8 gap-2 text-h5;
+
+    .break {
+      @apply w-96 break-words;
+    }
 
     .abc-icon {
       @apply lg:text-[32px];
@@ -52,6 +63,7 @@
   .right-content {
     @apply mt-10 basis-4/12 lg:mt-0;
     @apply h-fit rounded-lg;
+    @apply bg-abc-soft-blue;
     .sub-title {
       @apply p-4 text-center;
       @apply border;
@@ -76,9 +88,11 @@
     }
     .player-info {
       @apply flex items-center;
+      @apply w-full;
     }
     .name {
       @apply pl-4 text-base drop-shadow-md;
+      @apply truncate;
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;

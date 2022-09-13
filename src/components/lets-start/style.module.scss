@@ -22,6 +22,7 @@
       @apply relative;
       .error-validate {
         @apply absolute;
+        @apply mt-0;
       }
     }
     .btn {
