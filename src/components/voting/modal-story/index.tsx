@@ -18,14 +18,15 @@ interface IProps {
 
 const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
   const {story, errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
-  const title = story && story.avgPoint === null ? 'Update' : 'Create';
+  const title = story && story.avgPoint === null ? 'Update' : 'Create New';
+
   return (
     <>
       <Modal open={open}>
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
-              <Heading as="h5">{title} New Story</Heading>
+              <Heading as="h5">{title} Story</Heading>
               <div className="input-button">
                 <div className="input-name">
                   <Input className={errors.name && 'error'} placeholder="Enter story" {...register('name')} />

@@ -1,7 +1,9 @@
+import {useRouter} from 'next/router';
 import {FC, useRef, useState} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
+import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
@@ -18,6 +20,7 @@ interface IProps {
   data: IRoomResponse;
 }
 const VoteRoom: FC<IProps> = ({data}) => {
+  const router = useRouter();
   const [room, setRoom] = useState<IRoomResponse>(data);
 
   const {
@@ -40,8 +43,15 @@ const VoteRoom: FC<IProps> = ({data}) => {
       <div className={style['section-vote-room']}>
         <div className="container">
           <div className="topbar">
-            <Icon className="abc-user" size={24} />
-            <p className="user-name">{auth && auth.name}</p>
+            <button className="left" onClick={() => router.push(ROUTES.HOME)}>
+              {' '}
+              <Icon className="abc-arrow-left-circle" size={28} />
+              <p className="text">Back</p>
+            </button>
+            <div className="right">
+              <Icon className="abc-user" size={28} />
+              <p className="text">{auth && auth.name}</p>
+            </div>
           </div>
           <Heading className="setRoom-name" as="h5">
             {data.name}
@@ -80,7 +90,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 {auth && story && story.avgPoint !== null && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                Players:
+                The player: <span className="user-lenght">{room.acts.length}</span>
               </Heading>
               <div className="voter-list border-line">
                 {auth &&

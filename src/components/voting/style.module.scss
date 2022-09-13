@@ -1,46 +1,42 @@
 .section-vote-room :global {
-  @apply py-10;
   .container {
-    @apply px-4;
-    @apply transform lg:fixed lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2;
+    @apply px-4 lg:max-w-5xl lg:p-0;
   }
-  .topbar {
-    @apply flex items-center justify-end;
-
-    .abc-icon {
-      @apply mx-2;
-    }
-
-    .user-name {
-      @apply md:text-h5;
-    }
-  }
-  p {
+  .p {
     @apply text-base;
   }
-
   .topbar {
-    @apply flex items-center justify-end;
-    @apply mb-5 lg:mb-14;
-
+    @apply flex items-center justify-between;
+    @apply mt-7 w-full lg:mt-12;
     .abc-icon {
-      @apply mx-2 lg:mx-3 lg:text-[28px];
+      @apply mr-2;
     }
-    .user-name {
-      @apply lg:text-h3;
+    .text {
+      @apply font-normal lg:text-h4;
+    }
+    .left {
+      @apply flex items-center;
+    }
+
+    .right {
+      @apply flex items-center;
     }
   }
-
+  .setRoom-name {
+    @apply mt-5 lg:mt-14;
+  }
   .room-name {
     @apply justify-start;
   }
   .story-name {
-    @apply flex items-center justify-center gap-2;
-    @apply mt-8;
-    @apply text-h5;
+    @apply flex items-center justify-center;
+    @apply mt-8 gap-2 text-h5;
 
     .abc-icon {
       @apply lg:text-[32px];
+    }
+    button {
+      @apply flex items-center;
     }
   }
 
@@ -48,18 +44,27 @@
     @apply mt-8 justify-between gap-8 lg:mt-8 lg:flex;
   }
   .border-line {
-    @apply border-b-2 border-b-black/[0.2];
+    @apply border;
     &:last-child {
       @apply border-none;
     }
   }
   .right-content {
-    @apply mt-10  basis-4/12 border-2 border-black/[0.2] lg:mt-0;
+    @apply mt-10 basis-4/12 lg:mt-0;
+    @apply h-fit rounded-lg;
     .sub-title {
-      @apply py-4 px-4;
+      @apply p-4 text-center;
+      @apply border;
+
+      .user-lenght {
+        @apply text-abc-light-red;
+      }
     }
     .title {
-      @apply bg-abc-blue px-16 py-5 text-center text-white;
+      @apply text-center;
+      @apply bg-abc-blue text-white;
+      @apply py-5;
+      @apply rounded-t-lg;
     }
     .player-status {
       @apply flex items-center justify-between px-3 py-4;
@@ -69,13 +74,6 @@
         @apply ml-auto pr-1;
       }
     }
-
-    // .player-status:last-child {
-    //   @apply border-0;
-    // }
-    // .player-status:first-child {
-    //   @apply border-2;
-    // }
     .player-info {
       @apply flex items-center;
     }
@@ -84,27 +82,34 @@
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;
+      @apply border;
     }
     .btn {
       @apply py-1;
     }
     .sharing {
+      @apply rounded-b-lg border;
       h6 {
         @apply mt-4 pl-4;
       }
     }
     .share-link {
-      @apply m-4 flex border border-black border-opacity-20;
+      @apply m-4 flex;
+      @apply rounded-r;
 
       input {
         @apply h-12 w-full border-none;
       }
+
       .copy-btn {
-        @apply w-auto border border-y-0 border-r-0 border-l-2 border-black border-opacity-20 bg-white px-4;
+        @apply py-3 px-2;
+        @apply rounded-r bg-abc-blue text-white;
+        @apply text-base;
       }
     }
     .voter-list {
-      @apply mr-1 h-[280px] overflow-y-auto;
+      @apply min-h-fit overflow-y-auto;
+      @apply border;
       scrollbar-width: thin;
       scrollbar-color: rgba(0, 0, 0, 0.2);
       &::-webkit-scrollbar {
@@ -133,10 +138,26 @@
   .left-content {
     @apply basis-9/12;
     .card-holder {
-      @apply mx-auto mt-10 grid max-w-[290px] grid-cols-2 gap-x-5 gap-y-4 sm:max-w-full sm:grid-cols-3 sm:px-20 md:px-36 lg:mt-14 lg:grid-cols-4 lg:gap-10 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply mt-8 lg:mt-16;
+      @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4;
+      @apply sm:px-20 md:px-36 lg:mt-14 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply gap-y-4 gap-x-5 lg:gap-10;
+      @apply mx-auto;
     }
     .card-item {
-      @apply relative m-auto h-48 w-32 cursor-pointer rounded-md border border-black/[0.2] bg-white;
+      &.selected {
+        button {
+          @apply bg-abc-blue;
+        }
+      }
+      @apply relative m-auto h-48 w-32 cursor-pointer border border-black/[0.2] bg-white;
+      @apply rounded-lg;
+    }
+    .card-item:nth-child(odd) {
+      @apply mr-0 lg:mx-auto;
+    }
+    .card-item:nth-child(even) {
+      @apply ml-0 lg:mx-auto;
     }
     .card-number {
       @apply absolute z-50 h-full w-full p-5 text-h2;
@@ -147,12 +168,7 @@
         }
       }
     }
-    .selected {
-      @apply bg-abc-blue;
-      button {
-        @apply bg-white;
-      }
-    }
+
     .chart-holder {
       @apply relative mt-10 text-center text-base lg:mx-44;
       canvas {
