@@ -1,3 +1,4 @@
+import cls from 'classnames';
 import {useRouter} from 'next/router';
 import {FC, useRef, useState} from 'react';
 
@@ -50,7 +51,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
             </button>
             <div className="right">
               <Icon className="abc-user" size={28} />
-              <p className="text">{auth && auth.name}</p>
+              <p className={cls('text', auth.name.length >= 12 ? 'user-name' : '')}>{auth && auth.name}</p>
             </div>
           </div>
           <Heading className="setRoom-name" as="h5">
@@ -59,7 +60,9 @@ const VoteRoom: FC<IProps> = ({data}) => {
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <Heading as="h5">{story?.name || 'Story name'}</Heading>
+                <Heading as="h5" className={story?.name.length >= 25 ? 'break' : ''}>
+                  {story?.name || 'Story name'}
+                </Heading>
                 <button onClick={() => handleNewStory()}>
                   <Icon className="abc-edit" size={28} />
                 </button>

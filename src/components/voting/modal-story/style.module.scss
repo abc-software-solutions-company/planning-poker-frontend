@@ -21,10 +21,11 @@
       }
       .error-validate {
         @apply absolute;
+        @apply mt-0;
       }
     }
   }
   .button {
-    @apply mt-6 flex gap-6;
+    @apply mt-6 flex gap-3;
   }
 }
