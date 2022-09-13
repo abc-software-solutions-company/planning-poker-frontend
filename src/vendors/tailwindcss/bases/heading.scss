@@ -1,13 +1,11 @@
 h1 {
-  @apply text-center font-extrabold text-abc-dark-blue;
-  @apply text-hero lg:text-super;
+  @apply text-hero;
 }
 h2 {
-  @apply text-hero font-extrabold leading-none text-abc-dark-blue;
+  @apply text-hero font-extrabold;
 }
 h3 {
-  @apply text-abc-dark-blue;
-  @apply font-normal lg:font-medium;
+  @apply lg:font-medium;
   @apply text-h2 lg:text-h1;
 }
 h4 {

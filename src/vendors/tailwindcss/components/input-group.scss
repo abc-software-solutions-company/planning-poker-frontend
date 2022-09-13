@@ -1,0 +1,20 @@
+.input-group {
+  @apply relative flex w-full flex-wrap items-stretch;
+  > .form-input {
+    @apply relative w-[1%] min-w-0 flex-auto;
+  }
+  .input-group-text {
+    @apply inline-flex items-center whitespace-nowrap text-center;
+    &:not(input, button) {
+      @apply border border-slate-300 bg-slate-100 px-3;
+    }
+  }
+}
+
+.input-group > :not(:first-child) {
+  @apply -ml-[1px] rounded-tl-none rounded-bl-none;
+}
+
+.input-group > :not(:last-child) {
+  @apply rounded-tr-none rounded-br-none;
+}

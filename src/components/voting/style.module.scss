@@ -63,18 +63,18 @@
   .right-content {
     @apply mt-10 basis-4/12 lg:mt-0;
     @apply h-fit rounded-lg;
-    @apply bg-abc-soft-blue;
+    @apply bg-blue-300;
     .sub-title {
       @apply p-4 text-center;
       @apply border;
 
       .user-lenght {
-        @apply text-abc-light-red;
+        // @apply text-abc-light-red;
       }
     }
     .title {
       @apply text-center;
-      @apply bg-abc-blue text-white;
+      @apply bg-blue-500 text-white;
       @apply py-5;
       @apply rounded-t-lg;
     }
@@ -82,7 +82,7 @@
       @apply flex items-center justify-between px-3 py-4;
 
       .voted {
-        @apply flex items-center gap-1 text-abc-blue;
+        @apply flex items-center gap-1 text-blue-500;
         @apply ml-auto pr-1;
       }
     }
@@ -117,7 +117,7 @@
 
       .copy-btn {
         @apply py-3 px-2;
-        @apply rounded-r bg-abc-blue text-white;
+        @apply rounded-r bg-blue-500 text-white;
         @apply text-base;
       }
     }
@@ -154,14 +154,14 @@
     .card-holder {
       @apply mt-8 lg:mt-16;
       @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4;
-      @apply sm:px-20 md:px-36 lg:mt-14 lg:px-0 xl:mx-28 2xl:mx-48;
+      @apply sm:px-20 md:px-36 lg:mt-14 lg:px-0 xl:mx-28;
       @apply gap-y-4 gap-x-5 lg:gap-10;
       @apply mx-auto;
     }
     .card-item {
       &.selected {
         button {
-          @apply bg-abc-blue;
+          @apply bg-blue-500;
         }
       }
       @apply relative m-auto h-48 w-32 cursor-pointer border border-black/[0.2] bg-white;
@@ -178,7 +178,7 @@
       button {
         @apply flex h-full w-full items-center justify-center rounded-md border border-black/[0.5] text-center text-h2;
         &:hover {
-          @apply bg-abc-blue text-white;
+          @apply bg-blue-500 text-white;
         }
       }
     }
@@ -195,23 +195,27 @@
         }
       }
       .chart-info {
+        // @apply bg-rose-300;
         @apply flex flex-wrap justify-center gap-x-16 gap-y-10;
-        @apply mx-auto mt-52 h-full max-w-md lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
-        // @apply mt-52 grid h-full grid-cols-3 justify-between lg:absolute lg:top-7 lg:-left-32 lg:mt-0 lg:block;
+        @apply lg:block;
+        @apply mx-auto mt-52 h-full max-w-md lg:absolute lg:top-7 lg:-left-32 lg:mt-0;
         .label {
           @apply relative;
-          @apply flex items-center justify-between;
+          @apply flex items-center;
           @apply lg:items-start;
-          @apply w-24;
-          .result {
-            @apply flex gap-3;
-            @apply lg:pb-5 lg:pl-0;
-          }
+          @apply mb-3;
+          // .result {]+j
+          //   @apply bg-yellow-300;
+          //   @apply flex gap-3;
+          //   @apply lg:pb-5 lg:pl-0;
+          // }
           .circle {
             @apply h-5 w-5 rounded-full;
+            @apply mr-1 lg:mr-3;
           }
           .most {
             @apply border-2 border-[#6EDDA9] bg-[#9FE5C7];
+            @apply ml-2 lg:ml-3;
           }
         }
       }

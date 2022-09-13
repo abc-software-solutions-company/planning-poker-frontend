@@ -1,40 +1,34 @@
 .lets-start :global {
-  .container {
-    @apply max-w-[343px] lg:max-w-[576px];
-    @apply flex flex-col justify-between;
-    @apply h-screen p-0 py-5;
-  }
-  .section-content {
-    @apply lg:mt-16;
-  }
-  .enter-your-name {
-    @apply rounded-lg bg-white;
-    @apply py-8 px-4 lg:py-16 lg:px-20;
-    @apply flex flex-col text-center;
-    @apply mt-8 lg:mt-9;
-    .input {
-      .form-input {
-        @apply mt-6 lg:mt-14;
-      }
-      .error {
-        @apply placeholder:text-red-400;
-      }
-      @apply relative;
-      .error-validate {
-        @apply absolute;
-        @apply mt-0;
-      }
-    }
-    .btn {
-      @apply mt-6 lg:mt-8;
-    }
-  }
-  .footer {
-    @apply text-center;
-
-    .website {
-      @apply text-stone-700 hover:text-abc-blue;
-      @apply block lg:inline;
-    }
-  }
+  // .container {
+  // }
+  // .inner {
+  //   @apply max-w-[343px] lg:max-w-[576px];
+  //   @apply flex flex-col justify-between;
+  //   @apply h-screen p-0 py-5;
+  // }
+  // .section-content {
+  //   @apply lg:mt-16;
+  // }
+  // .enter-your-name {
+  //   @apply rounded-lg bg-white;
+  //   @apply py-8 px-4 lg:py-16 lg:px-20;
+  //   @apply flex flex-col text-center;
+  //   @apply mt-8 lg:mt-9;
+  //   .input {
+  //     .form-input {
+  //       @apply mt-6 lg:mt-14;
+  //     }
+  //     .error {
+  //       @apply placeholder:text-red-400;
+  //     }
+  //     @apply relative;
+  //     .error-validate {
+  //       @apply absolute;
+  //       @apply mt-0;
+  //     }
+  //   }
+  //   .btn {
+  //     @apply mt-6 lg:mt-8;
+  //   }
+  // }
 }

@@ -1,4 +1,4 @@
-import {Modal} from '@mui/material';
+import {Box, Modal} from '@mui/material';
 import {Dispatch, FC, SetStateAction} from 'react';
 
 import Button from '@/core-ui/button';
@@ -13,13 +13,25 @@ interface IProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+};
+
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
   const {errors, register, handleSubmit, onSubmit} = useModelRoom({setOpen});
   return (
     <>
       <Modal open={open}>
-        <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
-          <div className="container">
+        <Box sx={style}>
+          <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
             <div className="content">
               <Heading as="h5">Create New Room</Heading>
               <div className="input-button">
@@ -30,15 +42,19 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
                   </div>
                 </div>
                 <div className="button">
-                  <Button variant="white" onClick={() => setOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button type="submit">Create</Button>
+                  <Button
+                    className="w-full"
+                    variant="outlined"
+                    color="primary"
+                    text="Cancel"
+                    onClick={() => setOpen(false)}
+                  />
+                  <Button className="w-full" variant="contained" color="primary" text="Create" type="submit" />
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </Box>
       </Modal>
     </>
   );

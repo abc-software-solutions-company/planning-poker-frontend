@@ -2,74 +2,75 @@ const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./src/**/*.{html,njk,js,jsx,ts,tsx}'],
+  corePlugins: {
+    preflight: true
+  },
   theme: {
     container: {
+      // Dùng để giới hạn nội dung hiển thị của website
+      // Mặc định tailwind hỗ trợ 5 breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px).
+      // Như vậy khi mở website trên màn hình lớn nếu nội dung được chứa trong 1 div có class="container" thì nội dung sẽ hiển thị trong giới hạn tối đa là 1536px.
+      // Trường hợp bạn muốn thay đổi giá trị này thì cần điều chỉnh như sau: (Tham khảo dòng 21 đến 23 -> thay đổi giá trị của 2xl = 1440px);
       center: true,
       padding: {
-        DEFAULT: '0.938rem'
+        DEFAULT: '0.938rem', // Ở màn hình mobile thì container sẽ cách lề trái và lề phải 15px
+        xl: '0'
       }
     },
-    screens: Object.fromEntries(Object.entries(defaultTheme.screens).filter(([key, value]) => key !== '2xl')),
+    screens: Object.fromEntries(Object.entries(defaultTheme.screens).filter(([key]) => key !== '2xl')),
     fontFamily: {
-      sans: ['Mulish', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans']
+      // Khai báo các font chữ được sử dụng trong website. Mặc định Tailwind sẽ sử dụng font họ "sans". Có nghĩa là font được sử dụng trong website hiện tại là "Quicksand".
+      sans: ['Mulish', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'sans-serif'],
+      serif: ['Merriweather', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+      mono: ['"Roboto Mono"', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+      display: ['"Sansita Swashed"'],
+      handwriting: ['"Dancing Script"']
     },
     extend: {
+      screens: {xl: '1040px'},
+      // https://nekocalc.com/px-to-rem-converter
+      // Tailwind cung cấp sẵn cho bạn khá nhiều thứ nhưng không có nghĩa là chỉ dùng những cái nó cung cấp sẵn là đủ.
+      // Do đó Tailwind cung cấp tính năng mở rộng để tạo thêm cấu hình một cách dễ dàng.
       fontSize: {
         none: ['0', '0'],
         super: ['5rem', {lineHeight: '5.5rem', letterSpacing: '0.03em'}], //80/88
-        hero: ['3.5rem', {lineHeight: '4rem', letterSpacing: '0.03em'}], //56/64
-        h1: ['2.5rem', {lineHeight: '3rem', letterSpacing: '0.03em'}], // 40/48
-        h2: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0.03em'}], // 28/36
-        h3: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0.03em'}], // 24/32
-        h4: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
-        h5: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0.03em'}], // 20/28
-        base: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0.03em'}], // 16/24
-        caption: ['0.75rem', {lineHeight: '1.25rem', letterSpacing: '0.03em'}] // 12/20
-      },
-      lineHeight: {
-        0: '0'
+        hero: ['3.5rem', {lineHeight: '4rem', letterSpacing: '0'}],
+        h1: ['2.5rem', {lineHeight: '3rem', letterSpacing: '0'}],
+        h2: ['1.75rem', {lineHeight: '2.25rem', letterSpacing: '0'}],
+        h3: ['1.5rem', {lineHeight: '2rem', letterSpacing: '0'}],
+        h4: ['1.25rem', {lineHeight: '1.75rem', letterSpacing: '0'}],
+        h5: ['1.125rem', {lineHeight: '1.625rem', letterSpacing: '0'}],
+        h6: ['1rem', {lineHeight: '1.5rem', letterSpacing: '0'}],
+        display1: ['5rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        display2: ['4.5rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        display3: ['4rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        display4: ['3.5rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        display5: ['3rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        display6: ['2.5rem', {lineHeight: '3.5rem', letterSpacing: '0'}],
+        figure: ['0.688rem', {lineHeight: '3.5rem', letterSpacing: '0'}]
       },
       letterSpacing: {
+        4: '0.04em', // -4%
         3: '0.03em', // -3%
         2: '0.02em', // -2%
         1: '0.01em' // -1%
       },
-      screens: {
-        '2xl': '1440px'
+      lineHeight: {
+        0: '0'
       },
       colors: {
-        'abc-blue': '#4B9AE8',
-        'abc-dark-blue': '#3D99D3',
-        'abc-light-blue': '#3CC7F4',
-        'abc-aqua': '#56CCF2', //aqua
-        'abc-light-aqua': '#A8CEF4',
-        'abc-deep-green': '#3B8260', //dark green
-        'abc-light-red': '#D14F4F', //red
-        'abc-orange': '#F2994A', //orange
-        'abc-purple': '#BB6BD9', //purple
-        'abc-pink': '#FED0EE', //pink
-        'abc-yellow': '#DBA936',
-        'abc-light-yellow': '#FBE38E', //light yellow
-        'abc-grey': '#D9D9D9',
-        'abc-light-grey': '#EDF2F7',
-        'abc-dark-grey': '#4F4F4F', //dark grey
-        'abc-red': '#FF0000',
-        'abc-soft-blue': '#F5FAFD', // soft blue
-
-        colors: {
-          blue: {
-            50: '#f6fafe',
-            100: '#edf5fd',
-            200: '#d2e6f9',
-            300: '#b7d7f6',
-            400: '#81b8ef',
-            500: '#4b9ae8',
-            600: '#448bd1',
-            700: '#3874ae',
-            800: '#2d5c8b',
-            900: '#254b72'
-          }
+        blue: {
+          50: '#f6fafe',
+          100: '#edf5fd',
+          200: '#d2e6f9',
+          300: '#b7d7f6',
+          400: '#81b8ef',
+          500: '#4b9ae8',
+          600: '#448bd1',
+          700: '#3874ae',
+          800: '#2d5c8b',
+          900: '#254b72'
         }
       },
       backgroundImage: {
@@ -83,9 +84,9 @@ module.exports = {
         dropdown: '1000',
         sticky: '1020',
         fixed: '1030',
-        offcanvasoverlay: '1040',
-        offcanvas: '1045',
-        modaloverlay: '1050',
+        drawerbackdrop: '1040',
+        drawer: '1045',
+        modalbackdrop: '1050',
         modal: '1055',
         popover: '1070',
         tooltip: '1080',
@@ -100,11 +101,10 @@ module.exports = {
       transitionDuration: {
         0: '0ms',
         1500: '1500ms',
-        2000: '2000ms',
-        10000: '10000ms'
+        2000: '2000ms'
       },
       transitionTimingFunction: {
-        // https://cubic-bezier.com/
+        // Tham khảo: https://cubic-bezier.com/
         'in-out': 'cubic-bezier(.68,.12,.38,.87)',
         'in-out-back': 'cubic-bezier(0.68, -0.6, 0.32, 1.6)'
       },
@@ -141,7 +141,7 @@ module.exports = {
             maxWidth: theme('maxWidth.full')
           }
         },
-        pp: {
+        abc: {
           color: theme('colors.white'),
           css: {
             '--tw-prose-body': theme('colors.white'),
@@ -182,8 +182,9 @@ module.exports = {
       addUtilities({
         '.invalid': {
           fontSize: theme('fontSize.xs'),
-          color: theme('colors.pp-dark-red'),
-          fontStyle: 'italic'
+          color: theme('colors.abc-dark-red'),
+          fontStyle: 'italic',
+          marginTop: theme('spacing.1')
         },
         '.overflow-initial': {
           overflow: 'initial'

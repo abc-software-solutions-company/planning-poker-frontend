@@ -1,35 +1,27 @@
 .lobby :global {
-  @apply mx-auto bg-abc-light-grey;
+  @apply h-full;
   .container {
-    @apply fixed top-1/2 left-1/2;
-    transform: translate(-50%, -50%);
+    @apply flex h-full items-center;
   }
-  h2 {
-    @apply pb-7 text-center lg:pb-10;
+  .inner {
+    @apply mx-auto;
   }
-  h3 {
-    @apply pb-8 text-center;
+  .head {
+    @apply text-center text-blue-500;
   }
-  .input-button {
-    @apply mx-auto max-w-xl gap-8 space-y-4 lg:flex lg:space-y-0;
+  .heading {
+    @apply pb-7 lg:pb-10;
   }
-  .button-left {
-    @apply lg:w-1/2;
+  .headline {
+    @apply pb-8;
   }
-  .input-right {
-    @apply relative flex lg:w-1/2;
-
-    .error {
-      @apply placeholder:text-red-400;
+  .actions {
+    @apply grid gap-x-5 gap-y-4 md:grid-cols-2;
+  }
+  .abc-input.error {
+    @apply relative;
+    .message {
+      @apply absolute left-0;
     }
-  }
-  .form-input {
-    @apply rounded-r-none border border-r-0 lg:w-3/4;
-  }
-  .button-right {
-    @apply w-1/4 rounded-l-none;
-  }
-  .error-validate {
-    @apply absolute -bottom-4 left-0;
   }
 }

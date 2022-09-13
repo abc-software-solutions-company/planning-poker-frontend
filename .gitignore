@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/public/fonts
+public/fonts
 /.pnp
 .pnp.js
 
