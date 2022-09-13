@@ -31,7 +31,7 @@ export default function useLobby() {
       const arr = idOrLink.split(window.location.origin + ROUTES.ROOM);
       id = arr[arr.length - 1];
     }
-    return id;
+    return id.toLowerCase();
   };
 
   const handleOnSubmit = ({idOrLink}: IFormInputs) => {

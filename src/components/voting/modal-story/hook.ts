@@ -37,7 +37,7 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   });
 
   const handleOnSubmit = async ({name}: IFormInputs) => {
-    if (story) {
+    if (story && story.avgPoint === null) {
       updateStory({id: story.id, name: name}).then(async res => {
         if (res.status === 200) {
           socket.emit('update', {roomId: room.id});

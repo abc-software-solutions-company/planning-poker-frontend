@@ -2,10 +2,10 @@ import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
-import {createAtc} from '@/data/client/Atc.client';
-import {createResult, updateResult} from '@/data/client/Result.client';
 import {getRoom, IRoomResponse} from '@/data/client/room.client';
 import {completeStory} from '@/data/client/story.client';
+import {createUserRoom} from '@/data/client/userRoom.client';
+import {createUserStory, updateUserStory} from '@/data/client/userStory.client';
 import socket from '@/data/socket';
 // import {ISocketUpdate} from '@/types';
 
@@ -41,8 +41,8 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleStart = () => {
     if (auth) {
-      if (room.acts.filter(atc => atc.userId === auth.id).length === 0) {
-        createAtc({roomId: room.id, userId: auth.id}).then(res => {
+      if (room.userRooms.filter(atc => atc.userId === auth.id).length === 0) {
+        createUserRoom({roomId: room.id, userId: auth.id}).then(res => {
           if (res.status === 201) {
             socketUpdate();
           }
@@ -53,8 +53,8 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleUpdateRoom = () => {
     if (auth) {
-      if (story && story.avgPoint === null && story.results.filter(s => s.userId === auth.id).length === 0) {
-        createResult({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
+      if (story && story.avgPoint === null && story.userStories.filter(s => s.userId === auth.id).length === 0) {
+        createUserStory({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
           if (res.status === 201) {
             socketUpdate();
           }
@@ -64,7 +64,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
       if (story) {
         if (story.avgPoint) {
-          setDataVoted(story.results.map(r => r.votePoint));
+          setDataVoted(story.userStories.map(r => r.votePoint));
         } else {
           setDataVoted(undefined);
         }
@@ -74,7 +74,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleSelectPoker = async (value: number) => {
     if (auth && story) {
-      updateResult({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+      updateUserStory({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
         if (res.status === 200) {
           socketUpdate();
         }
