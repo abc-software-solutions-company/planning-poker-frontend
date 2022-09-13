@@ -22,22 +22,22 @@ const Authentication: FC<IProps> = ({children}) => {
     if (router.asPath.includes(ROUTES.ROOM) && !auth) {
       Cookie.set('_room', router.asPath);
     }
-
     const userIdCookie = getCookie('_userId');
     if (!userIdCookie) {
-      authDispatch(AuthActions.login(false));
+      if (!router.asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
     } else {
-      if (auth === null) {
-        getUser({id: userIdCookie}).then(res => {
-          if (res.status === 200) authDispatch(AuthActions.login(res.data));
-          else authDispatch(AuthActions.login(false));
-        });
-      }
+      getUser({id: userIdCookie}).then(res => {
+        if (res.status === 200) authDispatch(AuthActions.login(res.data));
+        else {
+          if (!router.asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
+        }
+      });
     }
-    if (!router.asPath.includes(ROUTES.LOGIN) && auth === false) router.push(ROUTES.LOGIN);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
-  if (!router.asPath.includes(ROUTES.LOGIN) && (auth === null || auth === false)) return null;
+  }, []);
+
+  if (!router.asPath.includes(ROUTES.LOGIN) && !auth) return null;
+
   return <>{children}</>;
 };
 
