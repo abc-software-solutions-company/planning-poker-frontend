@@ -30,7 +30,13 @@ export default function useLetsStart() {
         Cookie.remove('_userId');
         Cookie.set('_userId', res.data.id, {expires: 7, sameSite: 'strict', path: '/'});
         dispatchAuth(AuthActions.login(res.data));
-        router.push(ROUTES.HOME);
+        const linkRoom = Cookie.get('_room');
+        if (linkRoom) {
+          Cookie.remove('_room');
+          router.push(linkRoom);
+        } else {
+          router.push(ROUTES.HOME);
+        }
       }
     });
   };

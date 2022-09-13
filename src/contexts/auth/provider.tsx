@@ -4,6 +4,7 @@ import {getCookie} from 'typescript-cookie';
 
 import {ROUTES} from '@/configs/routes.config';
 import {getUser} from '@/data/client/user.client';
+import Cookie from '@/utils/cookie';
 
 import {AuthActions} from '.';
 import {Context, DispatchContext, useDispatchAuth, useStateAuth} from './context';
@@ -18,6 +19,10 @@ const Authentication: FC<IProps> = ({children}) => {
   const router = useRouter();
   const authDispatch = useDispatchAuth();
   useEffect(() => {
+    if (router.asPath.includes(ROUTES.ROOM) && !auth) {
+      Cookie.set('_room', router.asPath);
+    }
+
     const userIdCookie = getCookie('_userId');
     if (!userIdCookie) {
       authDispatch(AuthActions.login(false));
