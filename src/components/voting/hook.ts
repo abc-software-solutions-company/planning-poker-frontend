@@ -86,6 +86,10 @@ export default function useVoting({room, setRoom}: IHookParams) {
     if (isHost() && story && story.avgPoint !== null) {
       setOpenModal(true);
     }
+
+    if (isHost()) {
+      setOpenModal(true);
+    }
   };
 
   const handleComplete = () => {
