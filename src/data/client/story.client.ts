@@ -1,8 +1,8 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {IBaseResponse} from '@/types';
 
-import API from '../API';
-import {IResultRespone} from './Result.client';
+import api from '../api';
+import {IUserStoryRespone} from './userStory.client';
 
 //type
 export interface ICompleteStory {
@@ -20,16 +20,18 @@ export interface IUpdateStory extends ICompleteStory {
 
 export interface IStoryResponse extends IBaseResponse, ICreateStory, ICompleteStory {
   avgPoint: number | null;
-  results: IResultRespone[];
+  userStories: IUserStoryRespone[];
 }
 
 //function
 export function createStory(data: ICreateStory) {
-  return API.post<IStoryResponse>(API_ENDPOINTS.STORY, data);
+  return api.post<IStoryResponse>(API_ENDPOINTS.STORY, data);
 }
+
 export function updateStory(data: IUpdateStory) {
-  return API.patch<IStoryResponse>(API_ENDPOINTS.STORY, data);
+  return api.patch<IStoryResponse>(API_ENDPOINTS.STORY, data);
 }
+
 export function completeStory(data: ICompleteStory) {
-  return API.patch<IStoryResponse>(API_ENDPOINTS.STORY + '/complete', data);
+  return api.patch<IStoryResponse>(API_ENDPOINTS.STORY + '/complete', data);
 }

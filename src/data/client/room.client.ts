@@ -1,9 +1,9 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {IBaseResponse} from '@/types';
 
-import API from '../API';
-import {IActResponse} from './Atc.client';
+import api from '../api';
 import {IStoryResponse} from './story.client';
+import {IUserRoomResponse} from './userRoom.client';
 
 //
 export interface ICreateRoom {
@@ -14,16 +14,16 @@ export interface IGetRoom {
   id: string;
 }
 export interface IRoomResponse extends IBaseResponse, ICreateRoom, IGetRoom {
-  acts: IActResponse[];
+  userRooms: IUserRoomResponse[];
   stories: IStoryResponse[];
 }
 //function
 export function getRoom({id}: IGetRoom) {
-  return API.get<IRoomResponse>(`${API_ENDPOINTS.ROOM}/${id}`);
+  return api.get<IRoomResponse>(API_ENDPOINTS.ROOM + '/' + id);
 }
 export function allRoom() {
-  return API.get<IRoomResponse[]>(API_ENDPOINTS.ROOM);
+  return api.get<IRoomResponse[]>(API_ENDPOINTS.ROOM);
 }
 export function createRoom(data: ICreateRoom) {
-  return API.post<IRoomResponse>(API_ENDPOINTS.ROOM, data);
+  return api.post<IRoomResponse>(API_ENDPOINTS.ROOM, data);
 }

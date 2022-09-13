@@ -74,7 +74,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                       <VoteCard
                         key={num}
                         className={
-                          num === story?.results.filter(r => r.userId === auth.id)[0]?.votePoint ? 'selected' : ''
+                          num === story?.userStories.filter(r => r.userId === auth.id)[0]?.votePoint ? 'selected' : ''
                         }
                         value={num}
                         onClick={() => handleSelectPoker(num)}
@@ -90,23 +90,23 @@ const VoteRoom: FC<IProps> = ({data}) => {
             <div className="right-content">
               <Heading className="title" as="h6">
                 {auth && (story === null || story.avgPoint === null) && 'Wait for voting'}
-                {auth && story && story.avgPoint !== null && 'Result'}
+                {auth && story && story.avgPoint !== null && 'UserStory'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                The player: <span className="user-lenght">{room.acts.length}</span>
+                The player: <span className="user-lenght">{room.userRooms.length}</span>
               </Heading>
               <div className="voter-list border-line">
                 {auth &&
-                  room.acts
+                  room.userRooms
                     ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
-                    .map(act => {
+                    .map(ur => {
                       return (
                         <VoteUser
                           className="border-line"
-                          key={act.userId}
-                          name={act.user.name}
-                          host={act.userId === room.hostUserId}
-                          vote={act.user.results.filter(result => result.storyId === story?.id)[0]?.votePoint}
+                          key={ur.userId}
+                          name={ur.user.name}
+                          host={ur.userId === room.hostUserId}
+                          vote={ur.user.userStories.filter(us => us.storyId === story?.id)[0]?.votePoint}
                           isCompleted={Boolean(auth && story && story.avgPoint !== null)}
                         />
                       );
