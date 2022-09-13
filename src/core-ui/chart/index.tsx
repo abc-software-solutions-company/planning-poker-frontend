@@ -82,10 +82,9 @@ const Chart: FC<IProps> = ({className, voted}) => {
             return (
               <div key={index} className={'label'}>
                 <div className="circle" style={{backgroundColor: item.color}}></div>
-                <div className="result">
-                  <div>{item.value}</div>
-                  {item.len === sortedArray[0].len && <div className="most">Most</div>}
-                </div>
+                <div>{item.value}</div>
+                {item.len === sortedArray[0].len && <span className="most">Most</span>}
+                <div className="result"></div>
               </div>
             );
           })}

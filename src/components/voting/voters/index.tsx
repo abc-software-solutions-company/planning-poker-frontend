@@ -19,14 +19,14 @@ const VoteUser: React.FC<IProps> = ({name, className, host, vote, isCompleted = 
     <>
       <div className={cn('player-status', className)}>
         <div className="player-info">
-          <Icon className="abc-avatar" size={24} host={host} />
+          <Icon className="ico-avatar" size={24} host={host} />
           <div className="name" style={{color}}>
             {name}
           </div>
         </div>
         {vote != undefined && !isCompleted && (
           <div className="voted">
-            <Icon className="abc-checkmark" size={20} />
+            <Icon className="ico-checkmark" size={20} />
             <p className="text">Voted</p>
           </div>
         )}

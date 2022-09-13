@@ -3,7 +3,6 @@ import React from 'react';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
-import {ABCWEBSITE} from '@/utils/constant';
 
 import useLetsStart from './hook';
 import style from './style.module.scss';
@@ -14,26 +13,22 @@ const LetsStart: React.FC = () => {
     <>
       <div className={`${style['lets-start']}`}>
         <div className="container">
-          <div className="section-content">
-            <Heading className="heading" as="h1">
-              PLANNING POKER
-            </Heading>
-            <form className="enter-your-name" onSubmit={handleSubmit(onSubmit)}>
-              <Heading as="h4">Let&apos; start!</Heading>
-              <div className="input">
-                <Input className={errors.name && 'error'} placeholder="Enter your name" {...register('name')} />
-                {errors.name && <p className="error-validate">{errors.name.message}</p>}
-              </div>
-              <Button type="submit">Enter</Button>
-            </form>
+          <div className="inner">
+            <div className="section-content">
+              <Heading className="heading" as="h1">
+                PLANNING POKER
+              </Heading>
+              <form className="enter-your-name" onSubmit={handleSubmit(onSubmit)}>
+                <Heading as="h4">Let&apos; start!</Heading>
+                <div className="input">
+                  <Input className={errors.name && 'error'} placeholder="Enter your name" {...register('name')} />
+                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                </div>
+                <Button type="submit">Enter</Button>
+              </form>
+            </div>
           </div>
-          <div className="footer">
-            Copyright © 2022 By{' '}
-            <a className="footer website" href={ABCWEBSITE}>
-              ABC Software Solutions Company
-            </a>
-          </div>
-
+          ..
           {/* <div className="inner">
             <div>
               <Heading as="h1">PLANNING POKER</Heading>

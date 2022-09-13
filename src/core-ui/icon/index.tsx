@@ -1,18 +1,17 @@
-import React, {InputHTMLAttributes} from 'react';
+import cls from 'classnames';
+import React, {FC} from 'react';
 
-interface IProps extends InputHTMLAttributes<HTMLElement> {
-  size?: 16 | 24 | 32 | 48 | 28 | 20;
-  host?: boolean;
-  color?: string;
+import {IconSize} from '../types';
+
+interface IProps {
+  className?: string;
+  name: string;
+  size?: IconSize;
+  onClick?: () => void;
 }
 
-const Button: React.FC<IProps> = ({className, size = 16, host, color}) => {
-  if (host === true) color = 'text-abc-red';
-  return (
-    <>
-      <i className={['abc-icon', className, color, `abc-${size}`].join(' ')}></i>
-    </>
-  );
+const Icon: FC<IProps> = ({className, name, size = 24, onClick}) => {
+  return <i className={cls('abc-icon', className, name, `size-${size}`)} onClick={onClick}></i>;
 };
 
-export default Button;
+export default Icon;

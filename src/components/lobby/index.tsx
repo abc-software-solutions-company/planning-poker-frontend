@@ -15,26 +15,28 @@ const Lobby: FC = () => {
     <>
       <div className={styles.lobby}>
         <div className="container">
-          <Heading as="h2">PLANNING POKER</Heading>
-          <Heading as="h3">High-functioning teams here also rely on Planning Poker</Heading>
-          <div className="input-button">
-            <Button className="button-left" onClick={() => setOpenModal(true)}>
-              Create Room
-            </Button>
-            <ModalRoom open={openModal} setOpen={setOpenModal} />
-            <form className="input-right" onSubmit={handleSubmit(onSubmit)}>
-              <Input
-                className={errors.idOrLink && 'error'}
-                placeholder="Enter a link or ID"
-                {...register('idOrLink')}
-              />
-              {errors.idOrLink && <p className="error-validate">{errors.idOrLink.message}</p>}
-              <Button className="button-right" type="submit">
-                Join
-              </Button>
-            </form>
+          <div className="inner">
+            <Heading as="h2" className="heading head">
+              PLANNING POKER
+            </Heading>
+            <Heading as="h4" className="headline head">
+              High-functioning teams here also rely on Planning Poker
+            </Heading>
+            <div className="actions">
+              <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                  error={errors.idOrLink?.message}
+                  groupEnd={<Button variant="contained" color="primary" type="submit" text="Join" />}
+                  placeholder="Enter a link or ID"
+                  {...register('idOrLink')}
+                />
+              </form>
+            </div>
           </div>
         </div>
+
+        <ModalRoom open={openModal} setOpen={setOpenModal} />
       </div>
     </>
   );

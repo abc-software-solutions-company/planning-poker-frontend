@@ -46,12 +46,12 @@ const VoteRoom: FC<IProps> = ({data}) => {
           <div className="topbar">
             <button className="left" onClick={() => router.push(ROUTES.HOME)}>
               {' '}
-              <Icon className="abc-arrow-left-circle" size={28} />
+              <Icon className="ico-arrow-left-circle" size={28} />
               <p className="text">Back</p>
             </button>
             <div className="right">
-              <Icon className="abc-user" size={28} />
-              <p className={cls('text', auth && auth.name.length >= 12 ? 'user-name' : '')}>{auth && auth.name}</p>
+              <Icon className="ico-user" size={28} />
+              <p className={cls('text', auth && auth.name.length >= 12 && 'user-name')}>{auth && auth.name}</p>
             </div>
           </div>
           <Heading className="setRoom-name" as="h5">
@@ -60,11 +60,11 @@ const VoteRoom: FC<IProps> = ({data}) => {
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <Heading as="h5" className={story && story.name.length >= 25 ? 'break' : ''}>
+                <Heading as="h5" className={story && story?.name.length >= 25 && 'break'}>
                   {story?.name || 'Story name'}
                 </Heading>
                 <button onClick={() => handleNewStory()}>
-                  <Icon className="abc-edit" size={28} />
+                  <Icon className="ico-edit" size={28} />
                 </button>
               </div>
               {auth && (story === null || story.avgPoint === null) && (
