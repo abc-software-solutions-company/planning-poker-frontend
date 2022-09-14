@@ -29,7 +29,7 @@
   .abc-input.error {
     @apply relative;
     .message {
-      @apply absolute left-0 mt-0 md:mt-1;
+      @apply absolute left-0 mt-0;
     }
   }
 }
