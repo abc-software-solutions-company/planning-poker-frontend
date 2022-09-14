@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
-import {COLORVOTE, FIBONACCI} from '@/utils/constant';
+import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
@@ -12,7 +12,7 @@ const Chart: FC<IProps> = ({className, voted}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const lenVotedUser = voted.filter(v => v !== null).length;
   const lenUsers = voted.length;
-  const backgroundColor: string[] = Object.values(COLORVOTE);
+  const backgroundColor = Object.values(CHARTCOLORS);
   const sortedArray: {value: number; len: number; color: string}[] = FIBONACCI.map((item, index) => {
     return {value: item, len: voted.filter(v => v === item).length, color: backgroundColor[index]};
   }).sort((a, b) => b.len - a.len);
@@ -42,11 +42,11 @@ const Chart: FC<IProps> = ({className, voted}) => {
       },
       options: {
         aspectRatio: 1,
-        cutout: 110,
-        responsive: false,
+        cutout: '70%',
+        responsive: true,
         plugins: {
           legend: {
-            position: 'left',
+            position: 'center',
             fullWidth: true,
             labels: {
               usePointStyle: true,
@@ -70,21 +70,25 @@ const Chart: FC<IProps> = ({className, voted}) => {
 
   return (
     <div className={className}>
-      <canvas ref={canvasRef} width="338" height="338"></canvas>
-      <div className="chart-center-text">
-        <p>{`${lenVotedUser}/${lenUsers}`} players</p>
-        <p>voted</p>
+      <div className="chart">
+        <canvas ref={canvasRef}></canvas>
+        <div className="chart-center-text">
+          <p>{`${lenVotedUser}/${lenUsers}`} players</p>
+          <p>voted</p>
+        </div>
       </div>
+
       <div className="chart-info">
         {sortedArray
           .filter(item => item.len > 0)
           .map((item, index) => {
             return (
-              <div key={index} className={'label'}>
+              <div key={index} className="label">
                 <div className="circle" style={{backgroundColor: item.color}}></div>
-                <div>{item.value}</div>
-                {item.len === sortedArray[0].len && <span className="most">Most</span>}
-                <div className="result"></div>
+                <div className="value">
+                  {item.value}
+                  <div className="sub">{item.len === sortedArray[0].len && <div className="most">Most</div>}</div>
+                </div>
               </div>
             );
           })}
