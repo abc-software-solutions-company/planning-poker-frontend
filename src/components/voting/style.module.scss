@@ -62,7 +62,7 @@
       @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4;
       @apply sm:px-20 md:px-36 lg:px-0 xl:mx-28;
       @apply gap-y-4 gap-x-5 lg:gap-8;
-      @apply mx-auto mr-16;
+      @apply mx-auto lg:mr-16;
     }
     .card-item {
       &.selected {

@@ -1,8 +1,9 @@
-import {Box, Modal} from '@mui/material';
+import {Modal} from '@mui/material';
 import {Dispatch, FC, SetStateAction} from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 
 import useModelRoom from './hook';
@@ -13,34 +14,28 @@ interface IProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  maxWidth: 576,
-  bgcolor: '#f6fafe',
-  boxShadow: 24,
-  p: 4
-};
-
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
   const {errors, register, handleSubmit, onSubmit} = useModelRoom({setOpen});
   return (
     <>
       <Modal open={open}>
-        <Box sx={style}>
-          <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
+          <div className="container">
             <div className="content">
+              <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpen(false)} />
               <Heading as="h5">Create New Room</Heading>
               <div className="input-button">
                 <div className="input-name">
                   <div className="input-name">
-                    <Input className={errors.name && 'error'} placeholder="Enter room name" {...register('name')} />
-                    {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                    <Input
+                      error={errors.name?.message}
+                      className={errors.name && 'error'}
+                      placeholder="Enter room name"
+                      {...register('name')}
+                    />
                   </div>
                 </div>
-                <div className="button">
+                <div className="action">
                   <Button
                     className="w-full"
                     variant="outlined"
@@ -52,8 +47,8 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
                 </div>
               </div>
             </div>
-          </form>
-        </Box>
+          </div>
+        </form>
       </Modal>
     </>
   );

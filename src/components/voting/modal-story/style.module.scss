@@ -1,31 +1,36 @@
 .modal-create :global {
   @apply flex justify-center;
   .container {
-    @apply fixed top-1/2 -translate-y-1/2;
+    @apply fixed;
+    @apply top-1/2 -translate-y-1/2;
+    @apply left-1/2 -translate-x-1/2;
   }
   h5 {
     @apply pt-4 text-center;
   }
   .content {
     @apply mx-auto max-w-xl rounded-lg;
-    @apply bg-blue-300;
+    @apply bg-blue-50;
+    @apply relative;
+  }
+  .x-circle {
+    @apply absolute;
+    @apply right-2 lg:right-4;
+    @apply top-2 lg:top-4;
+    @apply cursor-pointer;
   }
   .input-button {
     @apply p-4 lg:p-5 lg:pb-6;
-
-    .input-name {
-      @apply relative;
-
-      .error {
-        @apply placeholder:text-red-300;
-      }
-      .error-validate {
-        @apply absolute;
-        @apply mt-0;
-      }
-    }
   }
-  .button {
-    @apply mt-6 flex gap-3;
+  .action {
+    @apply flex;
+    @apply gap-3 md:gap-4;
+    @apply mt-4 md:mt-6;
+  }
+  .abc-input.error {
+    @apply relative;
+    .message {
+      @apply absolute left-0 mt-0 text-xs;
+    }
   }
 }
