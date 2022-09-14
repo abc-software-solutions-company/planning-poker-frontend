@@ -107,13 +107,14 @@ const VoteRoom: FC<IProps> = ({data}) => {
                   room.userRooms
                     ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
                     .map(ur => {
+                      const vote = ur.user.userStories.filter(us => us.storyId === story?.id)[0]?.votePoint;
                       return (
                         <VoteUser
                           className="border-line"
                           key={ur.userId}
                           name={ur.user.name}
                           host={ur.userId === room.hostUserId}
-                          vote={ur.user.userStories.filter(us => us.storyId === story?.id)[0]?.votePoint}
+                          vote={vote !== undefined ? vote : null}
                           isCompleted={Boolean(auth && story && story.avgPoint !== null)}
                         />
                       );

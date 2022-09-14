@@ -68,14 +68,12 @@
       @apply mx-auto lg:mr-16;
     }
     .card-item {
+      @apply relative m-auto h-48 w-32 cursor-pointer overflow-hidden rounded-lg border border-blue-500 bg-white;
       &.selected {
         button {
           @apply bg-blue-400 text-white;
-          @apply rounded-lg;
         }
       }
-      @apply relative m-auto h-48 w-32 cursor-pointer border border-blue-500 bg-white;
-      @apply rounded-lg;
     }
     .card-item:nth-child(odd) {
       @apply mr-0 sm:mx-auto;
@@ -121,7 +119,7 @@
           .sub {
             @apply relative;
             .most {
-              @apply absolute top-0 left-0 ml-1 border-2 border-[#6EDDA9] bg-[#9FE5C7];
+              @apply absolute top-0 left-0 ml-1 rounded-full bg-green-400 px-2 text-white;
             }
           }
         }
@@ -140,7 +138,7 @@
     @apply h-fit rounded-lg;
     @apply bg-white;
     .sub-title {
-      @apply p-4 text-center;
+      @apply p-4 text-center text-h4;
       @apply border-0 border-x;
 
       .user-lenght {
@@ -155,10 +153,11 @@
     }
     .player-status {
       @apply flex items-center justify-between p-4;
-
       .voted {
-        @apply flex items-center gap-1 text-blue-500;
-        @apply ml-auto pr-1;
+        @apply ml-auto flex items-center gap-1 pr-1 text-blue-500;
+      }
+      .point {
+        @apply text-h4 font-bold;
       }
     }
     .player-info {
@@ -168,6 +167,9 @@
     .name {
       @apply pl-4 text-base drop-shadow-md;
       @apply flex items-center;
+    }
+    .host {
+      @apply ml-1 rounded-lg bg-green-400 px-2 text-xs text-white;
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;
