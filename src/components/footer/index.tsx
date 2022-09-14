@@ -9,9 +9,9 @@ const Footer: FC = () => {
   return (
     <>
       <div className={cls(styles.footer)}>
-        Copyright © 2022 By{' '}
+        Copyright © 2022{' '}
         <a className="footer website" href={ABCWEBSITE}>
-          ABC Software Solutions Company
+          By ABC Software Solutions Company
         </a>
       </div>
     </>

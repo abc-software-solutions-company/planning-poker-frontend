@@ -7,7 +7,7 @@ interface IProps {
   className?: string;
   name: string;
   host?: boolean;
-  vote: number | null;
+  vote?: number | null;
   isCompleted: boolean;
 }
 
@@ -21,16 +21,20 @@ const VoteUser: React.FC<IProps> = ({name, className, vote, host, isCompleted = 
         <div className="player-info">
           <Icon className={host ? 'text-red-400' : ''} name="ico-avatar" size={24} />
           <div className="name">
-            {name} {host ? <span className="ml-1 rounded-lg bg-green-400 px-2 text-xs text-white">Host</span> : ''}
+            {name} {host ? <span className="host">Host</span> : ''}
           </div>
         </div>
-        {vote != undefined && !isCompleted && (
+        {vote != null && !isCompleted && (
           <div className="voted">
             <Icon name="ico-checkmark" size={24} />
-            <p className="text">Voted</p>
+            <span>Voted</span>
           </div>
         )}
-        <span style={{color}}>{vote != undefined && isCompleted && vote}</span>
+        {vote != null && isCompleted && (
+          <span className="point" style={{color}}>
+            {vote}
+          </span>
+        )}
       </div>
     </>
   );
