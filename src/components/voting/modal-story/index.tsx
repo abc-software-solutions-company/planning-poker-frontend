@@ -3,6 +3,7 @@ import {Dispatch, FC, SetStateAction} from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
+import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 import {IRoomResponse} from '@/data/client/room.client';
 
@@ -26,17 +27,26 @@ const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
+              <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpen(false)} />
               <Heading as="h5">{title} Story</Heading>
               <div className="input-button">
                 <div className="input-name">
-                  <Input className={errors.name && 'error'} placeholder="Enter story" {...register('name')} />
-                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
+                  <Input
+                    error={errors.name?.message}
+                    className={errors.name && 'error'}
+                    placeholder="Enter story"
+                    {...register('name')}
+                  />
                 </div>
-                <div className="button">
-                  <Button variant="white" onClick={() => setOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button type="submit">{title}</Button>
+                <div className="action">
+                  <Button
+                    className="w-full"
+                    variant="outlined"
+                    color="primary"
+                    text="Cancel"
+                    onClick={() => setOpen(false)}
+                  />
+                  <Button className="w-full" variant="contained" color="primary" text={title} type="submit" />
                 </div>
               </div>
             </div>

@@ -1,36 +1,40 @@
 .modal-create :global {
-  @apply bg-blue-50;
-
-  .content {
-    @apply max-w-[576px];
+  .container {
+    @apply fixed;
+    @apply top-1/2 -translate-y-1/2;
+    @apply left-1/2 -translate-x-1/2;
   }
-  // @apply flex justify-center;
+  .content {
+    @apply relative max-w-[576px];
+  }
+  .x-circle {
+    @apply absolute;
+    @apply right-2 lg:right-4;
+    @apply top-2 lg:top-4;
+    @apply cursor-pointer;
+  }
+  h5 {
+    @apply text-center;
+    @apply pt-4 md:pt-6;
+  }
+  .content {
+    @apply mx-auto max-w-xl rounded-lg;
+    @apply bg-blue-50;
+  }
+  .input-button {
+    @apply p-4;
+    @apply lg:p-5 lg:pb-6;
+  }
+  .action {
+    @apply flex;
+    @apply gap-3 md:gap-4;
+    @apply mt-4 md:mt-6;
+  }
 
-  // h5 {
-  //   @apply text-center;
-  //   @apply pt-4 lg:pt-6;
-  // }
-  // .content {
-  //   @apply mx-auto max-w-xl bg-blue-50;
-  //   @apply rounded-lg;
-  // }
-  // .input-button {
-  //   @apply p-4;
-  //   @apply lg:px-5 lg:pb-6;
-
-  //   .input-name {
-  //     @apply relative;
-
-  //     .error {
-  //       @apply placeholder:text-red-300;
-  //     }
-  //     .error-validate {
-  //       @apply absolute mt-0;
-  //     }
-  //   }
-  // }
-  // .button {
-  //   @apply flex gap-3 lg:gap-5;
-  //   @apply mt-3 lg:mt-6;
-  // }
+  .abc-input.error {
+    @apply relative;
+    .message {
+      @apply absolute left-0 mt-0 text-xs;
+    }
+  }
 }
