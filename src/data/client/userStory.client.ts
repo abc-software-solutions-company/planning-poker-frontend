@@ -1,7 +1,7 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {IBaseResponse} from '@/types';
 
-import api from '../api';
+import api from '../http';
 
 //type
 export interface IAllByStoryUserStory {

@@ -1,7 +1,7 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {IBaseResponse} from '@/types';
 
-import api from '../api';
+import api from '../http';
 import {IUserResponse} from './user.client';
 
 //type
