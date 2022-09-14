@@ -23,7 +23,7 @@ const LetsStart: React.FC = () => {
                   <Heading className="head-form" as="h4">
                     Let&apos; start!
                   </Heading>
-                  <Input error={errors.name?.message} placeholder="Enter a link or ID" {...register('name')} />
+                  <Input error={errors.name?.message} placeholder="Enter your name" {...register('name')} />
                   <Button className="w-full" variant="contained" color="primary" type="submit">
                     Enter
                   </Button>
