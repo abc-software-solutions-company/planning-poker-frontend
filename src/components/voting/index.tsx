@@ -97,10 +97,10 @@ const VoteRoom: FC<IProps> = ({data}) => {
             <div className="right-content">
               <Heading className="title" as="h6">
                 {auth && (story === null || story.avgPoint === null) && 'Wait for voting'}
-                {auth && story && story.avgPoint !== null && 'UserStory'}
+                {auth && story && story.avgPoint !== null && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                The player: <span className="user-lenght">{room.userRooms.length}</span>
+                Total players: <span className="user-lenght">{room.userRooms.length}</span>
               </Heading>
               <div className={cls('voter-list border-line', room.userRooms.length >= 5 ? 'h-[285px]' : '')}>
                 {auth &&

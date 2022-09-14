@@ -15,7 +15,7 @@
       @apply mr-2;
     }
     .text {
-      @apply font-medium lg:text-h4;
+      @apply text-h4 font-medium;
     }
     .right {
       @apply flex items-center;
