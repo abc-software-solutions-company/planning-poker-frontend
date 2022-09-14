@@ -1,11 +1,36 @@
 .lobby :global {
   @apply h-full;
   .container {
-    @apply flex h-full items-center;
+    @apply flex flex-col;
+    @apply h-full justify-center;
   }
   .inner {
-    @apply mx-auto;
+    @apply mx-auto grow;
+    @apply flex flex-col justify-center;
   }
+  .topbar {
+    @apply flex items-center justify-end;
+    @apply mt-7 w-full lg:mt-12;
+    .abc-icon {
+      @apply mr-2;
+    }
+    .text {
+      @apply font-medium lg:text-h4;
+    }
+
+    .left {
+      @apply flex items-center;
+    }
+
+    .right {
+      @apply flex items-center;
+
+      .user-name {
+        @apply w-40 break-words;
+      }
+    }
+  }
+
   .head {
     @apply text-center text-blue-500;
   }
