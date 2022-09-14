@@ -1,34 +1,35 @@
 .lets-start :global {
-  // .container {
-  // }
-  // .inner {
-  //   @apply max-w-[343px] lg:max-w-[576px];
-  //   @apply flex flex-col justify-between;
-  //   @apply h-screen p-0 py-5;
-  // }
-  // .section-content {
-  //   @apply lg:mt-16;
-  // }
-  // .enter-your-name {
-  //   @apply rounded-lg bg-white;
-  //   @apply py-8 px-4 lg:py-16 lg:px-20;
-  //   @apply flex flex-col text-center;
-  //   @apply mt-8 lg:mt-9;
-  //   .input {
-  //     .form-input {
-  //       @apply mt-6 lg:mt-14;
-  //     }
-  //     .error {
-  //       @apply placeholder:text-red-400;
-  //     }
-  //     @apply relative;
-  //     .error-validate {
-  //       @apply absolute;
-  //       @apply mt-0;
-  //     }
-  //   }
-  //   .btn {
-  //     @apply mt-6 lg:mt-8;
-  //   }
-  // }
+  @apply h-full;
+  .container {
+    @apply flex h-full items-center;
+  }
+  .inner {
+    @apply mx-auto max-w-[343px] md:max-w-[576px];
+  }
+  .heading {
+    @apply text-center font-extrabold text-blue-500;
+  }
+  .form-enter-your-name {
+    @apply bg-white text-center;
+    @apply rounded-lg;
+    @apply mt-8 md:mt-9;
+    @apply py-8 md:py-16;
+    @apply px-4 md:px-20;
+  }
+  .head-form {
+    @apply font-normal md:font-medium;
+  }
+  .form-input {
+    @apply mt-6 md:mt-14;
+    @apply px-4;
+  }
+  .abc-btn {
+    @apply mt-4 md:mt-8;
+  }
+  .abc-input.error {
+    @apply relative;
+    .message {
+      @apply absolute left-0 mt-0 md:mt-1;
+    }
+  }
 }
