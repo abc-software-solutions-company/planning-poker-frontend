@@ -18,36 +18,19 @@ const LetsStart: React.FC = () => {
               <Heading className="heading" as="h1">
                 PLANNING POKER
               </Heading>
-              <form className="enter-your-name" onSubmit={handleSubmit(onSubmit)}>
-                <Heading as="h4">Let&apos; start!</Heading>
-                <div className="input">
-                  <Input className={errors.name && 'error'} placeholder="Enter your name" {...register('name')} />
-                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
-                </div>
-                <Button type="submit">Enter</Button>
-              </form>
-            </div>
-          </div>
-          ..
-          {/* <div className="inner">
-            <div>
-              <Heading as="h1">PLANNING POKER</Heading>
-              <form className="content" onSubmit={handleSubmit(onSubmit)}>
-                <Heading as="h4">Let&apos;s start!</Heading>
-                <div className="input">
-                  <Input className={errors.name && 'error'} placeholder="Enter your name" {...register('name')} />
-                  {errors.name && <p className="error-validate">{errors.name.message}</p>}
-                </div>
-                <Button type="submit">Enter</Button>
-              </form>
-              <div className="footer">
-                Copyright © 2022 By{' '}
-                <a className="footer website" href={ABCWEBSITE}>
-                  ABC Software Solutions Company
-                </a>
+              <div className="form-enter-your-name">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Heading className="head-form" as="h4">
+                    Let&apos; start!
+                  </Heading>
+                  <Input error={errors.name?.message} placeholder="Enter a link or ID" {...register('name')} />
+                  <Button className="w-full" variant="contained" color="primary" type="submit">
+                    Enter
+                  </Button>
+                </form>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </>

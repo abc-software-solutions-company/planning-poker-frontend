@@ -1,4 +1,9 @@
 .modal-create :global {
+  @apply bg-blue-50;
+
+  .content {
+    @apply max-w-[576px];
+  }
   // @apply flex justify-center;
 
   // h5 {
