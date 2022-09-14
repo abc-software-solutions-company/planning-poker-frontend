@@ -28,9 +28,6 @@ const Authentication: FC<IProps> = ({children}) => {
     } else {
       getUser({id: userIdCookie}).then(res => {
         if (res.status === 200) authDispatch(AuthActions.login(res.data));
-        else {
-          if (!router.asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
-        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
