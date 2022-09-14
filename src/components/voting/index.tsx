@@ -39,6 +39,8 @@ const VoteRoom: FC<IProps> = ({data}) => {
 
   const inputLink = useRef<HTMLInputElement>(null);
 
+  console.log(window.location.href);
+
   return (
     <>
       <div className={style['section-vote-room']}>
@@ -46,25 +48,30 @@ const VoteRoom: FC<IProps> = ({data}) => {
           <div className="topbar">
             <button className="left" onClick={() => router.push(ROUTES.HOME)}>
               {' '}
-              <Icon className="ico-arrow-left-circle" size={28} />
+              <Icon name="ico-arrow-left-circle" size={28} />
               <p className="text">Back</p>
             </button>
             <div className="right">
-              <Icon className="ico-user" size={28} />
+              <Icon name="ico-user" size={24} />
               <p className={cls('text', auth && auth.name.length >= 12 && 'user-name')}>{auth && auth.name}</p>
             </div>
           </div>
-          <Heading className="setRoom-name" as="h5">
-            {data.name}
-          </Heading>
+
           <div className="content">
             <div className="left-content">
+              {/* <Heading className="setRoom-name" as="h5">
+                {data.name}
+              </Heading> */}
+              <p className="setRoom-name">{data.name}</p>
               <div className="story-name">
-                <Heading as="h5" className={story && story?.name.length >= 25 && 'break'}>
+                {/* <Heading as="h5" className={story && story?.name.length >= 25 && 'break'}>
                   {story?.name || 'Story name'}
-                </Heading>
+                </Heading> */}
+                <p className={cls('name', story && story?.name.length >= 25 && 'break')}>
+                  {story?.name || 'Story name'}
+                </p>
                 <button onClick={() => handleNewStory()}>
-                  <Icon className="ico-edit" size={28} />
+                  <Icon name="ico-edit" size={24} />
                 </button>
               </div>
               {auth && (story === null || story.avgPoint === null) && (
@@ -95,7 +102,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
               <Heading className="sub-title border-line" as="h6">
                 The player: <span className="user-lenght">{room.userRooms.length}</span>
               </Heading>
-              <div className="voter-list border-line">
+              <div className={cls('voter-list border-line', room.userRooms.length >= 5 ? 'h-[285px]' : '')}>
                 {auth &&
                   room.userRooms
                     ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
@@ -115,13 +122,25 @@ const VoteRoom: FC<IProps> = ({data}) => {
               {isHost() && (
                 <div className="action border-line">
                   {auth && (story === null || story.avgPoint === null) && (
-                    <Button variant="white" type="button" onClick={handleComplete}>
+                    <Button
+                      className="w-full"
+                      variant="contained"
+                      color="primary"
+                      type="button"
+                      onClick={handleComplete}
+                    >
                       Finish
                     </Button>
                   )}
                   {auth && story && story.avgPoint !== null && (
-                    <Button variant="white" type="button" onClick={handleNewStory}>
-                      New Story
+                    <Button
+                      className="w-full"
+                      variant="contained"
+                      color="primary"
+                      type="button"
+                      onClick={handleNewStory}
+                    >
+                      Next
                     </Button>
                   )}
                 </div>
@@ -130,10 +149,15 @@ const VoteRoom: FC<IProps> = ({data}) => {
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input defaultValue={window.location.href} ref={inputLink} readOnly />
-                  <button className="copy-btn" onClick={() => handleCopy(inputLink.current!.value)}>
-                    Copy
-                  </button>
+                  <Input className="input-link" value={window.location.href} ref={inputLink} readOnly />
+                  <Button
+                    className="copy-btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleCopy(inputLink.current!.value)}
+                  >
+                    <Icon name="ico-copy" />
+                  </Button>
                 </div>
               </div>
             </div>

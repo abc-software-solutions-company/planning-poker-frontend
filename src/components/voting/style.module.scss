@@ -1,10 +1,8 @@
 .section-vote-room :global {
   .container {
-    @apply px-4 lg:max-w-5xl lg:p-0;
+    @apply py-5;
   }
-  .p {
-    @apply text-base;
-  }
+
   .topbar {
     @apply flex items-center justify-between;
     @apply mt-7 w-full lg:mt-12;
@@ -12,7 +10,7 @@
       @apply mr-2;
     }
     .text {
-      @apply font-normal lg:text-h4;
+      @apply font-medium lg:text-h4;
     }
 
     .left {
@@ -27,158 +25,71 @@
       }
     }
   }
-  .setRoom-name {
-    @apply mt-5 lg:mt-14;
-    @apply w-1/2;
-    @apply break-words;
-  }
-  .room-name {
-    @apply justify-start;
-  }
-  .story-name {
-    @apply flex items-center justify-center;
-    @apply mt-8 gap-2 text-h5;
-
-    .break {
-      @apply w-96 break-words;
-    }
-
-    .abc-icon {
-      @apply lg:text-[32px];
-    }
-    button {
-      @apply flex items-center;
-    }
-  }
-
   .content {
-    @apply mt-8 justify-between gap-8 lg:mt-8 lg:flex;
+    @apply lg:flex lg:justify-between;
+    @apply lg:mt-14;
   }
-  .border-line {
-    @apply border;
-    &:last-child {
-      @apply border-none;
-    }
-  }
-  .right-content {
-    @apply mt-10 basis-4/12 lg:mt-0;
-    @apply h-fit rounded-lg;
-    @apply bg-blue-300;
-    .sub-title {
-      @apply p-4 text-center;
-      @apply border;
 
-      .user-lenght {
-        // @apply text-abc-light-red;
-      }
-    }
-    .title {
-      @apply text-center;
-      @apply bg-blue-500 text-white;
-      @apply py-5;
-      @apply rounded-t-lg;
-    }
-    .player-status {
-      @apply flex items-center justify-between px-3 py-4;
-
-      .voted {
-        @apply flex items-center gap-1 text-blue-500;
-        @apply ml-auto pr-1;
-      }
-    }
-    .player-info {
-      @apply flex items-center;
-      @apply w-full;
-    }
-    .name {
-      @apply pl-4 text-base drop-shadow-md;
-      @apply truncate;
-    }
-    .action {
-      @apply flex justify-center gap-4 p-4 text-base;
-      @apply border;
-    }
-    .btn {
-      @apply py-1;
-    }
-    .sharing {
-      @apply rounded-b-lg border;
-      h6 {
-        @apply mt-4 pl-4;
-      }
-    }
-    .share-link {
-      @apply m-4 flex;
-      @apply rounded-r;
-
-      input {
-        @apply h-12 w-full border-none;
-      }
-
-      .copy-btn {
-        @apply py-3 px-2;
-        @apply rounded-r bg-blue-500 text-white;
-        @apply text-base;
-      }
-    }
-    .voter-list {
-      @apply min-h-fit overflow-y-auto;
-      @apply border;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0, 0, 0, 0.2);
-      &::-webkit-scrollbar {
-        @apply h-[6px] w-[6px];
-      }
-      &::-webkit-scrollbar-track {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        @apply rounded-[10rem] border border-white bg-black bg-opacity-20;
-      }
-      &::-webkit-scrollbar-track-piece:start {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-track-piece:end {
-        @apply bg-transparent;
-      }
-      &.scrolling-touch {
-        -webkit-overflow-scrolling: touch;
-      }
-      &.scrolling-auto {
-        -webkit-overflow-scrolling: auto;
-      }
-    }
-  }
   .left-content {
-    @apply basis-9/12;
+    .setRoom-name {
+      @apply w-1/2;
+      @apply break-words;
+      @apply text-h3 font-bold lg:text-h2;
+      @apply mt-5 lg:mt-0;
+    }
+    .room-name {
+      @apply justify-start;
+    }
+    .story-name {
+      @apply flex items-center justify-center;
+      @apply gap-2 text-h5;
+      @apply mt-7 lg:mt-9;
+
+      .break {
+        @apply w-96 break-words;
+      }
+
+      .abc-icon {
+        @apply lg:text-[32px];
+        @apply flex justify-center;
+      }
+      button {
+        @apply flex items-center;
+      }
+      .name {
+        @apply text-h4 font-medium lg:text-h3;
+      }
+    }
+
     .card-holder {
       @apply mt-8 lg:mt-16;
       @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4;
-      @apply sm:px-20 md:px-36 lg:mt-14 lg:px-0 xl:mx-28;
-      @apply gap-y-4 gap-x-5 lg:gap-10;
+      @apply sm:px-20 md:px-36 lg:px-0 xl:mx-28;
+      @apply gap-y-4 gap-x-5 lg:gap-8;
       @apply mx-auto;
     }
     .card-item {
       &.selected {
         button {
-          @apply bg-blue-500;
+          @apply bg-blue-400 text-white;
+          @apply rounded-lg;
         }
       }
-      @apply relative m-auto h-48 w-32 cursor-pointer border border-black/[0.2] bg-white;
+      @apply relative m-auto h-48 w-32 cursor-pointer border border-blue-500 bg-white;
       @apply rounded-lg;
     }
     .card-item:nth-child(odd) {
-      @apply mr-0 lg:mx-auto;
+      @apply mr-0 sm:mx-auto;
     }
     .card-item:nth-child(even) {
-      @apply ml-0 lg:mx-auto;
+      @apply ml-0 sm:mx-auto;
     }
     .card-number {
-      @apply absolute z-50 h-full w-full p-5 text-h2;
+      @apply absolute z-50 h-full w-full text-h2;
       button {
-        @apply flex h-full w-full items-center justify-center rounded-md border border-black/[0.5] text-center text-h2;
+        @apply flex h-full w-full items-center justify-center text-center text-h1 font-normal;
         &:hover {
-          @apply bg-blue-500 text-white;
+          @apply bg-blue-400 text-white;
         }
       }
     }
@@ -195,7 +106,6 @@
         }
       }
       .chart-info {
-        // @apply bg-rose-300;
         @apply flex flex-wrap justify-center gap-x-16 gap-y-10;
         @apply lg:block;
         @apply mx-auto mt-52 h-full max-w-md lg:absolute lg:top-7 lg:-left-32 lg:mt-0;
@@ -204,11 +114,7 @@
           @apply flex items-center;
           @apply lg:items-start;
           @apply mb-3;
-          // .result {]+j
-          //   @apply bg-yellow-300;
-          //   @apply flex gap-3;
-          //   @apply lg:pb-5 lg:pl-0;
-          // }
+
           .circle {
             @apply h-5 w-5 rounded-full;
             @apply mr-1 lg:mr-3;
@@ -218,6 +124,107 @@
             @apply ml-2 lg:ml-3;
           }
         }
+      }
+    }
+  }
+
+  .border-line {
+    @apply border-0 border-b;
+    &:last-child {
+      @apply border-none;
+    }
+  }
+  .right-content {
+    @apply mt-10 basis-4/12 lg:mt-0;
+    @apply h-fit rounded-lg;
+    @apply bg-white;
+    .sub-title {
+      @apply p-4 text-center;
+      @apply border-0 border-x;
+
+      .user-lenght {
+        @apply font-bold text-red-400;
+      }
+    }
+    .title {
+      @apply text-center;
+      @apply bg-blue-500 text-white;
+      @apply py-5;
+      @apply rounded-t-lg;
+    }
+    .player-status {
+      @apply flex items-center justify-between p-4;
+
+      .voted {
+        @apply flex items-center gap-1 text-blue-500;
+        @apply ml-auto pr-1;
+      }
+    }
+    .player-info {
+      @apply flex items-center;
+      @apply w-full;
+    }
+    .name {
+      @apply pl-4 text-base drop-shadow-md;
+      @apply truncate;
+    }
+    .action {
+      @apply flex justify-center gap-4 p-4 text-base;
+      @apply border-x;
+    }
+    .btn {
+      @apply py-1;
+    }
+    .sharing {
+      @apply rounded-b-lg;
+      @apply border-x border-b;
+
+      h6 {
+        @apply p-4;
+      }
+    }
+    .share-link {
+      @apply px-4 pb-4;
+      @apply flex justify-between;
+      @apply rounded-r;
+
+      .abc-input {
+        @apply w-full;
+      }
+      .input-link {
+        @apply rounded-r-none;
+      }
+
+      .copy-btn {
+        @apply rounded-l-none;
+      }
+    }
+    .voter-list {
+      @apply overflow-y-auto;
+      @apply min-h-fit;
+      @apply border;
+      scrollbar-width: thin;
+      scrollbar-color: #4b9ae8;
+      &::-webkit-scrollbar {
+        @apply h-[6px] w-[6px];
+      }
+      &::-webkit-scrollbar-track {
+        @apply bg-transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        @apply rounded-[10rem] border border-white bg-blue-500 bg-opacity-20;
+      }
+      &::-webkit-scrollbar-track-piece:start {
+        @apply bg-transparent;
+      }
+      &::-webkit-scrollbar-track-piece:end {
+        @apply bg-transparent;
+      }
+      &.scrolling-touch {
+        -webkit-overflow-scrolling: touch;
+      }
+      &.scrolling-auto {
+        -webkit-overflow-scrolling: auto;
       }
     }
   }

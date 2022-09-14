@@ -11,22 +11,22 @@ interface IProps {
   isCompleted: boolean;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, host, vote, isCompleted = false}) => {
+const VoteUser: React.FC<IProps> = ({name, className, vote, host, isCompleted = false}) => {
   let color = '#000000';
   if (vote && isCompleted) color = COLORVOTE[vote];
-
+  console.log(host);
   return (
     <>
       <div className={cn('player-status', className)}>
         <div className="player-info">
-          <Icon className="ico-avatar" size={24} host={host} />
-          <div className="name" style={{color}}>
-            {name}
+          <Icon className={host ? 'text-red-400' : ''} name="ico-avatar" size={24} />
+          <div className="name">
+            {name} {host ? <span className="ml-1 rounded-lg bg-green-400 px-2 text-xs text-white">Host</span> : ''}
           </div>
         </div>
         {vote != undefined && !isCompleted && (
           <div className="voted">
-            <Icon className="ico-checkmark" size={20} />
+            <Icon name="ico-checkmark" size={24} />
             <p className="text">Voted</p>
           </div>
         )}
