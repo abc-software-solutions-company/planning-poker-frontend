@@ -1,7 +1,7 @@
 import cn from 'classnames';
 
 import Icon from '@/core-ui/icon';
-import {COLORVOTE} from '@/utils/constant';
+import {CHARTCOLORS} from '@/utils/constant';
 
 interface IProps {
   className?: string;
@@ -13,8 +13,8 @@ interface IProps {
 
 const VoteUser: React.FC<IProps> = ({name, className, vote, host, isCompleted = false}) => {
   let color = '#000000';
-  if (vote && isCompleted) color = COLORVOTE[vote];
-  console.log(host);
+  if (vote && isCompleted) color = CHARTCOLORS[vote];
+
   return (
     <>
       <div className={cn('player-status', className)}>
