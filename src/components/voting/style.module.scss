@@ -162,7 +162,7 @@
     }
     .name {
       @apply pl-4 text-base drop-shadow-md;
-      @apply truncate;
+      @apply flex items-center;
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;
