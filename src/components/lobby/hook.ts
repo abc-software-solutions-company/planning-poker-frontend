@@ -9,7 +9,7 @@ import useToast from '@/core-ui/toast';
 import {getRoom} from '@/data/client/room.client';
 
 const Schema = yup.object().shape({
-  idOrLink: yup.string().required('Please enter room link or Id').max(256, 'Room link must not exceed 256 letters')
+  idOrLink: yup.string().required('Please enter room link or ID').max(256, 'Room link must not exceed 256 letters')
 });
 
 interface IFormInputs {
