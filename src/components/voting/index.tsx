@@ -23,6 +23,7 @@ interface IProps {
 const VoteRoom: FC<IProps> = ({data}) => {
   const router = useRouter();
   const [room, setRoom] = useState<IRoomResponse>(data);
+  let lenVotedUser = 0;
 
   const {
     auth,
@@ -38,8 +39,12 @@ const VoteRoom: FC<IProps> = ({data}) => {
   } = useVoting({room, setRoom});
 
   const inputLink = useRef<HTMLInputElement>(null);
-
   console.log(window.location.href);
+
+  if (dataVoted) {
+    lenVotedUser = dataVoted.filter(v => v !== null).length;
+    console.log(lenVotedUser);
+  }
 
   return (
     <>
@@ -94,7 +99,10 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 {auth && story && story.avgPoint !== null && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                Total players: <span className="user-lenght">{room.userRooms.length}</span>
+                Voted players:{' '}
+                <span className="user-lenght">
+                  {lenVotedUser}/{room.userRooms.length}
+                </span>
               </Heading>
               <div className={cls('voter-list border-line', room.userRooms.length >= 5 ? 'h-[285px]' : '')}>
                 {auth &&
