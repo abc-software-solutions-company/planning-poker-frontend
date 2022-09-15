@@ -1,5 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction, useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -25,9 +25,11 @@ const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
 export default function useModalStory({room, setRoom}: IHookParams) {
   const {toast, story} = useVoting({room, setRoom});
+  const value = story && story.avgPoint === null ? story.name : '';
 
   const {
     register,
+    setValue,
     handleSubmit,
     reset,
     formState: {errors}
@@ -69,6 +71,11 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   const onSubmit: SubmitHandler<IFormInputs> = data => {
     handleOnSubmit(data);
   };
+
+  useEffect(() => {
+    setValue('name', value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [story]);
 
   return {errors, register, handleSubmit, onSubmit, story};
 }

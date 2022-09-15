@@ -19,7 +19,7 @@ const Authentication: FC<IProps> = ({children}) => {
   const router = useRouter();
   const authDispatch = useDispatchAuth();
   useEffect(() => {
-    if (router.asPath.includes(ROUTES.ROOM) && !auth) {
+    if (!router.asPath.includes(ROUTES.LOGIN)) {
       Cookie.set('_room', router.asPath);
     }
     const userIdCookie = getCookie('_userId');
