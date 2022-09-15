@@ -19,7 +19,7 @@ interface IProps {
 
 const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
   const {story, errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
-  const title = story && story.avgPoint === null ? 'Update' : 'Create New';
+  const title = story && story.avgPoint === null ? 'Update' : 'Create';
 
   return (
     <>
