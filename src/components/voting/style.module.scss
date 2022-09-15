@@ -167,12 +167,15 @@
       @apply w-full;
     }
     .name {
-      @apply text-base drop-shadow-md;
+      @apply text-base;
       @apply flex items-center;
       @apply pl-3;
     }
     .host {
-      @apply mx-1 rounded-lg bg-green-400 px-2 text-xs text-white;
+      @apply bg-green-400 text-white;
+      @apply mx-1 rounded-lg text-xs;
+      @apply p-2;
+      @apply leading-0;
     }
     .action {
       @apply flex justify-center gap-4 p-4 text-base;
