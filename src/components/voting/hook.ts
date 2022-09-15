@@ -63,11 +63,12 @@ export default function useVoting({room, setRoom}: IHookParams) {
       if (isHost()) setOpenModal(!story);
 
       if (story) {
-        if (story.avgPoint) {
-          setDataVoted(story.userStories.map(r => r.votePoint));
-        } else {
-          setDataVoted(undefined);
-        }
+        // if (story.avgPoint) {
+        //   setDataVoted(story.userStories.map(r => r.votePoint));
+        // } else {
+        //   setDataVoted(undefined);
+        // }
+        setDataVoted(story.userStories.map(r => r.votePoint));
       }
     }
   };
