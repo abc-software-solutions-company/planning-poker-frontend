@@ -55,7 +55,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
               <button onClick={() => router.push(ROUTES.HOME)}>
                 <Icon name="ico-arrow-left-circle" size={28} />
               </button>
-              <p className="text">{room.name}</p>
+              <p className="room-name">{room.name}</p>
             </div>
             <div className="right">
               <Icon name="ico-user" size={24} />
