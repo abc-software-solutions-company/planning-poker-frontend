@@ -46,11 +46,12 @@ const VoteRoom: FC<IProps> = ({data}) => {
       <div className={style['section-vote-room']}>
         <div className="container">
           <div className="topbar">
-            <button className="left" onClick={() => router.push(ROUTES.HOME)}>
-              {' '}
-              <Icon name="ico-arrow-left-circle" size={28} />
-              <p className="text">Back</p>
-            </button>
+            <div className="left">
+              <button onClick={() => router.push(ROUTES.HOME)}>
+                <Icon name="ico-arrow-left-circle" size={28} />
+              </button>
+              <p className="text">{room.name}</p>
+            </div>
             <div className="right">
               <Icon name="ico-user" size={24} />
               <p className={cls('text')}>{auth && auth.name}</p>
@@ -59,14 +60,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
 
           <div className="content">
             <div className="left-content">
-              {/* <Heading className="setRoom-name" as="h5">
-                {data.name}
-              </Heading> */}
-              <p className="setRoom-name">{data.name}</p>
               <div className="story-name">
-                {/* <Heading as="h5" className={story && story?.name.length >= 25 && 'break'}>
-                  {story?.name || 'Story name'}
-                </Heading> */}
                 <p className={cls('name', story && story?.name.length >= 25 && 'break')}>
                   {story?.name || 'Story name'}
                 </p>

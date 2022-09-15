@@ -14,6 +14,9 @@
     }
     .left {
       @apply flex items-center;
+      button {
+        @apply -mb-1.5;
+      }
     }
     .right {
       @apply flex items-center;
@@ -37,7 +40,7 @@
     .story-name {
       @apply flex items-center justify-center;
       @apply gap-2 text-h5;
-      @apply mt-7 lg:mt-9;
+      @apply mt-7 lg:mt-0 lg:pt-5;
 
       .break {
         @apply w-96 break-words;
