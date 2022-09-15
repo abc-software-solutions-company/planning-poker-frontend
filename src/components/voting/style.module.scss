@@ -11,15 +11,18 @@
     }
     .text {
       @apply text-h4;
+      @apply truncate;
     }
     .left {
       @apply flex items-center;
+      @apply w-36 sm:w-fit;
       button {
         @apply -mb-1.5;
       }
     }
     .right {
       @apply flex items-center;
+      @apply w-36 sm:w-fit;
     }
   }
   .content {
