@@ -36,7 +36,7 @@
     @apply pb-8;
   }
   .actions {
-    @apply grid gap-x-5 gap-y-4 md:grid-cols-2;
+    @apply grid gap-4 md:grid-cols-2;
   }
   .abc-input.error {
     @apply relative;
