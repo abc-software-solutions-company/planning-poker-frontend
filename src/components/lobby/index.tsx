@@ -21,7 +21,7 @@ const Lobby: FC = () => {
           <div className="topbar">
             <div className="right">
               <Icon name="ico-user" size={24} />
-              <p className={cls('text', auth && auth.name.length >= 12 && 'user-name')}>{auth && auth.name}</p>
+              <p className={cls('text')}>{auth && auth.name}</p>
             </div>
           </div>
           <div className="inner">
