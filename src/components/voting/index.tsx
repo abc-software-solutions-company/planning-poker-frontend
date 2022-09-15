@@ -64,9 +64,11 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 <p className={cls('name', story && story?.name.length >= 25 && 'break')}>
                   {story?.name || 'Story name'}
                 </p>
-                <button onClick={() => handleNewStory()}>
-                  <Icon name="ico-edit" size={24} />
-                </button>
+                {isHost() && (
+                  <button onClick={() => handleNewStory()}>
+                    <Icon name="ico-edit" size={24} />
+                  </button>
+                )}
               </div>
               {auth && (story === null || story.avgPoint === null) && (
                 <div className="card-holder">
