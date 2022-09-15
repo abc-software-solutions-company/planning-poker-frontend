@@ -21,7 +21,7 @@ const LetsStart: React.FC = () => {
               <div className="form-enter-your-name">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Heading className="head-form" as="h4">
-                    Let&apos; start!
+                    Let&apos;s start!
                   </Heading>
                   <Input error={errors.name?.message} placeholder="Enter your name" {...register('name')} />
                   <Button className="w-full" variant="contained" color="primary" type="submit">
