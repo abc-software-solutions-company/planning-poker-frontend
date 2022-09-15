@@ -4,25 +4,33 @@
   }
 
   .topbar {
-    @apply flex items-center justify-between;
+    @apply flex items-start justify-between;
     @apply mt-7 w-full lg:mt-12;
+    @apply gap-2;
     .abc-icon {
       @apply mr-2;
     }
     .text {
-      @apply text-h4;
-      @apply truncate;
+      @apply mt-[2px] break-all text-h4 leading-5;
+    }
+    .room-name {
+      @apply font-bold;
+      @apply text-h4 md:text-h3;
+      @apply break-all;
+      @apply leading-6;
     }
     .left {
-      @apply flex items-center;
-      @apply w-36 sm:w-fit;
+      @apply flex items-start;
+      @apply w-full;
+      @apply basis-9/12;
       button {
         @apply -mb-1.5;
       }
     }
     .right {
-      @apply flex items-center;
-      @apply w-36 sm:w-fit;
+      @apply flex items-start;
+      @apply basis-4/12;
+      @apply justify-end;
     }
   }
   .content {
