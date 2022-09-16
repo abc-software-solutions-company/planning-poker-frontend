@@ -2,47 +2,27 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {Cookies} from 'typescript-cookie';
 import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
 import {AuthActions} from '@/contexts/auth';
 import {useDispatchAuth} from '@/contexts/auth/context';
-import {createUser, ICreateUser} from '@/data/client/user.client';
+import {login} from '@/data/client/auth.client';
 import Cookie from '@/utils/cookie';
 
 interface IFormInputs {
   name: string;
 }
+const Schema = yup.object().shape({
+  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters')
+});
 
+const FORM_DEFAULT_VALUES: IFormInputs = {
+  name: ''
+};
 export default function useLetsStart() {
   const router = useRouter();
   const dispatchAuth = useDispatchAuth();
-  const Schema = yup.object().shape({
-    name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters')
-  });
-
-  const FORM_DEFAULT_VALUES: IFormInputs = {
-    name: ''
-  };
-
-  const handleOnSubmit = (data: ICreateUser) => {
-    createUser(data).then(res => {
-      if (res.status === 201) {
-        Cookie.remove('_userId');
-        Cookie.set('_userId', res.data.id, {expires: 7, sameSite: 'strict', path: '/'});
-        dispatchAuth(AuthActions.login(res.data));
-        const linkRoom = Cookie.get('_room');
-        if (linkRoom) {
-          Cookie.remove('_room');
-          router.push('/', linkRoom, {locale: 'en'});
-        } else {
-          router.push(ROUTES.HOME);
-        }
-      }
-    });
-  };
-
   const {
     register,
     handleSubmit,
@@ -53,11 +33,22 @@ export default function useLetsStart() {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data);
+    login(data).then(res => {
+      if (res.status === 201) {
+        Cookie.accessToken.set(res.data.accessToken);
+        dispatchAuth(AuthActions.login(res.data.user));
+        const previousPage = Cookie.previousPage.get();
+        if (previousPage) {
+          router.push(previousPage);
+        } else {
+          router.push(ROUTES.HOME);
+        }
+      }
+    });
   };
 
   useEffect(() => {
-    Cookies.remove('_userId');
+    Cookie.accessToken.remove();
   }, []);
 
   return {register, errors, handleSubmit, onSubmit};

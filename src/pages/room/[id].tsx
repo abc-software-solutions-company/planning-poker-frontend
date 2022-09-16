@@ -8,11 +8,7 @@ import LayoutDefault from '@/layouts/default';
 export {getStaticPaths, getStaticProps};
 
 export default function PageRoom({room}: InferGetStaticPropsType<typeof getStaticProps>) {
-  return (
-    <>
-      <Voting data={room} />
-    </>
-  );
+  return <Voting data={room} />;
 }
 
 PageRoom.Layout = LayoutDefault;

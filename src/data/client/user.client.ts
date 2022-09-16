@@ -2,26 +2,17 @@ import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import {IBaseResponse} from '@/types';
 
 import api from '../http';
-import {IUserStoryRespone} from './userStory.client';
+import {IUserStoryResponse} from './userStory.client';
 
 //type
-export interface ICreateUser {
-  name: string;
-}
 
-export interface IGetUser {
+export interface IUserResponse extends IBaseResponse {
   id: string;
-}
-
-export interface IUserResponse extends IBaseResponse, ICreateUser, IGetUser {
-  userStories: IUserStoryRespone[];
+  name: string;
+  userStories: IUserStoryResponse[];
 }
 
 //function
-export function getUser({id}: IGetUser) {
-  return api.get<IUserResponse>(API_ENDPOINTS.USER + '/' + id);
-}
-
-export function createUser(data: ICreateUser) {
-  return api.post<IUserResponse>(API_ENDPOINTS.USER, data);
+export function getUserInfor() {
+  return api.get<IUserResponse>(API_ENDPOINTS.USER + '/infor');
 }
