@@ -15,10 +15,10 @@
       @apply mr-2;
     }
     .text {
-      @apply text-h4 font-medium;
+      @apply mt-[2px] break-words text-h4 leading-5;
     }
     .right {
-      @apply flex items-center;
+      @apply flex items-start;
     }
   }
 
