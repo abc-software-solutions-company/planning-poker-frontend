@@ -22,8 +22,7 @@
     @apply bg-blue-50;
   }
   .input-button {
-    @apply p-4;
-    @apply lg:p-5 lg:pb-6;
+    @apply p-4 lg:p-6;
   }
   .action {
     @apply flex;
