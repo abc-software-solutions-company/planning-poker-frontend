@@ -15,20 +15,19 @@
   }
   h5 {
     @apply text-center;
-    @apply pt-4 md:pt-6;
+    @apply pt-4 lg:pt-6;
   }
   .content {
     @apply mx-auto max-w-xl rounded-lg;
     @apply bg-blue-50;
   }
   .input-button {
-    @apply p-4;
-    @apply lg:p-5 lg:pb-6;
+    @apply p-4 lg:p-6;
   }
   .action {
     @apply flex;
-    @apply gap-3 md:gap-4;
-    @apply mt-4 md:mt-6;
+    @apply gap-3 lg:gap-4;
+    @apply mt-4 lg:mt-6;
   }
 
   .abc-input.error {
