@@ -19,7 +19,8 @@ interface IProps {
 
 const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
   const {story, errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
-  const title = story && story.avgPoint === null ? 'Update' : 'Create';
+  const title = story && story.avgPoint === null ? 'Update' : 'Create New';
+  const textButton = story && story.avgPoint === null ? 'Update' : 'Create';
 
   return (
     <>
@@ -46,7 +47,7 @@ const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
                     text="Cancel"
                     onClick={() => setOpen(false)}
                   />
-                  <Button className="w-full" variant="contained" color="primary" text={title} type="submit" />
+                  <Button className="w-full" variant="contained" color="primary" text={textButton} type="submit" />
                 </div>
               </div>
             </div>
