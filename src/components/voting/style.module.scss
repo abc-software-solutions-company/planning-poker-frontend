@@ -34,7 +34,7 @@
     }
   }
   .content {
-    @apply relative lg:mt-12 lg:flex;
+    @apply relative mt-8 lg:mt-12 lg:flex;
   }
 
   .left-content {
@@ -49,20 +49,22 @@
       @apply justify-start;
     }
     .story-name {
-      @apply flex items-center justify-center;
-      @apply gap-2 text-h5;
+      @apply flex items-start justify-center;
+      @apply text-h5;
       .break {
-        @apply w-96 break-words;
+        @apply w-96 break-all;
       }
       .abc-icon {
         @apply lg:text-[32px];
         @apply flex justify-center;
       }
       button {
-        @apply flex items-center;
+        @apply ml-1;
       }
       .name {
-        @apply text-h4 font-medium lg:text-h3;
+        @apply font-medium;
+        @apply text-h4 lg:text-h3;
+        @apply leading-5;
       }
     }
 
