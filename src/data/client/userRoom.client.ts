@@ -5,24 +5,23 @@ import api from '../http';
 import {IUserResponse} from './user.client';
 
 //type
-export interface ICreateUserRoom {
-  userId: string;
+export interface IUserRoomCreate {
   roomId: string;
 }
-export interface IUpdateUserRoom extends ICreateUserRoom {
-  isOnline?: boolean;
+export interface IUserRoomUpdate extends IUserRoomCreate {
+  isOnline: boolean;
 }
 
-export interface IUserRoomResponse extends IBaseResponse, ICreateUserRoom {
-  isOnline: boolean;
+export interface IUserRoomResponse extends IBaseResponse, IUserRoomCreate {
+  userId: string;
   user: IUserResponse;
 }
 
 //function
-export function createUserRoom(data: ICreateUserRoom) {
+export function createUserRoom(data: IUserRoomCreate) {
   return api.post<IUserRoomResponse>(API_ENDPOINTS.USERROOM, data);
 }
 
-export function updateUserRoom(data: IUpdateUserRoom) {
+export function updateUserRoom(data: IUserRoomUpdate) {
   return api.patch<IUserRoomResponse>(API_ENDPOINTS.USERROOM, data);
 }

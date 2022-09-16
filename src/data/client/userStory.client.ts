@@ -4,26 +4,23 @@ import {IBaseResponse} from '@/types';
 import api from '../http';
 
 //type
-export interface IAllByStoryUserStory {
+export interface IUserStoryCreate {
   storyId: string;
 }
-export interface IGetUserStory extends IAllByStoryUserStory {
-  userId: string;
-}
 
-export interface ICreateUserStory extends IGetUserStory {
+export interface IUserStoryUpdate extends IUserStoryCreate {
   votePoint: number | null;
 }
 
-export type IUpdateUserStory = ICreateUserStory;
-
-export interface IUserStoryRespone extends IBaseResponse, ICreateUserStory {}
+export interface IUserStoryResponse extends IBaseResponse, IUserStoryUpdate {
+  userId: string;
+}
 
 //function
 
-export function createUserStory(data: ICreateUserStory) {
-  return api.post<IUserStoryRespone>(API_ENDPOINTS.USERSTORY, data);
+export function createUserStory(data: IUserStoryCreate) {
+  return api.post<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data);
 }
-export function updateUserStory(data: IUpdateUserStory) {
-  return api.patch<IUserStoryRespone>(API_ENDPOINTS.USERSTORY, data);
+export function updateUserStory(data: IUserStoryUpdate) {
+  return api.patch<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data);
 }

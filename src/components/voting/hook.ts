@@ -42,7 +42,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
   const handleStart = () => {
     if (auth) {
       if (room.userRooms.filter(atc => atc.userId === auth.id).length === 0) {
-        createUserRoom({roomId: room.id, userId: auth.id}).then(res => {
+        createUserRoom({roomId: room.id}).then(res => {
           if (res.status === 201) {
             socketUpdate();
           }
@@ -54,7 +54,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
   const handleUpdateRoom = () => {
     if (auth) {
       if (story && story.avgPoint === null && story.userStories.filter(s => s.userId === auth.id).length === 0) {
-        createUserStory({storyId: story.id, userId: auth.id, votePoint: null}).then(res => {
+        createUserStory({storyId: story.id}).then(res => {
           if (res.status === 201) {
             socketUpdate();
           }
@@ -75,7 +75,7 @@ export default function useVoting({room, setRoom}: IHookParams) {
 
   const handleSelectPoker = async (value: number) => {
     if (auth && story) {
-      updateUserStory({storyId: story.id, userId: auth.id, votePoint: value}).then(res => {
+      updateUserStory({storyId: story.id, votePoint: value}).then(res => {
         if (res.status === 200) {
           socketUpdate();
         }

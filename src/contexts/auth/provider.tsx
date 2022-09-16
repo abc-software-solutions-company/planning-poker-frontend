@@ -1,9 +1,8 @@
 import {useRouter} from 'next/router';
 import React, {FC, ReactNode, useEffect, useReducer} from 'react';
-import {getCookie} from 'typescript-cookie';
 
 import {ROUTES} from '@/configs/routes.config';
-import {getUser} from '@/data/client/user.client';
+import {getUserInfor} from '@/data/client/user.client';
 import Cookie from '@/utils/cookie';
 
 import {AuthActions} from '.';
@@ -17,23 +16,32 @@ interface IProps {
 const Authentication: FC<IProps> = ({children}) => {
   const auth = useStateAuth();
   const router = useRouter();
+  const asPath = router.asPath;
   const authDispatch = useDispatchAuth();
+
   useEffect(() => {
-    if (!router.asPath.includes(ROUTES.LOGIN)) {
-      Cookie.set('_room', router.asPath);
+    if (!asPath.includes(ROUTES.LOGIN)) {
+      Cookie.previousPage.set(asPath);
     }
-    const userIdCookie = getCookie('_userId');
-    if (!userIdCookie) {
-      if (!router.asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
+    const accessToken = Cookie.accessToken.get();
+    if (!accessToken) {
+      if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
     } else {
-      getUser({id: userIdCookie}).then(res => {
-        if (res.status === 200) authDispatch(AuthActions.login(res.data));
-      });
+      if (!auth) {
+        getUserInfor()
+          .then(res => {
+            if (res.status === 200) authDispatch(AuthActions.login(res.data));
+          })
+          .catch(() => {
+            if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
+          });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!router.asPath.includes(ROUTES.LOGIN) && !auth) return null;
+  if (!asPath.includes(ROUTES.LOGIN) && !auth) return null;
+  console.log('🚀 ~ file: provider.tsx ~ line 18 ~ auth', auth);
 
   return <>{children}</>;
 };

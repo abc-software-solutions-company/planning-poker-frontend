@@ -16,13 +16,12 @@ api.interceptors.request.use(
   config => {
     config.headers = {...config.headers};
     if (typeof window !== 'undefined') {
-      const token = Cookie.get('_userId');
-      if (token) config.headers.Authorization = token;
+      const accessToken = Cookie.accessToken.get();
+      if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
-  err => err
+  err => Promise.reject(err)
 );
 
 api.interceptors.response.use(
@@ -35,7 +34,7 @@ api.interceptors.response.use(
         window.location.href = ROUTES.LOGIN;
       }
     }
-    return err;
+    return Promise.reject(err);
   }
 );
 
