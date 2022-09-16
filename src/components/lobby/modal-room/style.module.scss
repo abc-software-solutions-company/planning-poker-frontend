@@ -29,9 +29,9 @@
     @apply gap-3 lg:gap-4;
     @apply mt-4 lg:mt-6;
   }
-
   .abc-input.error {
     @apply relative;
+    @apply mb-5 lg:mb-0;
     .message {
       @apply absolute left-0 mt-0 text-xs;
     }
