@@ -34,7 +34,7 @@
     }
   }
   .content {
-    @apply relative lg:mt-14 lg:flex;
+    @apply relative lg:mt-12 lg:flex;
   }
 
   .left-content {
@@ -51,7 +51,7 @@
     .story-name {
       @apply flex items-center justify-center;
       @apply gap-2 text-h5;
-      @apply mt-7 lg:mt-0 lg:pt-5;
+      @apply mt-8 lg:mt-8;
 
       .break {
         @apply w-96 break-words;
@@ -70,14 +70,14 @@
     }
 
     .card-holder {
-      @apply mt-8 lg:mt-16;
-      @apply sm:px-20 md:px-36 lg:px-0 xl:mx-28;
-      @apply grid grid-cols-4 sm:grid-cols-3 lg:grid-cols-4;
-      @apply gap-y-4 lg:gap-8 lg:gap-x-5;
-      @apply mx-auto sm:mr-16;
+      @apply mx-auto w-fit lg:ml-0;
+      @apply mt-8 lg:mt-24;
+      @apply grid grid-cols-4;
+      @apply gap-3 lg:gap-8;
     }
     .card-item {
-      @apply relative m-auto cursor-pointer overflow-hidden rounded-lg border border-blue-500 bg-white;
+      @apply relative cursor-pointer overflow-hidden rounded-lg border border-blue-500 bg-white;
+      @apply m-auto;
       @apply h-28 w-20 lg:h-48 lg:w-32;
       &.selected {
         button {
