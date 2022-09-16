@@ -97,7 +97,7 @@
     .chart-holder {
       @apply flex flex-col items-center lg:flex-row-reverse;
       .chart {
-        @apply relative mx-auto my-10 flex h-[320px] w-[320px] items-center justify-center sm:h-[400px] sm:w-[400px];
+        @apply relative mx-auto my-8 flex h-[320px] w-[320px] items-center justify-center sm:h-[400px] sm:w-[400px];
         canvas {
           @apply absolute object-contain object-center;
         }
@@ -109,21 +109,28 @@
         }
       }
       .chart-info {
-        @apply mt-10 flex h-full w-full flex-wrap justify-center gap-y-5 lg:absolute lg:left-0 lg:mt-0 lg:w-auto lg:flex-col lg:flex-nowrap lg:justify-center lg:gap-y-10;
+        // @apply h-full w-full gap-y-5 lg:absolute lg:left-0 lg:mt-0 lg:w-auto lg:flex-col lg:flex-nowrap lg:justify-center lg:gap-y-10;
+
+        @apply flex flex-wrap justify-start lg:flex-col;
+        @apply gap-x-10 gap-y-3 lg:gap-y-4;
+
         .label {
-          @apply relative flex  w-1/3 items-center justify-center lg:w-auto lg:justify-start;
-          .circle {
-            @apply h-6 w-6 rounded-full;
-            @apply mr-1 lg:mr-3;
+          @apply flex items-center;
+          @apply border border-blue-500;
+          @apply rounded-3xl p-1;
+
+          .wrapper {
+            @apply h-7 w-7;
           }
+
           .value {
-            @apply flex pb-[1px];
+            @apply text-center text-h4 text-white;
+            @apply h-full w-full rounded-full;
           }
-          .sub {
-            @apply relative;
-            .most {
-              @apply absolute top-0 left-0 ml-1 rounded-full bg-green-400 px-2 text-white;
-            }
+
+          .most {
+            @apply rounded-full bg-green-400 px-1 text-white;
+            @apply ml-1;
           }
         }
       }
