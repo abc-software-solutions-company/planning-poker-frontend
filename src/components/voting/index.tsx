@@ -6,13 +6,13 @@ import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
-import Chart from '@/core-ui/chart';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 import {IRoomResponse} from '@/data/client/room.client';
 import {FIBONACCI} from '@/utils/constant';
 
+import ComChart from './chart';
 import useVoting from './hook';
 import style from './style.module.scss';
 import VoteUser from './voters';
@@ -92,7 +92,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                 </div>
               )}
               {auth && story && story.avgPoint !== null && dataVoted && (
-                <Chart className="chart-holder" voted={dataVoted} />
+                <ComChart className="chart-holder" voted={dataVoted} />
               )}
             </div>
             <div className="right-content">
