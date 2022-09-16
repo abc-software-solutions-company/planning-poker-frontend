@@ -11,7 +11,7 @@
       @apply mr-2;
     }
     .text {
-      @apply mt-[2px] break-all text-h4 leading-5;
+      @apply mt-[2px] break-words text-h4 leading-5;
     }
     .room-name {
       @apply font-bold;
@@ -52,7 +52,7 @@
       @apply flex items-start justify-center;
       @apply text-h5;
       .break {
-        @apply w-96 break-all;
+        @apply w-96 break-words;
       }
       .abc-icon {
         @apply lg:text-[32px];
@@ -165,13 +165,13 @@
       }
     }
     .player-info {
-      @apply flex items-center;
+      @apply flex items-start;
       @apply w-full;
     }
     .name {
       @apply text-base;
       @apply flex items-center;
-      @apply pl-3;
+      @apply mt-[2px] pl-3 leading-5;
     }
     .host {
       @apply bg-green-400 text-white;
