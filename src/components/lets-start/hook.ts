@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import {AuthActions} from '@/contexts/auth';
 import {useDispatchAuth} from '@/contexts/auth/context';
-import {login} from '@/data/client/auth.client';
+import api from '@/data/api';
 import Cookie from '@/utils/cookie';
 
 interface IFormInputs {
@@ -33,7 +33,7 @@ export default function useLetsStart() {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = data => {
-    login(data).then(res => {
+    api.auth.login(data).then(res => {
       if (res.status === 201) {
         Cookie.accessToken.set(res.data.accessToken);
         dispatchAuth(AuthActions.login(res.data.user));

@@ -1,13 +1,13 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {Dispatch, SetStateAction, useEffect} from 'react';
+import {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
-import {IRoomResponse} from '@/data/client/room.client';
-import {createStory, updateStory} from '@/data/client/story.client';
-import socket from '@/data/socket';
+import useToast from '@/core-ui/toast';
+import api from '@/data/api';
+import {socketUpdateRoom} from '@/data/socket';
 
-import useVoting from '../hook';
+import {IModalStoryProps} from '.';
 
 const Schema = yup.object().shape({
   name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
@@ -16,16 +16,12 @@ const Schema = yup.object().shape({
 interface IFormInputs {
   name: string;
 }
-interface IHookParams {
-  room: IRoomResponse;
-  setRoom: Dispatch<SetStateAction<IRoomResponse>>;
-}
 
 const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
-export default function useModalStory({room, setRoom}: IHookParams) {
-  const {toast, story} = useVoting({room, setRoom});
-  const value = story && story.avgPoint === null ? story.name : '';
+export default function useModalStory(props: IModalStoryProps) {
+  const {roomData, setOpenModal} = props;
+  const toast = useToast();
 
   const {
     register,
@@ -39,32 +35,36 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   });
 
   const handleOnSubmit = async ({name}: IFormInputs) => {
-    if (story && story.avgPoint === null) {
-      updateStory({id: story.id, name: name}).then(async res => {
-        if (res.status === 200) {
-          socket.emit('update', {roomId: room.id});
-          reset();
-          toast.show({
-            type: 'success',
-            title: 'Success!',
-            content: 'Update success story',
-            lifeTime: 3000
-          });
-        }
-      });
-    } else {
-      createStory({roomId: room.id, name}).then(async res => {
-        if (res.status === 201) {
-          socket.emit('update', {roomId: room.id});
-          reset();
-          toast.show({
-            type: 'success',
-            title: 'Success!',
-            content: 'Create success story',
-            lifeTime: 3000
-          });
-        }
-      });
+    if (roomData) {
+      if (roomData.story?.avgPoint === null) {
+        api.story.update({id: roomData.story.id, name: name}).then(async res => {
+          if (res.status === 200) {
+            socketUpdateRoom({roomId: roomData.id});
+            reset();
+            setOpenModal(false);
+            toast.show({
+              type: 'success',
+              title: 'Success!',
+              content: 'Update success story',
+              lifeTime: 3000
+            });
+          }
+        });
+      } else {
+        api.story.create({name, roomId: roomData.id}).then(async res => {
+          if (res.status === 201) {
+            socketUpdateRoom({roomId: roomData.id});
+            reset();
+            setOpenModal(false);
+            toast.show({
+              type: 'success',
+              title: 'Success!',
+              content: 'Create success story',
+              lifeTime: 3000
+            });
+          }
+        });
+      }
     }
   };
 
@@ -73,9 +73,9 @@ export default function useModalStory({room, setRoom}: IHookParams) {
   };
 
   useEffect(() => {
-    setValue('name', value);
+    setValue('name', '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [story]);
+  }, [roomData]);
 
-  return {errors, register, handleSubmit, onSubmit, story};
+  return {errors, register, handleSubmit, onSubmit};
 }

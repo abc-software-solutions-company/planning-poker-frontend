@@ -1,6 +1,6 @@
 import cls from 'classnames';
 import {useRouter} from 'next/router';
-import {FC, useRef, useState} from 'react';
+import {FC, useRef} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
@@ -9,7 +9,6 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {IRoomResponse} from '@/data/client/room.client';
 import {FIBONACCI} from '@/utils/constant';
 
 import ComChart from './chart';
@@ -17,34 +16,29 @@ import useVoting from './hook';
 import style from './style.module.scss';
 import VoteUser from './voters';
 
-interface IProps {
-  data: IRoomResponse;
+export interface IVoteRoomProps {
+  roomId: string;
 }
-const VoteRoom: FC<IProps> = ({data}) => {
+const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
   const router = useRouter();
-  const [room, setRoom] = useState<IRoomResponse>(data);
-  let lenVotedUser = 0;
-
   const {
     auth,
-    story,
-    dataVoted,
     openModal,
+    roomData,
+    dataVoted,
     isHost,
     handleCopy,
     setOpenModal,
     handleComplete,
     handleNewStory,
     handleSelectPoker
-  } = useVoting({room, setRoom});
+  } = useVoting({roomId});
+  console.log('🚀 ~ file: index.tsx ~ line 36 ~ isHost', isHost);
 
   const inputLink = useRef<HTMLInputElement>(null);
-  console.log(window.location.href);
 
-  if (dataVoted) {
-    lenVotedUser = dataVoted.filter(v => v !== null).length;
-    console.log(lenVotedUser);
-  }
+  const numVotedUser = roomData?.users?.filter(user => user.votePoint && user.votePoint !== null).length || 0;
+  const numJoinUser = roomData?.users?.length || 0;
 
   return (
     <>
@@ -55,7 +49,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
               <button onClick={() => router.push(ROUTES.HOME)}>
                 <Icon name="ico-arrow-left-circle" size={28} />
               </button>
-              <p className="room-name">{room.name}</p>
+              <p className="room-name">{roomData && roomData.name}</p>
             </div>
             <div className="right">
               <Icon name="ico-user" size={24} />
@@ -66,67 +60,69 @@ const VoteRoom: FC<IProps> = ({data}) => {
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <p className={cls('name', story && story?.name.length >= 25 && 'break')}>
-                  {story?.name || 'Story name'}
+                <p className={cls('name', roomData?.story && roomData.story.name.length >= 25 && 'break')}>
+                  {roomData?.story?.name || 'Story name'}
                 </p>
-                {isHost() && (
+                {isHost && (
                   <button onClick={() => handleNewStory()}>
                     <Icon name="ico-edit" size={24} />
                   </button>
                 )}
               </div>
-              {auth && (story === null || story.avgPoint === null) && (
+              {auth && (!roomData?.story || roomData.story.avgPoint === null) && (
                 <div className="card-holder">
-                  {FIBONACCI.map(num => {
-                    return (
-                      <VoteCard
-                        key={num}
-                        className={
-                          num === story?.userStories.filter(r => r.userId === auth.id)[0]?.votePoint ? 'selected' : ''
-                        }
-                        value={num}
-                        onClick={() => handleSelectPoker(num)}
-                      />
-                    );
-                  })}
+                  {roomData &&
+                    FIBONACCI.map(num => {
+                      return (
+                        <VoteCard
+                          key={num}
+                          className={
+                            num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint ? 'selected' : ''
+                          }
+                          value={num}
+                          onClick={() => handleSelectPoker(num)}
+                        />
+                      );
+                    })}
                 </div>
               )}
-              {auth && story && story.avgPoint !== null && dataVoted && (
+              {auth && roomData?.story?.avgPoint !== null && dataVoted && (
                 <ComChart className="chart-holder" voted={dataVoted} />
               )}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
-                {auth && (story === null || story.avgPoint === null) && 'Wait for voting'}
-                {auth && story && story.avgPoint !== null && 'Result'}
+                {(!roomData?.story || roomData.story.avgPoint === null) && 'Wait for voting'}
+                {roomData?.story?.avgPoint !== null && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
                 Voted players:{' '}
-                <span className="user-lenght">
-                  {lenVotedUser}/{room.userRooms.length}
-                </span>
+                {roomData && (
+                  <span className="user-lenght">
+                    {numVotedUser}/{numJoinUser}
+                  </span>
+                )}
               </Heading>
-              <div className={cls('voter-list border-line', room.userRooms.length >= 5 ? 'h-[285px]' : '')}>
-                {auth &&
-                  room.userRooms
-                    ?.sort(a => (a.userId !== room.hostUserId ? 1 : -1))
-                    .map(ur => {
-                      const vote = ur.user.userStories.filter(us => us.storyId === story?.id)[0]?.votePoint;
+              <div className={cls('voter-list border-line', roomData && roomData.users.length >= 5 ? 'h-[285px]' : '')}>
+                {roomData &&
+                  roomData.users
+                    ?.sort(user => (user.id === roomData.hostUserId ? -1 : 1))
+                    .map(({id, name, votePoint}) => {
                       return (
                         <VoteUser
                           className="border-line"
-                          key={ur.userId}
-                          name={ur.user.name}
-                          host={ur.userId === room.hostUserId}
-                          vote={vote !== undefined ? vote : null}
-                          isCompleted={Boolean(auth && story && story.avgPoint !== null)}
+                          key={id}
+                          name={name}
+                          host={id === roomData.hostUserId}
+                          votePoint={votePoint}
+                          isCompleted={!roomData?.story || roomData?.story.avgPoint !== null}
                         />
                       );
                     })}
               </div>
-              {isHost() && (
+              {isHost && (
                 <div className="action border-line">
-                  {auth && (story === null || story.avgPoint === null) && (
+                  {(!roomData?.story || roomData?.story.avgPoint === null) && (
                     <Button
                       className="w-full"
                       variant="contained"
@@ -137,7 +133,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                       Finish
                     </Button>
                   )}
-                  {auth && story && story.avgPoint !== null && (
+                  {(!roomData?.story || roomData?.story.avgPoint !== null) && (
                     <Button
                       className="w-full"
                       variant="contained"
@@ -150,7 +146,7 @@ const VoteRoom: FC<IProps> = ({data}) => {
                   )}
                 </div>
               )}
-              <ModalStory open={openModal} setOpen={setOpenModal} room={room} setRoom={setRoom} />
+              {openModal && <ModalStory {...{roomData, openModal, setOpenModal}} />}
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">

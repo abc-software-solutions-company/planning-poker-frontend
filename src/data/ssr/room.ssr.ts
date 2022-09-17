@@ -1,25 +1,22 @@
 import {GetStaticPaths, GetStaticProps} from 'next';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 
-import {allRoom, getRoom, IRoomResponse} from '../client/room.client';
+import api from '../api';
 
 type ParsedQueryParams = {
   id: string;
 };
 
 type PageProps = {
-  room: IRoomResponse;
+  roomId: string;
 };
 
 export const getStaticProps: GetStaticProps<PageProps, ParsedQueryParams> = async ({locale, params}) => {
   try {
     const {id} = params!;
-    const room = await getRoom({id: id});
-    if (!room.data) throw new Error('');
-    room.data.id = room.data.id;
     return {
       props: {
-        room: room.data,
+        roomId: id,
         ...(await serverSideTranslations(locale!, ['common']))
       }
     };
@@ -31,7 +28,7 @@ export const getStaticProps: GetStaticProps<PageProps, ParsedQueryParams> = asyn
 };
 
 export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async () => {
-  const rooms = await allRoom();
+  const rooms = await api.room.all();
   const paths = rooms.data.flatMap(room => ({params: {id: `${room.id}`}}));
   return {paths, fallback: 'blocking'};
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {ROUTES} from '@/configs/routes.config';
 import Cookie from '@/utils/cookie';
 
-const api = axios.create({
+const http = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333',
   timeout: 30000,
   headers: {
@@ -12,7 +12,7 @@ const api = axios.create({
   }
 });
 
-api.interceptors.request.use(
+http.interceptors.request.use(
   config => {
     config.headers = {...config.headers};
     if (typeof window !== 'undefined') {
@@ -21,21 +21,22 @@ api.interceptors.request.use(
     }
     return config;
   },
-  err => Promise.reject(err)
+  err => err
 );
 
-api.interceptors.response.use(
+http.interceptors.response.use(
   response => {
     return response;
   },
   err => {
-    if (err.response.status === 401) {
+    if (err?.response?.status === 401) {
       if (typeof window !== 'undefined') {
         window.location.href = ROUTES.LOGIN;
       }
     }
-    return Promise.reject(err);
+    console.log(err.response);
+    return err;
   }
 );
 
-export default api;
+export default http;

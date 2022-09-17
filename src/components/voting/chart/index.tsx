@@ -38,21 +38,17 @@ const ComChart: FC<IProps> = ({className, voted}) => {
 
       <div className="chart-info">
         {sortedArray
-          .filter(item => item.len > 0)
+          .filter(item => item.len == sortedArray[0].len)
           .map((item, index) => {
             return (
-              <>
-                {item.len === sortedArray[0].len && (
-                  <div key={index} className="label">
-                    <div className="wrapper">
-                      <p className="value" style={{backgroundColor: item.color}}>
-                        {item.value}
-                      </p>
-                    </div>
-                    <span className="most">Most</span>
-                  </div>
-                )}
-              </>
+              <div key={index} className="label">
+                <div className="wrapper">
+                  <p className="value" style={{backgroundColor: item.color}}>
+                    {item.value}
+                  </p>
+                </div>
+                <span className="most">Most</span>
+              </div>
             );
           })}
       </div>
