@@ -30,6 +30,7 @@ const Chart: FC<IProps> = ({className, voted}) => {
       data: {
         datasets: [
           {
+            labels: FIBONACCI.map(e => String(e)),
             data: FIBONACCI.map(num => voted.filter(v => v === num).length),
             backgroundColor,
             datalabels: {
@@ -59,15 +60,14 @@ const Chart: FC<IProps> = ({className, voted}) => {
             }
           },
           datalabels: {
-            formatter: function (value: any) {
-              if (value) return `${value}`;
+            formatter: function (value: any, context: any) {
+              if (value) return context.dataset.labels[context.dataIndex] as string;
               return '';
             }
           }
         }
       }
     };
-    console.log(FIBONACCI.map(num => voted.filter(v => v === num).length));
     chartModule.Chart.register(...module.registerables);
     chartModule.Chart.register(module.plugins.Decimation);
     chartModule.Chart.register(module.plugins.Filler);

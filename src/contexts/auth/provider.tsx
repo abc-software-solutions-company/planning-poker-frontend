@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import React, {FC, ReactNode, useEffect, useReducer} from 'react';
 
 import {ROUTES} from '@/configs/routes.config';
-import {getUserInfor} from '@/data/client/user.client';
+import api from '@/data/api';
 import Cookie from '@/utils/cookie';
 
 import {AuthActions} from '.';
@@ -28,7 +28,8 @@ const Authentication: FC<IProps> = ({children}) => {
       if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
     } else {
       if (!auth) {
-        getUserInfor()
+        api.auth
+          .verify()
           .then(res => {
             if (res.status === 200) authDispatch(AuthActions.login(res.data));
           })
@@ -41,7 +42,6 @@ const Authentication: FC<IProps> = ({children}) => {
   }, []);
 
   if (!asPath.includes(ROUTES.LOGIN) && !auth) return null;
-  console.log('🚀 ~ file: provider.tsx ~ line 18 ~ auth', auth);
 
   return <>{children}</>;
 };

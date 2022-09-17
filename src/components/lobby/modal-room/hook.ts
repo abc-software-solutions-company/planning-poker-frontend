@@ -7,7 +7,8 @@ import * as yup from 'yup';
 import {ROUTES} from '@/configs/routes.config';
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
-import {createRoom, IRoomCreate} from '@/data/client/room.client';
+import api from '@/data/api';
+import {IRoomCreate} from '@/data/types/room.type';
 
 const Schema = yup.object().shape({
   name: yup.string().required('Please enter room name').max(256, 'Your name must not exceed 256 letters')
@@ -40,7 +41,7 @@ export default function useModelRoom({setOpen}: IHookParams) {
   const handleOnSubmit = async ({name}: IFormInputs) => {
     if (auth) {
       const data: IRoomCreate = {name};
-      createRoom(data).then(res => {
+      api.room.create(data).then(res => {
         if (res.status === 201) {
           setOpen(false);
           reset();

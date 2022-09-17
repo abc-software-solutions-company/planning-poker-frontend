@@ -25,6 +25,7 @@ const CustomApp = ({Component, pageProps: {session, ...pageProps}}: AppProps) =>
     speed: 800,
     showSpinner: true
   });
+
   useEffect(() => {
     const progress = () => {
       nProgress.start();

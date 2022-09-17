@@ -5,30 +5,30 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {IRoomResponse} from '@/data/client/room.client';
+import {IRoomFullResponse} from '@/data/types/room.type';
 
 import useModalStory from './hook';
 import styles from './style.module.scss';
 
-interface IProps {
-  open: boolean;
-  room: IRoomResponse;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  setRoom: Dispatch<SetStateAction<IRoomResponse>>;
+export interface IModalStoryProps {
+  roomData?: IRoomFullResponse;
+  openModal: boolean;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
-  const {story, errors, register, handleSubmit, onSubmit} = useModalStory({room, setRoom});
-  const title = story && story.avgPoint === null ? 'Update' : 'Create New';
-  const textButton = story && story.avgPoint === null ? 'Update' : 'Create';
+const ModalStory: FC<IModalStoryProps> = props => {
+  const {roomData, openModal, setOpenModal} = props;
+  const {errors, register, handleSubmit, onSubmit} = useModalStory(props);
+  const title = roomData?.story?.avgPoint === null ? 'Update' : 'Create New';
+  const textButton = roomData?.story?.avgPoint === null ? 'Update' : 'Create';
 
   return (
     <>
-      <Modal open={open}>
+      <Modal open={openModal}>
         <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <div className="content">
-              <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpen(false)} />
+              <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpenModal(false)} />
               <Heading as="h5">{title} Story</Heading>
               <div className="input-button">
                 <div className="input-name">
@@ -45,7 +45,7 @@ const ModalStory: FC<IProps> = ({open, room, setOpen, setRoom}) => {
                     variant="outlined"
                     color="primary"
                     text="Cancel"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setOpenModal(false)}
                   />
                   <Button className="w-full" variant="contained" color="primary" text={textButton} type="submit" />
                 </div>

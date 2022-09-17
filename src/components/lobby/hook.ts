@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
 import useToast from '@/core-ui/toast';
-import {getRoom} from '@/data/client/room.client';
+import api from '@/data/api';
 
 const Schema = yup.object().shape({
   idOrLink: yup.string().required('Please enter room link or ID').max(256, 'Room link must not exceed 256 letters')
@@ -35,7 +35,7 @@ export default function useLobby() {
   };
 
   const handleOnSubmit = ({idOrLink}: IFormInputs) => {
-    getRoom({id: detectId(idOrLink)}).then(res => {
+    api.room.get({id: detectId(idOrLink)}).then(res => {
       if (res.status === 200 && res.data) {
         router.push(ROUTES.ROOM + res.data.id);
         toast.show({
