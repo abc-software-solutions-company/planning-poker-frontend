@@ -37,7 +37,8 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
 
   const inputLink = useRef<HTMLInputElement>(null);
 
-  const numVotedUser = roomData?.users?.filter(user => !user.votePoint && user.votePoint !== null).length || 0;
+  const numVotedUser =
+    roomData?.users?.filter(({votePoint}) => votePoint !== undefined && votePoint !== null).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
 
   return (
