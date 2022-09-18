@@ -8,10 +8,10 @@ interface IProps {
   name: string;
   host?: boolean;
   votePoint?: number | null;
-  isCompleted: boolean;
+  isCompleted?: boolean;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, votePoint, host, isCompleted = false}) => {
+const VoteUser: React.FC<IProps> = ({name, className, votePoint, host, isCompleted}) => {
   let color = '#000000';
   if (votePoint && isCompleted) color = CHARTCOLORS[votePoint];
 

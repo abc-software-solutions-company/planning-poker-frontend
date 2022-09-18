@@ -11,12 +11,12 @@ import {IVoteRoomProps} from '.';
 export default function useVoting({roomId}: IVoteRoomProps) {
   const [roomData, setRoomData] = useState<IRoomFullResponse>();
   console.log('🚀 ~ file: hook.ts ~ line 15 ~ useVoting ~ roomData', roomData);
-  const [dataVoted, setDataVoted] = useState<(number | null)[]>();
+  const [votedData, setDataVoted] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const auth = useStateAuth();
-  console.log('🚀 ~ file: hook.ts ~ line 20 ~ useVoting ~ auth', auth);
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
+  const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
 
   const updateRoom = () => {
     api.room.get({id: roomId}).then(({status, data}) => {
@@ -26,7 +26,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     });
   };
 
-  const handleStart = () => {
+  const onInitial = () => {
     api.room.get({id: roomId}).then(({status, data}) => {
       if (status === 200) {
         setRoomData(data);
@@ -34,7 +34,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     });
   };
 
-  const handleSelectPoker = async (value: number) => {
+  const onSelectPoker = async (value: number) => {
     if (auth && roomData?.story) {
       api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
         if (status === 200) {
@@ -44,13 +44,13 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     }
   };
 
-  const handleNewStory = () => {
-    if (isHost && roomData?.story?.avgPoint !== null) {
+  const onClickNext = () => {
+    if (isHost) {
       setOpenModal(true);
     }
   };
 
-  const handleComplete = () => {
+  const onClickComplete = () => {
     if (isHost && roomData?.story?.avgPoint === null)
       api.story.complete({id: roomData.story.id}).then(res => {
         if (res.status === 200) {
@@ -72,7 +72,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       });
   };
 
-  const handleCopy = (text: string) => {
+  const onClickCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.show({
       type: 'success',
@@ -84,7 +84,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
   useEffect(() => {
     if (roomData?.story?.avgPoint !== null) {
-      setDataVoted(roomData?.users?.map(user => user.votePoint || null));
+      setDataVoted(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
     }
 
     if (auth && roomData) {
@@ -110,16 +110,15 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   }, [roomData]);
 
   useEffect(() => {
-    handleStart();
-
     socket.emit('joinRoom', {roomId});
 
     socket.on('connect', () => {
       console.log('connect');
+      updateRoom();
     });
 
-    socket.on('updateRoom', function () {
-      console.log('updateRoom');
+    socket.on('UpdateRoom', function () {
+      console.log('UpdateRoom');
       updateRoom();
     });
 
@@ -129,23 +128,29 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
     return () => {
       socket.off('connect');
-      socket.off('updateRoom');
+      socket.off('UpdateRoom');
       socket.off('disconnect');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    onInitial();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
     auth,
     roomData,
-    dataVoted,
+    votedData,
     openModal,
     isHost,
+    isCompleted,
     setRoomData,
-    handleCopy,
+    onClickCopy,
     setOpenModal,
-    handleNewStory,
-    handleComplete,
-    handleSelectPoker
+    onClickNext,
+    onClickComplete,
+    onSelectPoker
   };
 }

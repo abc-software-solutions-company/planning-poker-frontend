@@ -11,7 +11,7 @@ import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 import {FIBONACCI} from '@/utils/constant';
 
-import ComChart from './chart';
+import Chart from './chart';
 import useVoting from './hook';
 import style from './style.module.scss';
 import VoteUser from './voters';
@@ -25,19 +25,19 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
     auth,
     openModal,
     roomData,
-    dataVoted,
+    votedData,
     isHost,
-    handleCopy,
+    isCompleted,
+    onClickCopy,
     setOpenModal,
-    handleComplete,
-    handleNewStory,
-    handleSelectPoker
+    onClickComplete,
+    onClickNext,
+    onSelectPoker
   } = useVoting({roomId});
-  console.log('🚀 ~ file: index.tsx ~ line 36 ~ isHost', isHost);
 
   const inputLink = useRef<HTMLInputElement>(null);
 
-  const numVotedUser = roomData?.users?.filter(user => user.votePoint && user.votePoint !== null).length || 0;
+  const numVotedUser = roomData?.users?.filter(user => !user.votePoint && user.votePoint !== null).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
 
   return (
@@ -64,12 +64,12 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   {roomData?.story?.name || 'Story name'}
                 </p>
                 {isHost && (
-                  <button onClick={() => handleNewStory()}>
+                  <button onClick={onClickNext}>
                     <Icon name="ico-edit" size={24} />
                   </button>
                 )}
               </div>
-              {auth && (!roomData?.story || roomData.story.avgPoint === null) && (
+              {!isCompleted && auth && (
                 <div className="card-holder">
                   {roomData &&
                     FIBONACCI.map(num => {
@@ -80,20 +80,25 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                             num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint ? 'selected' : ''
                           }
                           value={num}
-                          onClick={() => handleSelectPoker(num)}
+                          onClick={() => onSelectPoker(num)}
                         />
                       );
                     })}
                 </div>
               )}
-              {auth && roomData?.story?.avgPoint !== null && dataVoted && (
-                <ComChart className="chart-holder" voted={dataVoted} />
+              {isCompleted && votedData && (
+                <Chart
+                  className="chart-holder"
+                  votedData={votedData}
+                  onClickNext={onClickNext}
+                  showBtnNextStory={isCompleted}
+                />
               )}
             </div>
             <div className="right-content">
               <Heading className="title" as="h6">
-                {(!roomData?.story || roomData.story.avgPoint === null) && 'Wait for voting'}
-                {roomData?.story?.avgPoint !== null && 'Result'}
+                {!isCompleted && 'Wait for voting'}
+                {isCompleted && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
                 Voted players:{' '}
@@ -104,43 +109,36 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                 )}
               </Heading>
               <div className={cls('voter-list border-line', roomData && roomData.users.length >= 5 ? 'h-[285px]' : '')}>
-                {roomData &&
-                  roomData.users
-                    ?.sort(user => (user.id === roomData.hostUserId ? -1 : 1))
-                    .map(({id, name, votePoint}) => {
-                      return (
-                        <VoteUser
-                          className="border-line"
-                          key={id}
-                          name={name}
-                          host={id === roomData.hostUserId}
-                          votePoint={votePoint}
-                          isCompleted={!roomData?.story || roomData?.story.avgPoint !== null}
-                        />
-                      );
-                    })}
+                {roomData?.users
+                  ?.sort(user => (user.id === roomData.hostUserId ? -1 : 1))
+                  .map(({id, name, votePoint}) => {
+                    return (
+                      <VoteUser
+                        className="border-line"
+                        key={id}
+                        name={name}
+                        host={id === roomData.hostUserId}
+                        votePoint={votePoint}
+                        isCompleted={isCompleted}
+                      />
+                    );
+                  })}
               </div>
               {isHost && (
                 <div className="action border-line">
-                  {(!roomData?.story || roomData?.story.avgPoint === null) && (
+                  {!isCompleted && (
                     <Button
                       className="w-full"
                       variant="contained"
                       color="primary"
                       type="button"
-                      onClick={handleComplete}
+                      onClick={onClickComplete}
                     >
-                      Finish
+                      Complete
                     </Button>
                   )}
-                  {(!roomData?.story || roomData?.story.avgPoint !== null) && (
-                    <Button
-                      className="w-full"
-                      variant="contained"
-                      color="primary"
-                      type="button"
-                      onClick={handleNewStory}
-                    >
+                  {isCompleted && (
+                    <Button className="w-full" variant="contained" color="primary" type="button" onClick={onClickNext}>
                       Next
                     </Button>
                   )}
@@ -155,7 +153,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                     className="copy-btn"
                     variant="contained"
                     color="primary"
-                    onClick={() => handleCopy(inputLink.current!.value)}
+                    onClick={() => onClickCopy(inputLink.current!.value)}
                   >
                     <Icon name="ico-copy" />
                   </Button>
