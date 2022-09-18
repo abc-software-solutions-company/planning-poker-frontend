@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Chart: FC<IProps> = ({className, votedData, showBtnNextStory, onClickNext}) => {
-  const numVotedUser = votedData.filter(point => !point && point !== null).length || 0;
+  const numVotedUser = votedData.filter(point => point !== undefined && point !== null).length || 0;
   const numJoinUser = votedData.length || 0;
 
   const backgroundColor = Object.values(CHARTCOLORS);

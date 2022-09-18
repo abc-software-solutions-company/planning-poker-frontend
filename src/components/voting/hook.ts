@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
-import socket, {socketUpdateRoom} from '@/data/socket';
+import socket, {socketJoin, socketJoinRoom, socketUpdateRoom} from '@/data/socket';
 import {IRoomFullResponse} from '@/data/types/room.type';
 
 import {IVoteRoomProps} from '.';
@@ -19,14 +19,6 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
 
   const updateRoom = () => {
-    api.room.get({id: roomId}).then(({status, data}) => {
-      if (status === 200) {
-        setRoomData(data);
-      }
-    });
-  };
-
-  const onInitial = () => {
     api.room.get({id: roomId}).then(({status, data}) => {
       if (status === 200) {
         setRoomData(data);
@@ -91,7 +83,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
         api.userRoom.create({roomId}).then(({status}) => {
           if (status === 201) {
-            socketUpdateRoom({roomId});
+            socketJoinRoom({roomId, auth});
           }
         });
       }
@@ -105,16 +97,31 @@ export default function useVoting({roomId}: IVoteRoomProps) {
         });
       }
     }
-    if (roomData && !roomData.story) setOpenModal(!roomData.story);
+    if (roomData && !roomData.story && isHost) setOpenModal(!roomData.story);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
   useEffect(() => {
-    socket.emit('joinRoom', {roomId});
+    socketJoin({roomId});
 
     socket.on('connect', () => {
       console.log('connect');
+    });
+
+    socket.io.on('reconnect', attempt => {
+      console.log('🚀 ~ file: hook.ts ~ line 121 ~ socket.io.on ~ attempt', attempt);
       updateRoom();
+    });
+
+    socket.on('ToastJoinRoom', function (data: any) {
+      console.log('🚀 ~ file: hook.ts ~ line 125 ~ data', data);
+      if (data && auth && data.id !== auth.id)
+        toast.show({
+          type: 'info',
+          title: 'Join',
+          content: `${data.name} joined the room`,
+          lifeTime: 3000
+        });
     });
 
     socket.on('UpdateRoom', function () {
@@ -124,10 +131,13 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
     socket.on('disconnect', function () {
       console.log('disconnected');
+      // socketUpdateRoom({roomId});
     });
 
     return () => {
       socket.off('connect');
+      socket.off('reconnect');
+      socket.off('ToastJoinRoom');
       socket.off('UpdateRoom');
       socket.off('disconnect');
     };
@@ -135,7 +145,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   }, []);
 
   useEffect(() => {
-    onInitial();
+    updateRoom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
