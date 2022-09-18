@@ -1,38 +1,41 @@
 import {FC} from 'react';
 
 import Button from '@/core-ui/button';
-import Chart from '@/core-ui/chart';
+import DoughnutChart from '@/core-ui/doughnut-chart';
 import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
-  voted: (number | null)[];
+  votedData: (number | null)[];
+  showBtnNextStory: boolean;
+  onClickNext: () => void;
 }
 
-const ComChart: FC<IProps> = ({className, voted}) => {
-  const lenVotedUser = voted.filter(v => v !== null).length;
-  const lenUsers = voted.length;
+const Chart: FC<IProps> = ({className, votedData, showBtnNextStory, onClickNext}) => {
+  const numVotedUser = votedData.filter(point => !point && point !== null).length || 0;
+  const numJoinUser = votedData.length || 0;
 
   const backgroundColor = Object.values(CHARTCOLORS);
   const sortedArray: {value: number; len: number; color: string}[] = FIBONACCI.map((item, index) => {
-    return {value: item, len: voted.filter(v => v === item).length, color: backgroundColor[index]};
+    return {value: item, len: votedData.filter(v => v === item).length, color: backgroundColor[index]};
   }).sort((a, b) => b.len - a.len);
 
   return (
     <div className={className}>
       <div className="chart">
-        <Chart voted={voted} />
-        <div className="chart-center-text z-40">
-          <p>{`${lenVotedUser}/${lenUsers}`} players</p>
-          <p>voted</p>
-          {/* //FIXME: button to create next story */}
-          <Button
-            className="mt-3 block py-2.5 sm:hidden"
-            variant="outlined"
-            color="primary"
-            text="Next Story"
-            onClick={() => alert()}
-          />
+        <DoughnutChart votedData={votedData} />
+        <div className="chart-center-text">
+          <p>{`${numVotedUser}/${numJoinUser}`} players</p>
+          <p className="opacity-50">voted</p>
+          {showBtnNextStory && (
+            <Button
+              className="chart-center-btn"
+              variant="outlined"
+              color="primary"
+              text="Next Story"
+              onClick={onClickNext}
+            />
+          )}
         </div>
       </div>
 
@@ -56,4 +59,4 @@ const ComChart: FC<IProps> = ({className, voted}) => {
   );
 };
 
-export default ComChart;
+export default Chart;

@@ -5,16 +5,13 @@ import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
 
 interface IProps {
   className?: string;
-  voted: (number | null)[];
+  votedData: (number | null)[];
 }
 
-const Chart: FC<IProps> = ({className, voted}) => {
+const DoughnutChart: FC<IProps> = ({className, votedData}) => {
   const [module, setModule] = useState<any>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const backgroundColor = Object.values(CHARTCOLORS);
-
-  useEffect(() => {}, [voted]);
-
   useEffect(() => {
     const chartJs = import('chart.js');
     chartJs.then(resp => setModule(resp));
@@ -31,7 +28,7 @@ const Chart: FC<IProps> = ({className, voted}) => {
         datasets: [
           {
             labels: FIBONACCI.map(e => String(e)),
-            data: FIBONACCI.map(num => voted.filter(v => v === num).length),
+            data: FIBONACCI.map(num => votedData.filter(v => v === num).length),
             backgroundColor,
             datalabels: {
               color: '#fff',
@@ -84,4 +81,4 @@ const Chart: FC<IProps> = ({className, voted}) => {
   return <canvas className={className} ref={canvasRef} />;
 };
 
-export default Chart;
+export default DoughnutChart;

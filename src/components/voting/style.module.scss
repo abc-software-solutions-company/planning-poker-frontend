@@ -49,7 +49,7 @@
       @apply justify-start;
     }
     .story-name {
-      @apply flex items-start justify-center;
+      @apply flex items-center justify-center;
       @apply text-h5;
       .break {
         @apply w-96 break-words;
@@ -102,16 +102,14 @@
           @apply absolute object-contain object-center;
         }
         .chart-center-text {
-          @apply text-center;
-          p:last-child {
-            @apply opacity-50;
-          }
+          @apply z-40 text-center;
+        }
+        .chart-center-btn {
+          @apply mt-3 block py-2.5 lg:hidden;
         }
       }
       .chart-info {
-        // @apply h-full w-full gap-y-5 lg:absolute lg:left-0 lg:mt-0 lg:w-auto lg:flex-col lg:flex-nowrap lg:justify-center lg:gap-y-10;
-
-        @apply flex flex-wrap justify-start lg:flex-col;
+        @apply left-0 flex flex-wrap justify-start lg:absolute lg:flex-col;
         @apply gap-x-10 gap-y-3 lg:gap-y-4;
 
         .label {
@@ -139,9 +137,9 @@
 
   .border-line {
     @apply border-0 border-b;
-    &:last-child {
-      @apply border-none;
-    }
+    // &:last-child {
+    //   @apply border-none;
+    // }
   }
   .right-content {
     @apply mt-8 basis-4/12 lg:mt-0;
@@ -162,7 +160,7 @@
       @apply rounded-t-lg;
     }
     .player-status {
-      @apply flex items-center justify-between p-4;
+      @apply flex h-14 items-center justify-between px-4;
       .voted {
         @apply ml-auto flex items-center gap-1 pr-1 text-blue-500;
       }
@@ -219,7 +217,7 @@
     }
     .voter-list {
       @apply overflow-y-auto;
-      @apply min-h-fit;
+      @apply h-[280px];
       @apply border;
       scrollbar-width: thin;
       scrollbar-color: #4b9ae8;
