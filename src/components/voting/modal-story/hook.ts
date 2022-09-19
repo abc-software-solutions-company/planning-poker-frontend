@@ -10,7 +10,7 @@ import {socketUpdateRoom} from '@/data/socket';
 import {IModalStoryProps} from '.';
 
 const Schema = yup.object().shape({
-  name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters')
+  name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters').trim()
 });
 
 interface IFormInputs {

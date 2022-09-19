@@ -14,7 +14,7 @@ interface IFormInputs {
   name: string;
 }
 const Schema = yup.object().shape({
-  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters')
+  name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters').trim()
 });
 
 const FORM_DEFAULT_VALUES: IFormInputs = {
