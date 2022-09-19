@@ -216,9 +216,7 @@
       }
     }
     .voter-list {
-      @apply overflow-y-auto;
-      @apply h-[280px];
-      @apply border;
+      @apply overflow-y-auto border lg:h-[280px];
       scrollbar-width: thin;
       scrollbar-color: #4b9ae8;
       &::-webkit-scrollbar {
