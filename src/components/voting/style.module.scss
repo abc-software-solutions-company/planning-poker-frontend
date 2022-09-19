@@ -49,8 +49,10 @@
       @apply justify-start;
     }
     .story-name {
-      @apply flex items-center justify-center;
-      @apply text-h5;
+      @apply flex items-start justify-center text-h5;
+      .name {
+        @apply pt-0.5;
+      }
       .break {
         @apply w-96 break-words;
       }
