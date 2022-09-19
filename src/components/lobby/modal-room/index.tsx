@@ -31,6 +31,7 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
                       error={errors.name?.message}
                       className={errors.name && 'error'}
                       placeholder="Enter room name"
+                      maxLength={32}
                       {...register('name')}
                     />
                   </div>
