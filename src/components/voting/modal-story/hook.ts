@@ -73,7 +73,7 @@ export default function useModalStory(props: IModalStoryProps) {
   };
 
   useEffect(() => {
-    setValue('name', '');
+    setValue('name', roomData?.story && roomData.story.avgPoint === null ? roomData.story.name : '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
