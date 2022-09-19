@@ -11,7 +11,7 @@ import api from '@/data/api';
 import {IRoomCreate} from '@/data/types/room.type';
 
 const Schema = yup.object().shape({
-  name: yup.string().required('Please enter room name').max(256, 'Your name must not exceed 256 letters')
+  name: yup.string().required('Please enter room name').max(32, 'Your name must not exceed 32 letters')
 });
 interface IFormInputs {
   name: string;
