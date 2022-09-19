@@ -12,24 +12,24 @@
     }
     .text {
       @apply mt-[2px] break-words text-h4 leading-5;
+      @apply text-right;
     }
     .room-name {
       @apply font-bold;
       @apply text-h4 md:text-h3;
-      @apply break-all;
+      @apply break-words;
       @apply leading-6;
     }
     .left {
       @apply flex items-start;
-      @apply w-full;
-      @apply basis-9/12;
+      @apply basis-11/12 md:basis-6/12;
       button {
         @apply -mb-1.5;
       }
     }
     .right {
       @apply flex items-start;
-      @apply basis-4/12;
+      @apply basis-1/12 md:basis-6/12;
       @apply justify-end;
     }
   }
