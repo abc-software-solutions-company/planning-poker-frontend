@@ -35,7 +35,7 @@ const DoughnutChart: FC<IProps> = ({className, votedData}) => {
               textAlign: 'center',
               weight: 'bold',
               font: {
-                size: 32,
+                size: 24,
                 lineHeight: 3,
                 family: 'Mulish'
               }
