@@ -11,7 +11,7 @@ const Footer: FC = () => {
       <div className={cls(styles.footer)}>
         Copyright © 2022{' '}
         <a className="footer website" href={ABCWEBSITE}>
-          By ABC Software Solutions Company
+          by ABC Software Solutions Company
         </a>
       </div>
     </>

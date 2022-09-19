@@ -140,7 +140,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   )}
                   {isCompleted && (
                     <Button className="w-full" variant="contained" color="primary" type="button" onClick={onClickNext}>
-                      Next
+                      Next Story
                     </Button>
                   )}
                 </div>
