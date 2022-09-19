@@ -92,7 +92,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   className="chart-holder"
                   votedData={votedData}
                   onClickNext={onClickNext}
-                  showBtnNextStory={isCompleted}
+                  showBtnNextStory={isCompleted && isHost}
                 />
               )}
             </div>
