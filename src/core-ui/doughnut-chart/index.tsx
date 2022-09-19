@@ -36,7 +36,8 @@ const DoughnutChart: FC<IProps> = ({className, votedData}) => {
               weight: 'bold',
               font: {
                 size: 32,
-                lineHeight: 3
+                lineHeight: 3,
+                family: 'Mulish'
               }
             }
           }
@@ -48,6 +49,9 @@ const DoughnutChart: FC<IProps> = ({className, votedData}) => {
         responsive: true,
         borderWidth: 0,
         plugins: {
+          tooltip: {
+            enabled: false
+          },
           legend: {
             position: 'center',
             fullWidth: true,
