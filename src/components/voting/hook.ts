@@ -81,14 +81,15 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
     if (auth && roomData) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
-        api.userRoom.create({roomId}).then(({status}) => {
+        api.userRoom.create({roomId}).then(({status, data}) => {
           if (status === 201) {
+            console.log(data);
             socketJoinRoom({roomId, auth});
           }
         });
       }
     }
-    if (auth && roomData?.story) {
+    if (auth && roomData?.story && roomData.story.avgPoint === null) {
       if (roomData.users.filter(user => user.id === auth.id && user.votePoint === undefined).length === 1) {
         api.userStory.create({storyId: roomData.story.id}).then(({status}) => {
           if (status === 201) {

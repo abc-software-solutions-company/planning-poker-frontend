@@ -28,14 +28,10 @@ const Authentication: FC<IProps> = ({children}) => {
       if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
     } else {
       if (!auth) {
-        api.auth
-          .verify()
-          .then(res => {
-            if (res.status === 200) authDispatch(AuthActions.login(res.data));
-          })
-          .catch(() => {
-            if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
-          });
+        api.auth.verify().then(res => {
+          if (res.status === 200) authDispatch(AuthActions.login(res.data));
+          else if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
