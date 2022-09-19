@@ -7,7 +7,7 @@ import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
 interface IProps {
   className?: string;
   votedData: (number | null)[];
-  showBtnNextStory: boolean;
+  showBtnNextStory?: boolean;
   onClickNext: () => void;
 }
 
