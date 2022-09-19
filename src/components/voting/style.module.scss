@@ -111,7 +111,7 @@
         }
       }
       .chart-info {
-        @apply left-0 flex flex-wrap justify-start lg:absolute lg:flex-col;
+        @apply left-0 flex flex-wrap justify-center lg:absolute lg:flex-col;
         @apply gap-x-10 gap-y-3 lg:gap-y-4;
 
         .label {
