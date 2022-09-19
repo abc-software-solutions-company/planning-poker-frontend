@@ -217,29 +217,30 @@
     }
     .voter-list {
       @apply overflow-y-auto border lg:h-[280px];
-      scrollbar-width: thin;
-      scrollbar-color: #4b9ae8;
-      &::-webkit-scrollbar {
-        @apply h-[6px] w-[6px];
-      }
-      &::-webkit-scrollbar-track {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        @apply rounded-[10rem] border border-white bg-blue-500 bg-opacity-20;
-      }
-      &::-webkit-scrollbar-track-piece:start {
-        @apply bg-transparent;
-      }
-      &::-webkit-scrollbar-track-piece:end {
-        @apply bg-transparent;
-      }
-      &.scrolling-touch {
-        -webkit-overflow-scrolling: touch;
-      }
-      &.scrolling-auto {
-        -webkit-overflow-scrolling: auto;
-      }
+      scrollbar-color: #4b9ae8 white;
+      // scrollbar-width: thin;
+      // scrollbar-color: #4b9ae8;
+      // &::-webkit-scrollbar {
+      //   @apply h-[6px] w-[6px];
+      // }
+      // &::-webkit-scrollbar-track {
+      //   @apply bg-transparent;
+      // }
+      // &::-webkit-scrollbar-thumb {
+      //   @apply rounded-[10rem] border border-white bg-blue-500 bg-opacity-20;
+      // }
+      // &::-webkit-scrollbar-track-piece:start {
+      //   @apply bg-transparent;
+      // }
+      // &::-webkit-scrollbar-track-piece:end {
+      //   @apply bg-transparent;
+      // }
+      // &.scrolling-touch {
+      //   -webkit-overflow-scrolling: touch;
+      // }
+      // &.scrolling-auto {
+      //   -webkit-overflow-scrolling: auto;
+      // }
     }
   }
 }
