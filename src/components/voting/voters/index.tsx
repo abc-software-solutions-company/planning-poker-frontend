@@ -7,11 +7,12 @@ interface IProps {
   className?: string;
   name: string;
   host?: boolean;
+  isOnline?: boolean;
   votePoint?: number | null;
   isCompleted?: boolean;
 }
 
-const VoteUser: React.FC<IProps> = ({name, className, votePoint, host, isCompleted}) => {
+const VoteUser: React.FC<IProps> = ({name, className, votePoint, host, isOnline, isCompleted}) => {
   let color = '#000000';
   if (votePoint && isCompleted) color = CHARTCOLORS[votePoint];
 
@@ -19,7 +20,10 @@ const VoteUser: React.FC<IProps> = ({name, className, votePoint, host, isComplet
     <>
       <div className={cn('player-status', className)}>
         <div className="player-info">
-          <Icon className={host ? 'text-red-400' : ''} name="ico-avatar" size={24} />
+          <div className={cn('icon', isOnline ? 'online' : '')}>
+            <Icon className={host ? 'text-red-400' : ''} name="ico-avatar" size={24} />
+          </div>
+
           <div className="name">
             {name} {host ? <span className="host">Host</span> : ''}
           </div>

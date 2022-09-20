@@ -112,13 +112,14 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               <div className="voter-list border-line">
                 {roomData?.users
                   ?.sort(user => (user.id === roomData.hostUserId ? -1 : 1))
-                  .map(({id, name, votePoint}) => {
+                  .map(({id, name, votePoint, isOnline}) => {
                     return (
                       <VoteUser
                         className="border-line"
                         key={id}
                         name={name}
                         host={id === roomData.hostUserId}
+                        isOnline={isOnline}
                         votePoint={votePoint}
                         isCompleted={isCompleted}
                       />
