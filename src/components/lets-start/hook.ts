@@ -29,6 +29,7 @@ export default function useLetsStart() {
     formState: {errors}
   } = useForm<IFormInputs>({
     defaultValues: FORM_DEFAULT_VALUES,
+    mode: 'onChange',
     resolver: yupResolver(Schema)
   });
 
