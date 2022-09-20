@@ -31,6 +31,7 @@ export default function useModalStory(props: IModalStoryProps) {
     formState: {errors}
   } = useForm<IFormInputs>({
     defaultValues: FORM_DEFAULT_VALUES,
+    mode: 'onChange',
     resolver: yupResolver(Schema)
   });
 
