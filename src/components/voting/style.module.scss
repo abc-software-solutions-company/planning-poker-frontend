@@ -1,11 +1,11 @@
 .section-vote-room :global {
   .container {
-    @apply p-4;
+    @apply p-4 lg:p-0;
   }
 
   .topbar {
     @apply flex items-start justify-between;
-    @apply w-full lg:mt-12;
+    @apply w-full lg:mt-7;
     @apply gap-2;
     .abc-icon {
       @apply mr-2;
@@ -50,10 +50,9 @@
       @apply justify-start;
     }
     .story-name {
-      @apply flex items-start justify-center text-h5;
-      .name {
-        @apply pt-0.5;
-      }
+      @apply flex items-start justify-center;
+      @apply text-h5;
+
       .break {
         @apply w-96 break-words;
       }
@@ -67,7 +66,7 @@
       .name {
         @apply font-medium;
         @apply text-h4 lg:text-h3;
-        @apply leading-5;
+        @apply leading-6 md:leading-7;
       }
     }
 
