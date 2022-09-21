@@ -1,30 +1,25 @@
 import {io} from 'socket.io-client';
 
-const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333');
+import {IToastItem} from '@/core-ui/toast/toast';
 
-interface ISocketUpdateRoom {
-  roomId: string;
+interface IsocketToast extends IToastItem {
+  lifeTime?: number;
 }
 
-interface ISocketJoin {
-  roomId: string;
-}
+const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333', {
+  autoConnect: false,
+  transports: ['websocket']
+});
 
-interface ISocketJoinRoon {
-  roomId: string;
-  auth: {id: string; name: string};
-}
-
-export const socketUpdateRoom = (data: ISocketUpdateRoom) => {
-  socket.emit('UpdateRoom', data);
+export const socketUpdateRoom = () => {
+  socket.emit('UpdateRoom');
 };
 
-export const socketJoin = (data: ISocketJoin) => {
-  socket.emit('Join', data);
+export const socketJoinRoom = () => {
+  socket.emit('JoinRoom');
 };
 
-export const socketJoinRoom = (data: ISocketJoinRoon) => {
-  socket.emit('JoinRoom', data);
+export const socketToast = (data: IsocketToast) => {
+  socket.emit('Toast', data);
 };
-
 export default socket;
