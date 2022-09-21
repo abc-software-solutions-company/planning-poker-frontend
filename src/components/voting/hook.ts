@@ -3,8 +3,9 @@ import {useEffect, useState} from 'react';
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
+import {IRoomFullResponse} from '@/data/api/types/room.type';
 import socket, {socketJoinRoom, socketToast, socketUpdateRoom} from '@/data/socket';
-import {IRoomFullResponse} from '@/data/types/room.type';
+import {SOCKET_EVENTS} from '@/data/socket/type';
 
 import {IVoteRoomProps} from '.';
 
@@ -98,30 +99,25 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   useEffect(() => {
     socket.connect();
 
-    socket.on('reconnect', attempt => {
-      console.log('reconnect', attempt);
+    socket.on(SOCKET_EVENTS.reconnect, attempt => {
+      console.log(SOCKET_EVENTS.reconnect, attempt);
       updateRoom();
     });
 
-    socket.on('Toast', data => {
+    socket.on(SOCKET_EVENTS.toast, data => {
       toast.show(data);
     });
 
-    socket.on('UpdateRoom', () => {
-      console.log('UpdateRoom');
+    socket.on(SOCKET_EVENTS.updateRoom, () => {
+      console.log(SOCKET_EVENTS.updateRoom);
       updateRoom();
     });
 
     return () => {
-      socket.off('reconnect');
-      socket.off('Toast');
-      socket.off('UpdateRoom');
+      socket.off(SOCKET_EVENTS.reconnect);
+      socket.off(SOCKET_EVENTS.toast);
+      socket.off(SOCKET_EVENTS.updateRoom);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    // updateRoom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
