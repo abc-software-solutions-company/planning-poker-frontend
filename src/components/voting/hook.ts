@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
-import socket, {socketJoin, socketJoinRoom, socketUpdateRoom} from '@/data/socket';
+import socket, {socketJoinRoom, socketToast, socketUpdateRoom} from '@/data/socket';
 import {IRoomFullResponse} from '@/data/types/room.type';
 
 import {IVoteRoomProps} from '.';
@@ -14,6 +14,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   const [votedData, setDataVoted] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const auth = useStateAuth();
+  socket.auth = {...auth, roomId};
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
@@ -30,7 +31,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     if (auth && roomData?.story) {
       api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
         if (status === 200) {
-          socketUpdateRoom({roomId});
+          socketUpdateRoom();
         }
       });
     }
@@ -46,19 +47,13 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     if (isHost && roomData?.story?.avgPoint === null)
       api.story.complete({id: roomData.story.id}).then(res => {
         if (res.status === 200) {
-          socketUpdateRoom({roomId});
-          toast.show({
-            type: 'success',
-            title: 'Success!',
-            content: 'Show all votes',
-            lifeTime: 3000
-          });
+          socketUpdateRoom();
+          socketToast({type: 'success', title: 'Success!', content: 'Show all votes'});
         } else {
           toast.show({
             type: 'warning',
             title: 'Success!',
-            content: 'No users have voted yet',
-            lifeTime: 3000
+            content: 'No users have voted yet'
           });
         }
       });
@@ -69,8 +64,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     toast.show({
       type: 'success',
       title: 'Success!',
-      content: 'Copy success',
-      lifeTime: 3000
+      content: 'Copy success'
     });
   };
 
@@ -81,10 +75,9 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
     if (auth && roomData) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
-        api.userRoom.create({roomId}).then(({status, data}) => {
+        api.userRoom.create({roomId}).then(({status}) => {
           if (status === 201) {
-            console.log(data);
-            socketJoinRoom({roomId, auth});
+            socketJoinRoom();
           }
         });
       }
@@ -93,7 +86,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       if (roomData.users.filter(user => user.id === auth.id && user.votePoint === undefined).length === 1) {
         api.userStory.create({storyId: roomData.story.id}).then(({status}) => {
           if (status === 201) {
-            socketUpdateRoom({roomId});
+            socketUpdateRoom();
           }
         });
       }
@@ -103,50 +96,32 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   }, [roomData]);
 
   useEffect(() => {
-    socketJoin({roomId});
+    socket.connect();
 
-    socket.on('connect', () => {
-      console.log('connect');
-    });
-
-    socket.io.on('reconnect', attempt => {
-      console.log('🚀 ~ file: hook.ts ~ line 121 ~ socket.io.on ~ attempt', attempt);
+    socket.on('reconnect', attempt => {
+      console.log('reconnect', attempt);
       updateRoom();
     });
 
-    socket.on('ToastJoinRoom', function (data: any) {
-      console.log('🚀 ~ file: hook.ts ~ line 125 ~ data', data);
-      if (data && auth && data.id !== auth.id)
-        toast.show({
-          type: 'info',
-          title: 'Join',
-          content: `${data.name} joined the room`,
-          lifeTime: 3000
-        });
+    socket.on('Toast', data => {
+      toast.show(data);
     });
 
-    socket.on('UpdateRoom', function () {
+    socket.on('UpdateRoom', () => {
       console.log('UpdateRoom');
       updateRoom();
     });
 
-    socket.on('disconnect', function () {
-      console.log('disconnected');
-      // socketUpdateRoom({roomId});
-    });
-
     return () => {
-      socket.off('connect');
       socket.off('reconnect');
-      socket.off('ToastJoinRoom');
+      socket.off('Toast');
       socket.off('UpdateRoom');
-      socket.off('disconnect');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    updateRoom();
+    // updateRoom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

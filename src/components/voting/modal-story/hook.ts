@@ -3,9 +3,8 @@ import {useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
-import useToast from '@/core-ui/toast';
 import api from '@/data/api';
-import {socketUpdateRoom} from '@/data/socket';
+import {socketToast, socketUpdateRoom} from '@/data/socket';
 
 import {IModalStoryProps} from '.';
 
@@ -21,7 +20,6 @@ const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
 export default function useModalStory(props: IModalStoryProps) {
   const {roomData, setOpenModal} = props;
-  const toast = useToast();
 
   const {
     register,
@@ -38,30 +36,28 @@ export default function useModalStory(props: IModalStoryProps) {
   const handleOnSubmit = async ({name}: IFormInputs) => {
     if (roomData) {
       if (roomData.story?.avgPoint === null) {
-        api.story.update({id: roomData.story.id, name: name}).then(async res => {
+        api.story.update({id: roomData.story.id, name: name}).then(res => {
           if (res.status === 200) {
-            socketUpdateRoom({roomId: roomData.id});
+            socketUpdateRoom();
             reset();
             setOpenModal(false);
-            toast.show({
+            socketToast({
               type: 'success',
               title: 'Success!',
-              content: 'Update success story',
-              lifeTime: 3000
+              content: 'Update success story'
             });
           }
         });
       } else {
-        api.story.create({name, roomId: roomData.id}).then(async res => {
+        api.story.create({name, roomId: roomData.id}).then(res => {
           if (res.status === 201) {
-            socketUpdateRoom({roomId: roomData.id});
+            socketUpdateRoom();
             reset();
             setOpenModal(false);
-            toast.show({
+            socketToast({
               type: 'success',
               title: 'Success!',
-              content: 'Create success story',
-              lifeTime: 3000
+              content: 'Create success story'
             });
           }
         });

@@ -47,10 +47,9 @@ export default function useModelRoom({setOpen}: IHookParams) {
           setOpen(false);
           reset();
           toast.show({
-            type: 'success',
+            type: 'info',
             title: 'Success!',
-            content: 'Create success story',
-            lifeTime: 3000
+            content: 'Create success room'
           });
           router.push(`${ROUTES.ROOM}${res.data.id}`);
         }

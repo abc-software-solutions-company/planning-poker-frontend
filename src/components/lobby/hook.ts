@@ -45,15 +45,13 @@ export default function useLobby() {
         toast.show({
           type: 'success',
           title: 'Success',
-          content: 'Join the success room',
-          lifeTime: 3000
+          content: 'Join the success room'
         });
       } else
         toast.show({
           type: 'danger',
           title: 'Error!',
-          content: 'Room does not exist',
-          lifeTime: 3000
+          content: 'Room does not exist'
         });
     });
   };

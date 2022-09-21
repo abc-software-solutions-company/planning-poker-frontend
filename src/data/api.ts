@@ -4,7 +4,7 @@ import http from '../utils/http';
 import {IAuthInfor, IAuthLogin, IAuthResponse} from './types/auth.type';
 import {IRoomCreate, IRoomFullResponse, IRoomGet, IRoomResponse} from './types/room.type';
 import {IStoryComplete, IStoryCreate, IStoryResponse, IStoryUpdate} from './types/story.type';
-import {IUserRoomCreate} from './types/userRoom.type';
+import {IUserRoomCreate, IUserRoomUpdate} from './types/userRoom.type';
 import {IUserStoryCreate, IUserStoryResponse, IUserStoryUpdate} from './types/userStory.type';
 
 const api = {
@@ -24,7 +24,7 @@ const api = {
   },
   userRoom: {
     create: (data: IUserRoomCreate) => http.post<IRoomResponse>(API_ENDPOINTS.USERROOM, data),
-    update: (data: IUserRoomCreate) => http.patch<IRoomResponse>(API_ENDPOINTS.USERROOM, data)
+    update: (data: IUserRoomUpdate) => http.patch<IRoomResponse>(API_ENDPOINTS.USERROOM, data)
   },
   userStory: {
     create: (data: IUserStoryCreate) => http.post<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data),
