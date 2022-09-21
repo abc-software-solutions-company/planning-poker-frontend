@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 
 import {useStateAuth} from '@/contexts/auth';
@@ -19,6 +20,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
+  const router = useRouter();
 
   const updateRoom = () => {
     api.room.get({id: roomId}).then(({status, data}) => {
@@ -117,6 +119,17 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       socket.off(SOCKET_EVENTS.reconnect);
       socket.off(SOCKET_EVENTS.toast);
       socket.off(SOCKET_EVENTS.updateRoom);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const disconnect = () => {
+      socket.disconnect();
+    };
+    router.events.on('routeChangeStart', disconnect);
+    return () => {
+      router.events.off('routeChangeStart', disconnect);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
