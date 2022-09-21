@@ -1,6 +1,6 @@
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
+import http from '@/utils/http';
 
-import http from '../utils/http';
 import {IAuthInfor, IAuthLogin, IAuthResponse} from './types/auth.type';
 import {IRoomCreate, IRoomFullResponse, IRoomGet, IRoomResponse} from './types/room.type';
 import {IStoryComplete, IStoryCreate, IStoryResponse, IStoryUpdate} from './types/story.type';

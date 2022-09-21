@@ -1,10 +1,6 @@
 import {io} from 'socket.io-client';
 
-import {IToastItem} from '@/core-ui/toast/toast';
-
-interface IsocketToast extends IToastItem {
-  lifeTime?: number;
-}
+import {IsocketToast, SOCKET_EVENTS} from './type';
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333', {
   autoConnect: false,
@@ -12,14 +8,15 @@ const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333', {
 });
 
 export const socketUpdateRoom = () => {
-  socket.emit('UpdateRoom');
+  socket.emit(SOCKET_EVENTS.updateRoom);
 };
 
 export const socketJoinRoom = () => {
-  socket.emit('JoinRoom');
+  socket.emit(SOCKET_EVENTS.joinRoom);
 };
 
 export const socketToast = (data: IsocketToast) => {
-  socket.emit('Toast', data);
+  socket.emit(SOCKET_EVENTS.toast, data);
 };
+
 export default socket;

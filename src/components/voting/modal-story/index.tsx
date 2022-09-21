@@ -5,7 +5,7 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {IRoomFullResponse} from '@/data/types/room.type';
+import {IRoomFullResponse} from '@/data/api/types/room.type';
 
 import useModalStory from './hook';
 import styles from './style.module.scss';

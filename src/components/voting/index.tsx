@@ -111,7 +111,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               </Heading>
               <div className="voter-list border-line">
                 {roomData?.users
-                  ?.sort(user => (user.id === roomData.hostUserId ? -1 : 1))
+                  .sort(a => (a.id === roomData.hostUserId ? -1 : 1))
                   .map(({id, name, votePoint, isOnline}) => {
                     return (
                       <VoteUser
