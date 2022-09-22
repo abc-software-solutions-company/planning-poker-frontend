@@ -46,7 +46,7 @@ const schemaJsonLdWebSiteDefault = {
 };
 
 export const siteSettings = {
-  name: 'PP',
+  name: 'Planing Poker',
   description: 'Simple solutions for complex problems',
   defaultLanguage: 'en',
   phoneNumber: '0987654321',
