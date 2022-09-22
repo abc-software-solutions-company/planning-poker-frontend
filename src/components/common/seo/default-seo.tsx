@@ -1,12 +1,15 @@
+import {useRouter} from 'next/router';
 import {DefaultSeo as NextDefaultSeo} from 'next-seo';
 
 import {siteSettings} from '@/configs/site.config';
 
 const DefaultSeo: React.FC = () => {
+  const router = useRouter();
+  const subTitle = router.asPath.split('/')[1] ? '| ' + router.asPath.split('/')[1] : '';
   return (
     <NextDefaultSeo
       title={siteSettings.name}
-      titleTemplate={`${siteSettings.name} | %s`}
+      titleTemplate={`${siteSettings.name} ${subTitle}`}
       defaultTitle={siteSettings.name}
       description={siteSettings.description}
       openGraph={{
