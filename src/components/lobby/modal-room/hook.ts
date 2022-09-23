@@ -47,7 +47,7 @@ export default function useModelRoom({setOpen}: IHookParams) {
           setOpen(false);
           reset();
           toast.show({
-            type: 'info',
+            type: 'success',
             title: 'Success!',
             content: 'Create success room'
           });
