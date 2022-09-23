@@ -16,7 +16,7 @@
       @apply text-right;
     }
     .room-name {
-      @apply -mt-1 break-words text-h4 font-bold leading-5 md:text-h3;
+      @apply mt-1 break-words text-h4 font-bold leading-5 md:-mt-[2px] md:text-h3;
     }
     .left {
       @apply flex items-start;
