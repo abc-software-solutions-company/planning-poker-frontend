@@ -20,7 +20,7 @@
     "check-format": "prettier --check .",
     "check-all": ".husky/pre-commit",
     "clean": "rimraf \"{.next,dist,build,out,node_modules,coverage,*.tsbuildinfo}\"",
-    "postbuild": "node ./cli/postbuild.js && next-sitemap",
+    "postbuild": "next-sitemap",
     "cm": "git-cz",
     "test": "jest",
     "test:watch": "jest --watch",

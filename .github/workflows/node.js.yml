@@ -23,11 +23,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: setup env
+        run: cp .env.sample .env
+
       - name: Install Yarn, PM2
         run: npm install -g yarn pm2
 
       - name: Install Node Module
         run: yarn
+
+      - name: Gen font
+        run: yarn genfont
 
       - name: Build,Start and Restart Web Application
         run: RUNNER_TRACKING_ID="" && yarn build && pm2 start yarn -- start && pm2 restart yarn
