@@ -1,8 +1,7 @@
 .footer :global {
-  @apply py-3 text-center;
+  @apply py-3 text-center text-[12px] leading-3;
 
   .website {
     @apply text-stone-700 hover:text-blue-500;
-    @apply block lg:inline;
   }
 }
