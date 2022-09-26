@@ -1,11 +1,9 @@
 import {NextSeo, NextSeoProps} from 'next-seo';
 import {OpenGraphMedia} from 'next-seo/lib/types';
 
-import {IImageAttributes} from '@/types';
-
 interface SeoProps extends NextSeoProps {
   url?: string;
-  cover?: IImageAttributes;
+  cover?: any;
 }
 
 const Seo: React.FC<SeoProps> = ({title, description, cover, url, ...rest}: SeoProps) => {

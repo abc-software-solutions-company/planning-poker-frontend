@@ -45,3 +45,5 @@ junit.xml
 public/fonts
 
 src/vendors/abc-icons/dist
+public/sitemap.xml
+public/sitemap-0.xml
