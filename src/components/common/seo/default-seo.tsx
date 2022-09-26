@@ -5,7 +5,22 @@ import {siteSettings} from '@/configs/site.config';
 
 const DefaultSeo: React.FC = () => {
   const router = useRouter();
-  const subTitle = router.asPath.split('/')[1] ? '| ' + router.asPath.split('/')[1] : '';
+  const asPath = router.asPath.split('/')[1];
+
+  let subTitle;
+
+  switch (asPath) {
+    case '':
+      subTitle = '| Lobby';
+      break;
+    case 'login':
+      subTitle = '| Login';
+      break;
+    case 'room':
+      const roomName = router.asPath.split('/')[2].charAt(0).toUpperCase() + router.asPath.split('/')[2].slice(1);
+      subTitle = `| ${roomName}`;
+  }
+
   return (
     <NextDefaultSeo
       title={siteSettings.name}
