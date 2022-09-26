@@ -1,4 +1,4 @@
-# ABC Website
+# Planning Poker
 
 [Stage](https://abc-website-stage.vercel.app)
 
