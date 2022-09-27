@@ -109,7 +109,39 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   </span>
                 )}
               </Heading>
-              <div className="voter-list border-line">
+              <div className="voter-list border-line scrollbar">
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
+                <h3>sdfsdf</h3>
                 {roomData?.users.map(({id, name, votePoint, isOnline}) => {
                   return (
                     <VoteUser

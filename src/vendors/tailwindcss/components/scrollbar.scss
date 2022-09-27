@@ -1,4 +1,6 @@
 .scrollbar {
+  scrollbar-color: #4b9ae8 white;
+  scrollbar-width: thin;
   &::-webkit-scrollbar {
     @apply h-[6px] w-[6px];
   }
@@ -6,7 +8,7 @@
     @apply bg-stone-900;
   }
   &::-webkit-scrollbar-thumb {
-    @apply bg-blue-600;
+    @apply rounded bg-blue-600;
   }
   &::-webkit-scrollbar-thumb:hover {
     @apply bg-blue-600;
