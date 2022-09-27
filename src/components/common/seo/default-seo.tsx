@@ -32,14 +32,7 @@ const DefaultSeo: React.FC = () => {
         locale: 'en',
         site_name: siteSettings.name,
         description: siteSettings.description,
-        images: [
-          {
-            url: '/og-abc.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'ABC Software Solutions Company'
-          }
-        ]
+        images: [{url: '/og-img.jpg', width: 1200, height: 630, alt: 'Seo image'}]
       }}
       twitter={{
         handle: '@handle',

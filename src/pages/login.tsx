@@ -4,11 +4,7 @@ import LetsStart from '@/components/lets-start';
 import LayoutDefault from '@/layouts/default';
 
 export default function PageLogin() {
-  return (
-    <>
-      <LetsStart />
-    </>
-  );
+  return <LetsStart />;
 }
 
 PageLogin.Layout = LayoutDefault;

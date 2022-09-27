@@ -47,21 +47,21 @@ const schemaJsonLdWebSiteDefault = {
 
 export const siteSettings = {
   name: 'Planing Poker',
-  description: 'Simple solutions for complex problems',
+  description: 'Planning Poker is an application for many participants to vote on user stories',
   defaultLanguage: 'en',
-  phoneNumber: '0987654321',
+  phoneNumber: '0372909818',
   facebookUrl: '#',
   twitterUrl: '#',
   linkedInUrl: '#',
   email: 'hello@abcsoftwarecompany.com',
   author: {
-    name: 'IKI Design',
+    name: 'ABC',
     websiteUrl: 'https://www.abcsoftwarecompany.com',
     address: ''
   },
   logo: {
     url: 'https://www.abcsoftwarecompany.com',
-    alt: 'IKI Design',
+    alt: 'ABC',
     href: '/',
     width: 128,
     height: 30
