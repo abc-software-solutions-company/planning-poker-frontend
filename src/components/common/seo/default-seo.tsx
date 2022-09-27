@@ -5,7 +5,6 @@ import {siteSettings} from '@/configs/site.config';
 const DefaultSeo: React.FC = () => {
   return (
     <NextDefaultSeo
-      title={siteSettings.name}
       titleTemplate={`${siteSettings.name} | %s`}
       defaultTitle={siteSettings.name}
       description={siteSettings.description}
