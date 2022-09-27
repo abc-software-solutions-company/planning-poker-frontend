@@ -72,14 +72,15 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                 <div className="card-holder">
                   {roomData &&
                     FIBONACCI.map(num => {
+                      const isSelected = num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint;
                       return (
                         <VoteCard
                           key={num}
-                          className={
-                            num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint ? 'selected' : ''
-                          }
+                          className={isSelected ? 'selected' : ''}
                           value={num}
-                          onClick={() => onSelectPoker(num)}
+                          onClick={() => {
+                            if (!isSelected) onSelectPoker(num);
+                          }}
                         />
                       );
                     })}

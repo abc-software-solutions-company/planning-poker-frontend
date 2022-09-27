@@ -12,7 +12,7 @@ import useLobby from './hook';
 import styles from './style.module.scss';
 
 const Lobby: FC = () => {
-  const {openModal, setOpenModal, register, handleSubmit, errors, onSubmit} = useLobby();
+  const {openModal, setOpenModal, register, handleSubmit, errors, onSubmit, disabled} = useLobby();
   const auth = useStateAuth();
   return (
     <>
@@ -32,7 +32,13 @@ const Lobby: FC = () => {
               High-functioning teams here also rely on Planning Poker
             </Heading>
             <div className="actions">
-              <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
+              <Button
+                variant="contained"
+                color="primary"
+                text="Create Room"
+                onClick={() => setOpenModal(true)}
+                disabled={disabled}
+              />
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                   error={errors.idOrLink?.message}

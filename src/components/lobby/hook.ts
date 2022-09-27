@@ -25,6 +25,8 @@ const FORM_DEFAULT_VALUES: IFormInputs = {idOrLink: ''};
 export default function useLobby() {
   const toast = useToast();
   const router = useRouter();
+  const [disabled, setDisable] = useState(false);
+
   const [openModal, setOpenModal] = useState(false);
 
   const detectId = (idOrLink: string) => {
@@ -38,7 +40,17 @@ export default function useLobby() {
     return id.toLowerCase();
   };
 
-  const handleOnSubmit = ({idOrLink}: IFormInputs) => {
+  const {
+    register,
+    handleSubmit,
+    formState: {errors}
+  } = useForm<IFormInputs>({
+    defaultValues: FORM_DEFAULT_VALUES,
+    resolver: yupResolver(Schema)
+  });
+
+  const onSubmit: SubmitHandler<IFormInputs> = ({idOrLink}) => {
+    setDisable(true);
     api.room.get({id: detectId(idOrLink)}).then(res => {
       if (res.status === 200 && res.data) {
         router.push(ROUTES.ROOM + res.data.id);
@@ -54,20 +66,8 @@ export default function useLobby() {
           content: 'Room does not exist'
         });
     });
+    setDisable(false);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: {errors}
-  } = useForm<IFormInputs>({
-    defaultValues: FORM_DEFAULT_VALUES,
-    resolver: yupResolver(Schema)
-  });
-
-  const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data);
-  };
-
-  return {openModal, setOpenModal, register, handleSubmit, errors, onSubmit};
+  return {openModal, setOpenModal, register, handleSubmit, errors, onSubmit, disabled};
 }

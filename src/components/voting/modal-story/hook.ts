@@ -1,5 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -20,6 +20,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
 
 export default function useModalStory(props: IModalStoryProps) {
   const {roomData, setOpenModal} = props;
+  const [disabled, setDisable] = useState(false);
 
   const {
     register,
@@ -33,7 +34,8 @@ export default function useModalStory(props: IModalStoryProps) {
     resolver: yupResolver(Schema)
   });
 
-  const handleOnSubmit = async ({name}: IFormInputs) => {
+  const onSubmit: SubmitHandler<IFormInputs> = ({name}) => {
+    setDisable(true);
     if (roomData) {
       if (roomData.story?.avgPoint === null) {
         api.story.update({id: roomData.story.id, name: name}).then(res => {
@@ -47,6 +49,7 @@ export default function useModalStory(props: IModalStoryProps) {
               content: 'Update success story'
             });
           }
+          setDisable(false);
         });
       } else {
         api.story.create({name, roomId: roomData.id}).then(res => {
@@ -60,13 +63,10 @@ export default function useModalStory(props: IModalStoryProps) {
               content: 'Create success story'
             });
           }
+          setDisable(false);
         });
       }
     }
-  };
-
-  const onSubmit: SubmitHandler<IFormInputs> = data => {
-    handleOnSubmit(data);
   };
 
   useEffect(() => {
@@ -74,5 +74,5 @@ export default function useModalStory(props: IModalStoryProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
-  return {errors, register, handleSubmit, onSubmit};
+  return {errors, register, handleSubmit, onSubmit, disabled};
 }
