@@ -3,8 +3,7 @@ import {io} from 'socket.io-client';
 import {IsocketToast, SOCKET_EVENTS} from './type';
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333', {
-  autoConnect: false,
-  transports: ['websocket']
+  autoConnect: false
 });
 
 export const socketUpdateRoom = () => {
