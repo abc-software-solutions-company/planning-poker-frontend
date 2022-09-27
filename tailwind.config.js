@@ -180,6 +180,10 @@ module.exports = {
         })
       );
       addUtilities({
+        '.text-break': {
+          wordBreak: 'break-word',
+          wordWrap: 'break-word'
+        },
         '.invalid': {
           fontSize: theme('fontSize.xs'),
           color: theme('colors.abc-dark-red'),
