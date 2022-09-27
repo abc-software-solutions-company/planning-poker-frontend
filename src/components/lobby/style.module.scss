@@ -15,13 +15,12 @@
       @apply mr-2;
     }
     .text {
-      @apply mt-[2px] break-words text-h4 leading-5;
+      @apply mt-[2px] text-h4 leading-5 text-break;
     }
     .right {
       @apply flex items-start;
     }
   }
-
   .head {
     @apply text-center text-blue-500;
   }

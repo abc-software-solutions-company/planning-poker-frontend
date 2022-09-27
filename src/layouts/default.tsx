@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 export default function DefaultLayout({children}: React.PropsWithChildren<Record<string, unknown>>) {
   return (
     <div className={cls(styles['layout-default'])}>
-      <main className="scrollbar flex grow flex-col">{children}</main>
+      <main className="flex grow flex-col">{children}</main>
       <Footer />
     </div>
   );

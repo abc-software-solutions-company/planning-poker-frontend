@@ -61,9 +61,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
           <div className="content">
             <div className="left-content">
               <div className="story-name">
-                <p className={cls('name', roomData?.story && roomData.story.name.length >= 25 && 'break')}>
-                  {roomData?.story?.name || 'Story name'}
-                </p>
+                <p className="name">{roomData?.story?.name || 'Story name'}</p>
                 {isHost && (
                   <button onClick={onClickNext}>
                     <Icon name="ico-edit" size={24} />
@@ -110,38 +108,6 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                 )}
               </Heading>
               <div className="voter-list border-line scrollbar">
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
-                <h3>sdfsdf</h3>
                 {roomData?.users.map(({id, name, votePoint, isOnline}) => {
                   return (
                     <VoteUser
