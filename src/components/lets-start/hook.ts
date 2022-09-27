@@ -1,6 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useRouter} from 'next/router';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -21,6 +21,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
 export default function useLetsStart() {
+  const [disabled, setDisable] = useState(false);
   const router = useRouter();
   const dispatchAuth = useDispatchAuth();
   const {
@@ -34,6 +35,7 @@ export default function useLetsStart() {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = data => {
+    setDisable(true);
     api.auth.login(data).then(res => {
       if (res.status === 201) {
         Cookie.accessToken.set(res.data.accessToken);
@@ -45,6 +47,7 @@ export default function useLetsStart() {
           router.push(ROUTES.HOME);
         }
       }
+      setDisable(false);
     });
   };
 
@@ -52,5 +55,5 @@ export default function useLetsStart() {
     Cookie.accessToken.remove();
   }, []);
 
-  return {register, errors, handleSubmit, onSubmit};
+  return {register, errors, handleSubmit, onSubmit, disabled};
 }
