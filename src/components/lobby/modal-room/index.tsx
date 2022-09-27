@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
-  const {errors, register, handleSubmit, onSubmit} = useModelRoom({setOpen});
+  const {errors, register, handleSubmit, onSubmit, disabled} = useModelRoom({setOpen});
   return (
     <>
       <Modal open={open}>
@@ -44,7 +44,14 @@ const ModalRoom: FC<IProps> = ({open, setOpen}) => {
                     text="Cancel"
                     onClick={() => setOpen(false)}
                   />
-                  <Button className="w-full" variant="contained" color="primary" text="Create" type="submit" />
+                  <Button
+                    className="w-full"
+                    variant="contained"
+                    color="primary"
+                    text="Create"
+                    type="submit"
+                    disabled={disabled}
+                  />
                 </div>
               </div>
             </div>

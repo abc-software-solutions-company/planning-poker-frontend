@@ -8,7 +8,7 @@ import useLetsStart from './hook';
 import style from './style.module.scss';
 
 const LetsStart: React.FC = () => {
-  const {register, errors, handleSubmit, onSubmit} = useLetsStart();
+  const {register, errors, handleSubmit, onSubmit, disabled} = useLetsStart();
   return (
     <>
       <div className={`${style['lets-start']}`}>
@@ -29,7 +29,7 @@ const LetsStart: React.FC = () => {
                     maxLength={33}
                     {...register('name')}
                   />
-                  <Button className="w-full" variant="contained" color="primary" type="submit">
+                  <Button className="w-full" variant="contained" color="primary" type="submit" disabled={disabled}>
                     Enter
                   </Button>
                 </form>

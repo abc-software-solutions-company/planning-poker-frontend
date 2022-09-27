@@ -18,7 +18,7 @@ export interface IModalStoryProps {
 
 const ModalStory: FC<IModalStoryProps> = props => {
   const {roomData, openModal, setOpenModal} = props;
-  const {errors, register, handleSubmit, onSubmit} = useModalStory(props);
+  const {errors, register, handleSubmit, onSubmit, disabled} = useModalStory(props);
   const title = roomData?.story?.avgPoint === null ? 'Update' : 'Create New';
   const textButton = roomData?.story?.avgPoint === null ? 'Update' : 'Create';
 
@@ -47,7 +47,14 @@ const ModalStory: FC<IModalStoryProps> = props => {
                     text="Cancel"
                     onClick={() => setOpenModal(false)}
                   />
-                  <Button className="w-full" variant="contained" color="primary" text={textButton} type="submit" />
+                  <Button
+                    className="w-full"
+                    variant="contained"
+                    color="primary"
+                    text={textButton}
+                    type="submit"
+                    disabled={disabled}
+                  />
                 </div>
               </div>
             </div>
