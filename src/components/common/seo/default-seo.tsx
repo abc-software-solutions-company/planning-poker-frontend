@@ -1,30 +1,12 @@
-import {useRouter} from 'next/router';
 import {DefaultSeo as NextDefaultSeo} from 'next-seo';
 
 import {siteSettings} from '@/configs/site.config';
 
 const DefaultSeo: React.FC = () => {
-  const router = useRouter();
-  const asPath = router.asPath.split('/')[1];
-
-  let subTitle;
-
-  switch (asPath) {
-    case '':
-      subTitle = '| Lobby';
-      break;
-    case 'login':
-      subTitle = '| Login';
-      break;
-    case 'room':
-      const roomName = router.asPath.split('/')[2].charAt(0).toUpperCase() + router.asPath.split('/')[2].slice(1);
-      subTitle = `| ${roomName}`;
-  }
-
   return (
     <NextDefaultSeo
       title={siteSettings.name}
-      titleTemplate={`${siteSettings.name} ${subTitle}`}
+      titleTemplate={`${siteSettings.name} | %s`}
       defaultTitle={siteSettings.name}
       description={siteSettings.description}
       openGraph={{
