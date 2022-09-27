@@ -1,10 +1,11 @@
 import {merge} from 'lodash-es';
 
-const schemaJsonLdOrganizationDefault = {
+const organizationDefault = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   founder: 'Khanh Mai',
-  logo: 'https://stage.abcsoftwarecompany.com/og-abc.jpg',
+  logo: "'https://abcsoftwarecompany.com/android-chrome-512x512.png",
+  url: 'https://abcsoftwarecompany.com',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'Viet Nam',
@@ -13,87 +14,42 @@ const schemaJsonLdOrganizationDefault = {
   }
 };
 
-const schemaJsonLdWebSiteDefault = {
+const websiteDefault = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  datePublished: 'February 2022',
-  inLanguage: [
-    {
-      '@type': 'Language',
-      name: 'Vietnamese',
-      alternateName: 'vn',
-      additionalType: 'https://www.loc.gov/standards/iso639-2/php/code_list.php',
-      sameAs: 'https://en.wikipedia.org/wiki/Vietnamese_language'
-    },
-    {
-      '@type': 'Language',
-      name: 'English',
-      alternateName: 'en',
-      additionalType: 'https://www.loc.gov/standards/iso639-2/php/code_list.php',
-      sameAs: 'https://en.wikipedia.org/wiki/English_language'
-    }
-  ],
-  url: 'https://stage.abcsoftwarecompany.com/',
+  datePublished: 'September 2022',
+  url: process.env.NEXT_PUBLIC_SITE_URL,
   sameAs: [
-    'https://www.facebook.com/abcsoftwaresolutionscompany?utm_source=abcsoftwarecompany.com&utm_medium=banner&utm_campaign=n%2Fa',
-    'https://www.linkedin.com/company/abc-software-solutions-company/about/'
-  ],
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://stage.abcsoftwarecompany.com/pages/search_results?q={search_term}',
-    'query-input': 'required name=search_term'
-  }
+    'https://www.facebook.com/abcsoftwaresolutionscompany',
+    'https://www.linkedin.com/company/abc-software-solutions-company'
+  ]
 };
 
 export const siteSettings = {
   name: 'Planing Poker',
   description: 'Planning Poker is an application for many participants to vote on user stories',
-  defaultLanguage: 'en',
-  phoneNumber: '0372909818',
-  facebookUrl: '#',
-  twitterUrl: '#',
-  linkedInUrl: '#',
-  email: 'hello@abcsoftwarecompany.com',
   author: {
-    name: 'ABC',
-    websiteUrl: 'https://www.abcsoftwarecompany.com',
-    address: ''
+    name: 'ABC Software Solutions',
+    websiteUrl: 'https://www.abcsoftwarecompany.com'
   },
   logo: {
-    url: 'https://www.abcsoftwarecompany.com',
-    alt: 'ABC',
-    href: '/',
-    width: 128,
-    height: 30
+    url: process.env.NEXT_PUBLIC_SITE_URL + '/og-img.jpg',
+    alt: 'Planning Poker',
+    width: 512,
+    height: 512
+  },
+  defaultLanguage: 'en',
+  facebookUrl: 'https://www.facebook.com/abcsoftwaresolutionscompany',
+  linkedInUrl: 'https://www.linkedin.com/company/abc-software-solutions-company',
+  contact: {
+    email: 'hello@abcsoftwarecompany.com'
   },
   schemaJsonLd: {
-    index: [
-      merge(schemaJsonLdOrganizationDefault, {
-        name: 'ABC Software Solution'
-      }),
-      merge(schemaJsonLdWebSiteDefault, {})
-    ],
-    blog: {
-      ...schemaJsonLdWebSiteDefault,
-      name: 'ABC Software Solution | Blog',
-      description:
-        'ABC blog. Here Are the places our company members sharing their learning experiences about different catagories. Read the experiences and learning it, get updates and more.'
-    },
-    showcases: [
-      merge(schemaJsonLdOrganizationDefault, {
-        name: 'ABC Software Solution | Showcases',
-        description: 'ABC showcases, where we show you about all the project we had worked on.'
-      }),
-      merge(schemaJsonLdWebSiteDefault, {})
-    ],
-    contact: [
-      merge(schemaJsonLdOrganizationDefault, {
-        name: 'ABC Software Solution | Contact Us',
-        description: 'Get in touch with us, contact us via email and we will response promptly',
-        email: 'hello@abcsoftwarecompany.com',
-        telephone: '+84372909818'
-      }),
-      merge(schemaJsonLdWebSiteDefault, {})
-    ]
+    organization: merge(organizationDefault, {
+      name: 'ABC Software Solution'
+    }),
+    website: merge(websiteDefault, {
+      name: 'Planning Poker'
+    })
   }
 };
