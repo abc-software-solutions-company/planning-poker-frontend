@@ -7,9 +7,7 @@ interface SeoProps extends NextSeoProps {
 }
 
 const Seo: React.FC<SeoProps> = ({title, description, cover, url, ...rest}: SeoProps) => {
-  const image = cover?.formats.large;
-  let images: ReadonlyArray<OpenGraphMedia> = [{url: '/og-abc.jpg', width: 1200, height: 630, alt: 'IKI Design'}];
-  if (image) images = [{url: image.url, width: image.width, height: image.height, alt: cover.alternativeText}];
+  const images: ReadonlyArray<OpenGraphMedia> = [{url: '/seo-img.jpg', width: 1200, height: 630, alt: 'Seo image'}];
   return (
     <NextSeo
       title={title}
