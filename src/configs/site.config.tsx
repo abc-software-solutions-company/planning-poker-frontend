@@ -26,11 +26,11 @@ const websiteDefault = {
 };
 
 export const siteSettings = {
-  name: 'Planing Poker',
+  name: 'Planning Poker',
   description: 'Planning Poker is an application for many participants to vote on user stories',
   author: {
     name: 'ABC Software Solutions',
-    websiteUrl: 'https://www.abcsoftwarecompany.com'
+    websiteUrl: 'https://www.voteuserstory.com'
   },
   logo: {
     url: process.env.NEXT_PUBLIC_SITE_URL + '/og-img.jpg',
