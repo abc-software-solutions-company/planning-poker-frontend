@@ -11,7 +11,7 @@ export {getStaticPaths, getStaticProps};
 export default function PageRoom({roomId}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Seo title="Room" />
+      <Seo title={roomId} />
       <Voting roomId={roomId} />
     </>
   );
