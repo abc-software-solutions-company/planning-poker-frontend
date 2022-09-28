@@ -24,20 +24,13 @@ const Authentication: FC<IProps> = ({children}) => {
       Cookie.previousPage.set(asPath);
     }
     const accessToken = Cookie.accessToken.get();
-    if (!accessToken) {
-      if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
-    } else {
-      if (!auth) {
-        api.auth.verify().then(res => {
-          if (res.status === 200) authDispatch(AuthActions.login(res.data));
-          else if (!asPath.includes(ROUTES.LOGIN)) router.push(ROUTES.LOGIN);
-        });
-      }
+    if (accessToken && !auth) {
+      api.auth.verify().then(res => {
+        if (res.status === 200) authDispatch(AuthActions.login(res.data));
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (!asPath.includes(ROUTES.LOGIN) && !auth) return null;
 
   return <>{children}</>;
 };
