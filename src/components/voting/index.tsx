@@ -1,6 +1,6 @@
 import cls from 'classnames';
 import {useRouter} from 'next/router';
-import {FC, useRef} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
@@ -21,6 +21,7 @@ export interface IVoteRoomProps {
 }
 const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
   const router = useRouter();
+  const [url, setUrl] = useState('');
   const {
     auth,
     openModal,
@@ -40,6 +41,10 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
   const numVotedUser =
     roomData?.users?.filter(({votePoint}) => votePoint !== undefined && votePoint !== null).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
+
+  useEffect(() => {
+    setUrl(window.location.href);
+  }, []);
 
   return (
     <>
@@ -147,7 +152,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input className="input-link" value={window.location.href} ref={inputLink} readOnly />
+                  <Input className="input-link" value={url} ref={inputLink} readOnly />
                   <Button
                     className="copy-btn"
                     variant="contained"

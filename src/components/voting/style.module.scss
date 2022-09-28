@@ -27,7 +27,7 @@
     }
   }
   .content {
-    @apply relative mt-8 gap-x-16 lg:mt-12 lg:flex;
+    @apply relative mt-8 lg:mt-12 lg:flex lg:gap-x-12;
   }
   .left-content {
     @apply grow;
@@ -68,10 +68,10 @@
       }
       .chart-info {
         @apply left-0 flex flex-wrap justify-center lg:absolute lg:flex-col;
-        @apply gap-x-10 gap-y-3 lg:gap-y-4;
+        @apply mr-8 gap-x-10 gap-y-3 lg:gap-y-4;
         .label {
           @apply flex items-center;
-          @apply border border-blue-500;
+          // @apply border border-blue-500;
           @apply rounded-3xl p-1;
           .wrapper {
             @apply h-8 w-8;
