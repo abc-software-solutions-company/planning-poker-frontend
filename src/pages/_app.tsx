@@ -11,6 +11,8 @@ import nProgress from 'nprogress';
 import {useEffect} from 'react';
 
 import DefaultSeo from '@/components/common/seo/default-seo';
+import * as Tracking from '@/components/common/third-party/tracking';
+import Analytics from '@/components/common/third-party/tracking/Analytics';
 import {AuthProvider} from '@/contexts/auth';
 
 const Noop: React.FC = ({children}: React.PropsWithChildren<any>) => <>{children}</>;
@@ -41,11 +43,24 @@ const CustomApp = ({Component, pageProps: {session, ...pageProps}}: AppProps) =>
       router.events.off('routeChangeComplete', doneProgress);
       router.events.off('routeChangeError', doneProgress);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => Tracking.page(url);
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <DefaultSeo />
+      <Analytics />
       <AuthProvider>
         <Layout pageProps={pageProps}>
           <Component {...pageProps} key={router.route} />
