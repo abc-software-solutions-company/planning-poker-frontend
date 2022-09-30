@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import React, {FC, ReactNode, useEffect, useReducer} from 'react';
+import {FC, ReactNode, useEffect, useReducer} from 'react';
 
 import {ROUTES} from '@/configs/routes.config';
 import api from '@/data/api';
@@ -15,24 +15,25 @@ interface IProps {
 }
 const Authentication: FC<IProps> = ({children}) => {
   const auth = useStateAuth();
-  const router = useRouter();
-  const asPath = router.asPath;
+  const {asPath} = useRouter();
+  const isLoginPage = asPath.includes(ROUTES.LOGIN);
   const authDispatch = useDispatchAuth();
-
+  let showPage = false;
   useEffect(() => {
     if (!asPath.includes(ROUTES.LOGIN)) {
       Cookie.previousPage.set(asPath);
     }
-    const accessToken = Cookie.accessToken.get();
-    if (accessToken && !auth) {
+    if (!auth && !isLoginPage) {
       api.auth.verify().then(res => {
-        if (res.status === 200) authDispatch(AuthActions.login(res.data));
+        if (res.status === 200) {
+          authDispatch(AuthActions.login(res.data));
+        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  return <>{children}</>;
+  if (isLoginPage || auth) showPage = true;
+  return <div className={showPage ? '' : 'invisible'}>{children}</div>;
 };
 
 const Provider: FC<IProps> = ({children}) => {
