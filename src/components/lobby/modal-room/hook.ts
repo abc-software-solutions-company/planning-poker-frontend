@@ -11,9 +11,11 @@ import api from '@/data/api';
 const Schema = yup.object().shape({
   name: yup.string().required('Please enter room name').max(32, 'Your name must not exceed 32 letters').trim()
 });
+
 interface IFormInputs {
   name: string;
 }
+
 const FORM_DEFAULT_VALUES: IFormInputs = {
   name: ''
 };
@@ -21,6 +23,7 @@ const FORM_DEFAULT_VALUES: IFormInputs = {
 interface IHookParams {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
+
 export default function useModelRoom({setOpen}: IHookParams) {
   const [disabled, setDisable] = useState(false);
   const router = useRouter();

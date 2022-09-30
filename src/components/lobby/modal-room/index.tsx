@@ -17,48 +17,46 @@ interface IProps {
 const ModalRoom: FC<IProps> = ({open, setOpen}) => {
   const {errors, register, handleSubmit, onSubmit, disabled} = useModelRoom({setOpen});
   return (
-    <>
-      <Modal open={open}>
-        <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
-          <div className="container">
-            <div className="content">
-              <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpen(false)} />
-              <Heading as="h5">Create New Room</Heading>
-              <div className="input-button">
+    <Modal open={open}>
+      <form className={styles['modal-create']} onSubmit={handleSubmit(onSubmit)}>
+        <div className="container">
+          <div className="content">
+            <Icon className="x-circle" name="ico-x-circle" size={20} onClick={() => setOpen(false)} />
+            <Heading as="h5">Create New Room</Heading>
+            <div className="input-button">
+              <div className="input-name">
                 <div className="input-name">
-                  <div className="input-name">
-                    <Input
-                      error={errors.name?.message}
-                      className={errors.name && 'error'}
-                      placeholder="Enter room name"
-                      maxLength={33}
-                      {...register('name')}
-                    />
-                  </div>
-                </div>
-                <div className="action">
-                  <Button
-                    className="w-full"
-                    variant="outlined"
-                    color="primary"
-                    text="Cancel"
-                    onClick={() => setOpen(false)}
-                  />
-                  <Button
-                    className="w-full"
-                    variant="contained"
-                    color="primary"
-                    text="Create"
-                    type="submit"
-                    disabled={disabled}
+                  <Input
+                    error={errors.name?.message}
+                    className={errors.name && 'error'}
+                    placeholder="Enter room name"
+                    maxLength={33}
+                    {...register('name')}
                   />
                 </div>
               </div>
+              <div className="action">
+                <Button
+                  className="w-full"
+                  variant="outlined"
+                  color="primary"
+                  text="Cancel"
+                  onClick={() => setOpen(false)}
+                />
+                <Button
+                  className="w-full"
+                  variant="contained"
+                  color="primary"
+                  text="Create"
+                  type="submit"
+                  disabled={disabled}
+                />
+              </div>
             </div>
           </div>
-        </form>
-      </Modal>
-    </>
+        </div>
+      </form>
+    </Modal>
   );
 };
 
