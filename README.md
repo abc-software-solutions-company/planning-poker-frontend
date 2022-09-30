@@ -4,7 +4,7 @@
 
 ## ⚠️ Prerequisites.
 
-1. Install Node.js >=14.18
+1. Install Node.js v16.x
 2. Install Yarn
 3. Working knowledge of React and Next.js.
 
