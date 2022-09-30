@@ -7,6 +7,9 @@ on:
   push:
     branches: ["main"]
 
+env:
+  APP_ENV: ${{ secrets.APP_ENV }}
+
 jobs:
   build:
     runs-on: self-hosted
@@ -23,8 +26,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: setup env
-        run: cp .env.sample .env
+      - name: Delete old env file
+        run: rm -r -f .env
+
+      - name: Create env_temp file
+        run: touch .env_temp
+
+      - name: Copy Secret Key Multiline environment variable to .env_temp file
+        run: echo $APP_ENV | tee .env_temp
+
+      - name: Replace space character with break-line in .env
+        run: sed 's/ /\n/g' .env_temp >> .env
+
+      - name: Remove .env_temp file
+        run: rm -r -f .env_temp
 
       - name: Install Yarn, PM2
         run: npm install -g yarn pm2

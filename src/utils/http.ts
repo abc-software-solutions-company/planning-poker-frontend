@@ -8,6 +8,7 @@ const http = axios.create({
   timeout: 30000,
   headers: {
     Accept: 'application/json',
+    api_key: process.env.NEXT_PUBLIC_API_KEY || '',
     'Content-Type': 'application/json'
   }
 });
