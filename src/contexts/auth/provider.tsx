@@ -18,17 +18,20 @@ const Authentication: FC<IProps> = ({children}) => {
   const {asPath} = useRouter();
   const isLoginPage = asPath.includes(ROUTES.LOGIN);
   const authDispatch = useDispatchAuth();
+  const handleSetAuth = async () => {
+    const res = await api.auth.verify();
+    if (res.status === 200) {
+      authDispatch(AuthActions.login(res.data));
+      console.log('🚀 ~ file: provider.tsx ~ line 25 ~ handleSetAuth ~ res.data', res.data);
+    }
+  };
   let showPage = false;
   useEffect(() => {
     if (!asPath.includes(ROUTES.LOGIN)) {
       Cookie.previousPage.set(asPath);
     }
     if (!auth && !isLoginPage) {
-      api.auth.verify().then(res => {
-        if (res.status === 200) {
-          authDispatch(AuthActions.login(res.data));
-        }
-      });
+      handleSetAuth();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
