@@ -32,17 +32,13 @@ const Lobby: FC = () => {
               High-functioning teams here also rely on Planning Poker
             </Heading>
             <div className="actions">
-              <Button
-                variant="contained"
-                color="primary"
-                text="Create Room"
-                onClick={() => setOpenModal(true)}
-                disabled={disabled}
-              />
+              <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                   error={errors.idOrLink?.message}
-                  groupEnd={<Button variant="contained" color="primary" type="submit" text="Join" />}
+                  groupEnd={
+                    <Button variant="contained" color="primary" type="submit" text="Join" disabled={disabled} />
+                  }
                   placeholder="Enter a link or ID"
                   {...register('idOrLink')}
                 />

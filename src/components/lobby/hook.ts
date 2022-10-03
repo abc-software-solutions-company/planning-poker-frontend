@@ -59,14 +59,15 @@ export default function useLobby() {
           title: 'Success',
           content: 'Join the success room'
         });
-      } else
+      } else {
         toast.show({
           type: 'danger',
           title: 'Error!',
           content: 'Room does not exist'
         });
+        setDisable(false);
+      }
     });
-    setDisable(false);
   };
 
   return {openModal, setOpenModal, register, handleSubmit, errors, onSubmit, disabled};

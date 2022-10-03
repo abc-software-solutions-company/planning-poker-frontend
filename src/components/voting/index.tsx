@@ -19,6 +19,7 @@ import VoteUser from './voters';
 export interface IVoteRoomProps {
   roomId: string;
 }
+
 const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
   const router = useRouter();
   const [url, setUrl] = useState('');
@@ -28,6 +29,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
     roomData,
     votedData,
     isHost,
+    disableBtn,
     isCompleted,
     onClickCopy,
     setOpenModal,
@@ -137,6 +139,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                       color="primary"
                       type="button"
                       onClick={onClickComplete}
+                      disabled={disableBtn}
                     >
                       Complete
                     </Button>
