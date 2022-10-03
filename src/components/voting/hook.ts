@@ -5,7 +5,7 @@ import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
 import {IRoomFullResponse} from '@/data/api/types/room.type';
-import socket, {socketJoinRoom, socketToast, socketUpdateRoom} from '@/data/socket';
+import socket, {socketJoinRoom, socketToast, socketUpdateRoom, socketUpdateRoomExceptMe} from '@/data/socket';
 import {SOCKET_EVENTS} from '@/data/socket/type';
 
 import {IVoteRoomProps} from '.';
@@ -17,7 +17,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const auth = useStateAuth();
-  socket.auth = {...auth, roomId};
+
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
@@ -33,10 +33,25 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
   const onSelectPoker = async (value: number) => {
     if (auth && roomData?.story) {
-      api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
-        if (status === 200) {
-          socketUpdateRoom();
-        }
+      if (roomData.story.avgPoint === null)
+        api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
+          if (status === 200) {
+            updateRoom();
+            socketUpdateRoomExceptMe();
+          }
+        });
+      else
+        api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
+          if (status === 200) {
+            updateRoom();
+            socketUpdateRoomExceptMe();
+          }
+        });
+    } else {
+      toast.show({
+        type: 'info',
+        title: 'Story',
+        content: 'Please wait for the host to set up the story'
       });
     }
   };
@@ -57,7 +72,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
         } else {
           toast.show({
             type: 'warning',
-            title: 'Success!',
+            title: 'warning!',
             content: 'No users have voted yet'
           });
           setDisableBtn(false);
@@ -78,31 +93,39 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     if (roomData?.story?.avgPoint !== null) {
       setVotedData(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
     }
+    const promiseArr = [];
 
     if (auth && roomData) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
-        api.userRoom.create({roomId}).then(({status}) => {
-          if (status === 201) {
-            socketJoinRoom();
-          }
-        });
+        promiseArr.push(
+          api.userRoom.create({roomId}).then(({status}) => {
+            if (status === 201) {
+              socketJoinRoom();
+            }
+          })
+        );
       }
     }
     if (auth && roomData?.story && roomData.story.avgPoint === null) {
       if (roomData.users.filter(user => user.id === auth.id && user.votePoint === undefined).length === 1) {
-        api.userStory.create({storyId: roomData.story.id}).then(({status}) => {
-          if (status === 201) {
-            socketUpdateRoom();
-          }
-        });
+        promiseArr.push(api.userStory.create({storyId: roomData.story.id}));
       }
+    }
+    console.log(promiseArr);
+    if (promiseArr.length > 0) {
+      Promise.allSettled(promiseArr).finally(() => {
+        socketUpdateRoom();
+      });
     }
     if (roomData && !roomData.story && isHost) setOpenModal(!roomData.story);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
   useEffect(() => {
-    socket.connect();
+    if (auth) {
+      socket.auth = {...auth, roomId};
+      socket.connect();
+    }
 
     socket.on(SOCKET_EVENTS.reconnect, attempt => {
       console.log(SOCKET_EVENTS.reconnect, attempt);
@@ -118,13 +141,19 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       updateRoom();
     });
 
+    socket.on(SOCKET_EVENTS.updateRoomExceptMe, () => {
+      console.log(SOCKET_EVENTS.updateRoomExceptMe);
+      updateRoom();
+    });
+
     return () => {
       socket.off(SOCKET_EVENTS.reconnect);
       socket.off(SOCKET_EVENTS.toast);
       socket.off(SOCKET_EVENTS.updateRoom);
+      socket.off(SOCKET_EVENTS.updateRoomExceptMe);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     const disconnect = () => {
