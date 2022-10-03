@@ -13,8 +13,9 @@ import {IVoteRoomProps} from '.';
 export default function useVoting({roomId}: IVoteRoomProps) {
   const [roomData, setRoomData] = useState<IRoomFullResponse>();
   console.log('🚀 ~ file: hook.ts ~ line 15 ~ useVoting ~ roomData', roomData);
-  const [votedData, setDataVoted] = useState<(number | null)[]>();
+  const [votedData, setVotedData] = useState<(number | null)[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const auth = useStateAuth();
   socket.auth = {...auth, roomId};
   const toast = useToast();
@@ -47,6 +48,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   };
 
   const onClickComplete = () => {
+    setDisableBtn(true);
     if (isHost && roomData?.story?.avgPoint === null)
       api.story.complete({id: roomData.story.id}).then(res => {
         if (res.status === 200) {
@@ -58,6 +60,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
             title: 'Success!',
             content: 'No users have voted yet'
           });
+          setDisableBtn(false);
         }
       });
   };
@@ -73,7 +76,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
 
   useEffect(() => {
     if (roomData?.story?.avgPoint !== null) {
-      setDataVoted(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
+      setVotedData(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
     }
 
     if (auth && roomData) {
@@ -134,12 +137,17 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setDisableBtn(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomData?.story?.id]);
   return {
     auth,
     roomData,
     votedData,
     openModal,
     isHost,
+    disableBtn,
     isCompleted,
     setRoomData,
     onClickCopy,
