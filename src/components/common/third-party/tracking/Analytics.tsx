@@ -4,6 +4,10 @@ import React from 'react';
 import {GA_TRACKING_ID} from './gtag';
 import {SEGMENT_TRACKING_ID} from './segment';
 
+console.log('🚀 ~ file: Analytics.tsx ~ line 5 ~ GA_TRACKING_ID', GA_TRACKING_ID);
+
+console.log('🚀 ~ file: Analytics.tsx ~ line 7 ~ SEGMENT_TRACKING_ID', SEGMENT_TRACKING_ID);
+
 const Analytics = () => {
   return (
     <>
