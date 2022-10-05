@@ -1,7 +1,10 @@
+import {StoryTypes} from '@/utils/constant';
+
 export interface IStory {
   id: string;
   name: string;
   avgPoint: number;
+  type: keyof typeof StoryTypes;
 }
 
 export interface IUser {

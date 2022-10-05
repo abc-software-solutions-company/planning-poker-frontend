@@ -1,10 +1,13 @@
+import {StoryTypes} from '@/utils/constant';
+
 export interface IStoryComplete {
   id: string;
 }
 
 export interface IStoryCreate {
-  name: string;
   roomId: string;
+  name: string;
+  type: keyof typeof StoryTypes;
 }
 
 export interface IStoryUpdate extends IStoryComplete {

@@ -14,6 +14,7 @@ import DefaultSeo from '@/components/common/seo/default-seo';
 import * as Tracking from '@/components/common/third-party/tracking';
 import Analytics from '@/components/common/third-party/tracking/Analytics';
 import {AuthProvider} from '@/contexts/auth';
+import {RoomProvider} from '@/contexts/room';
 
 const Noop: React.FC = ({children}: React.PropsWithChildren<any>) => <>{children}</>;
 
@@ -61,9 +62,11 @@ const CustomApp = ({Component, pageProps: {...pageProps}}: AppProps) => {
       <DefaultSeo />
       <Analytics />
       <AuthProvider>
-        <Layout pageProps={pageProps}>
-          <Component {...pageProps} key={router.route} />
-        </Layout>
+        <RoomProvider>
+          <Layout pageProps={pageProps}>
+            <Component {...pageProps} key={router.route} />
+          </Layout>
+        </RoomProvider>
       </AuthProvider>
     </>
   );

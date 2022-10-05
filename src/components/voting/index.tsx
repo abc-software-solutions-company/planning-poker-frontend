@@ -1,6 +1,6 @@
 import cls from 'classnames';
 import {useRouter} from 'next/router';
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 
 import VoteCard from '@/components/voting/cards';
 import ModalStory from '@/components/voting/modal-story';
@@ -9,10 +9,10 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {FIBONACCI} from '@/utils/constant';
+import {StoryTypes} from '@/utils/constant';
 
 import Chart from './chart';
-import useVoting from './hook';
+import useVoting from './hooks';
 import style from './style.module.scss';
 import VoteUser from './voters';
 
@@ -30,19 +30,18 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
     votedData,
     isHost,
     disableBtn,
+    storyType,
     isCompleted,
     onClickCopy,
-    setOpenModal,
     onClickComplete,
     onClickNext,
     onSelectPoker
   } = useVoting({roomId});
 
-  const inputLink = useRef<HTMLInputElement>(null);
-
-  const numVotedUser =
-    roomData?.users?.filter(({votePoint}) => votePoint !== undefined && votePoint !== null).length || 0;
+  const numVotedUser = roomData?.users?.filter(({votePoint}) => votePoint || votePoint === 0).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
+  const votedInfo = `${numVotedUser}/${numJoinUser}`;
+  const type = roomData?.story?.type || storyType;
 
   useEffect(() => {
     setUrl(window.location.href);
@@ -78,15 +77,16 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               {!isCompleted && auth && (
                 <div className="card-holder">
                   {roomData &&
-                    FIBONACCI.map(num => {
-                      const isSelected = num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint;
+                    Object.keys(StoryTypes[type]).map(key => {
+                      const value = Number(key);
+                      const isSelected = value === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint;
                       return (
                         <VoteCard
-                          key={num}
+                          key={value}
                           className={isSelected ? 'selected' : ''}
-                          value={num}
+                          name={StoryTypes[type][value]}
                           onClick={() => {
-                            if (!isSelected) onSelectPoker(num);
+                            if (!isSelected) onSelectPoker(value);
                           }}
                         />
                       );
@@ -96,9 +96,9 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               {isCompleted && votedData && (
                 <Chart
                   className="chart-holder"
-                  votedData={votedData}
                   onClickNext={onClickNext}
                   showBtnNextStory={isCompleted && isHost}
+                  votedInfo={votedInfo}
                 />
               )}
             </div>
@@ -108,12 +108,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                 {isCompleted && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                Voted players:{' '}
-                {roomData && (
-                  <span className="user-lenght">
-                    {numVotedUser}/{numJoinUser}
-                  </span>
-                )}
+                Voted players: {roomData && <span className="user-lenght">{votedInfo}</span>}
               </Heading>
               <div className="voter-list border-line scrollbar">
                 {roomData?.users.map(({id, name, votePoint, isOnline}) => {
@@ -151,17 +146,12 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   )}
                 </div>
               )}
-              {openModal && <ModalStory {...{roomData, openModal, setOpenModal}} />}
+              {openModal && <ModalStory />}
               <div className="sharing">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input className="input-link" value={url} ref={inputLink} readOnly />
-                  <Button
-                    className="copy-btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={() => onClickCopy(inputLink.current!.value)}
-                  >
+                  <Input className="input-link" value={url} readOnly />
+                  <Button className="copy-btn" variant="contained" color="primary" onClick={() => onClickCopy(url)}>
                     <Icon name="ico-copy" />
                   </Button>
                 </div>

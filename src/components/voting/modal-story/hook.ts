@@ -5,8 +5,8 @@ import * as yup from 'yup';
 
 import api from '@/data/api';
 import {socketToast, socketUpdateRoom} from '@/data/socket';
-
-import {IModalStoryProps} from '.';
+import useRoom from '@/hooks/useRoom';
+import {StoryTypes} from '@/utils/constant';
 
 const Schema = yup.object().shape({
   name: yup.string().required('Please fill in story name').max(256, 'Story name must not exceed 256 letters').trim()
@@ -14,27 +14,29 @@ const Schema = yup.object().shape({
 
 interface IFormInputs {
   name: string;
+  type: keyof typeof StoryTypes;
 }
 
-const FORM_DEFAULT_VALUES: IFormInputs = {name: ''};
+const FORM_DEFAULT_VALUES: IFormInputs = {name: '', type: 'Fibonacci'};
 
-export default function useModalStory(props: IModalStoryProps) {
-  const {roomData, setOpenModal} = props;
+export default function useModalStory() {
+  const {roomData, setStoryType, openModal, setOpenModal} = useRoom();
   const [disabled, setDisable] = useState(false);
 
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     reset,
-    formState: {errors}
+    formState: {errors, isDirty}
   } = useForm<IFormInputs>({
     defaultValues: FORM_DEFAULT_VALUES,
     mode: 'onChange',
     resolver: yupResolver(Schema)
   });
 
-  const onSubmit: SubmitHandler<IFormInputs> = ({name}) => {
+  const onSubmit: SubmitHandler<IFormInputs> = ({name, type}) => {
     setDisable(true);
     if (roomData) {
       if (roomData.story?.avgPoint === null) {
@@ -52,7 +54,7 @@ export default function useModalStory(props: IModalStoryProps) {
           setDisable(false);
         });
       } else {
-        api.story.create({name, roomId: roomData.id}).then(res => {
+        api.story.create({name, roomId: roomData.id, type}).then(res => {
           if (res.status === 201) {
             socketUpdateRoom();
             reset();
@@ -74,5 +76,11 @@ export default function useModalStory(props: IModalStoryProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
-  return {errors, register, handleSubmit, onSubmit, disabled};
+  useEffect(() => {
+    const {type} = getValues();
+    setStoryType(type);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDirty]);
+
+  return {roomData, openModal, setOpenModal, errors, register, handleSubmit, onSubmit, disabled};
 }

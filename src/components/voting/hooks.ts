@@ -4,20 +4,18 @@ import {useEffect, useState} from 'react';
 import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
-import {IRoomFullResponse} from '@/data/api/types/room.type';
 import socket, {socketJoinRoom, socketToast, socketUpdateRoom, socketUpdateRoomExceptMe} from '@/data/socket';
 import {SOCKET_EVENTS} from '@/data/socket/type';
+import useRoom from '@/hooks/useRoom';
+import {StoryTypes} from '@/utils/constant';
 
 import {IVoteRoomProps} from '.';
 
 export default function useVoting({roomId}: IVoteRoomProps) {
-  const [roomData, setRoomData] = useState<IRoomFullResponse>();
-  console.log('🚀 ~ file: hook.ts ~ line 15 ~ useVoting ~ roomData', roomData);
-  const [votedData, setVotedData] = useState<(number | null)[]>();
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const {openModal, roomData, storyType, setOpenModal, setRoomData} = useRoom();
+  const [votedData, setVotedData] = useState<(string | null)[]>();
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const auth = useStateAuth();
-
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
@@ -92,8 +90,12 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   };
 
   useEffect(() => {
-    if (roomData?.story?.avgPoint !== null) {
-      setVotedData(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
+    if (roomData && roomData.story && roomData.story.avgPoint !== null) {
+      setVotedData(
+        roomData.users.map(({votePoint}) =>
+          votePoint || votePoint === 0 ? StoryTypes[roomData.story?.type || 'Fibonacci'][votePoint] : null
+        )
+      );
     }
     const promiseArr = [];
 
@@ -113,7 +115,6 @@ export default function useVoting({roomId}: IVoteRoomProps) {
         promiseArr.push(api.userStory.create({storyId: roomData.story.id}));
       }
     }
-    console.log(promiseArr);
     if (promiseArr.length > 0) {
       Promise.allSettled(promiseArr).finally(() => {
         socketUpdateRoom();
@@ -175,14 +176,15 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   return {
     auth,
     roomData,
-    votedData,
     openModal,
+    setOpenModal,
+    storyType,
+    votedData,
     isHost,
     disableBtn,
     isCompleted,
     setRoomData,
     onClickCopy,
-    setOpenModal,
     onClickNext,
     onClickComplete,
     onSelectPoker
