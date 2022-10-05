@@ -33,7 +33,7 @@ export const siteSettings = {
     websiteUrl: 'https://www.voteuserstory.com'
   },
   logo: {
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/og-img.jpg',
+    url: process.env.NEXT_PUBLIC_SITE_URL + '/og-img.png',
     alt: 'Planning Poker',
     width: 512,
     height: 512

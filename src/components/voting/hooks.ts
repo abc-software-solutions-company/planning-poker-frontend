@@ -2,22 +2,22 @@ import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 
 import {useStateAuth} from '@/contexts/auth';
+import {IChartData} from '@/core-ui/doughnut-chart';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
-import {IRoomFullResponse} from '@/data/api/types/room.type';
 import socket, {socketJoinRoom, socketToast, socketUpdateRoom, socketUpdateRoomExceptMe} from '@/data/socket';
 import {SOCKET_EVENTS} from '@/data/socket/type';
+import useRoom from '@/hooks/useRoom';
+import {ChartColors, StoryTypes} from '@/utils/constant';
 
 import {IVoteRoomProps} from '.';
 
 export default function useVoting({roomId}: IVoteRoomProps) {
-  const [roomData, setRoomData] = useState<IRoomFullResponse>();
-  console.log('🚀 ~ file: hook.ts ~ line 15 ~ useVoting ~ roomData', roomData);
-  const [votedData, setVotedData] = useState<(number | null)[]>();
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const {openModal, roomData, storyType, setStoryType, setOpenModal, setRoomData} = useRoom();
+  console.log('🚀 ~ file: hooks.ts ~ line 17 ~ useVoting ~ roomData', roomData);
+  const [chartData, setChartData] = useState<IChartData[]>();
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const auth = useStateAuth();
-
   const toast = useToast();
   const isHost = roomData && auth && auth.id === roomData.hostUserId;
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
@@ -27,16 +27,18 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     api.room.get({id: roomId}).then(({status, data}) => {
       if (status === 200) {
         setRoomData(data);
+        if (data.story) setStoryType(data.story.type);
       }
     });
   };
 
   const onSelectPoker = async (value: number) => {
     if (auth && roomData?.story) {
+      const curentVotePoint = roomData.users.filter(u => u.id === auth.id)[0].votePoint;
       const roomDataTemp = {...roomData};
       roomDataTemp.users.filter(u => u.id === auth.id)[0].votePoint = value;
       setRoomData(roomDataTemp);
-      if (roomData.users.filter(u => u.id === auth.id)[0].votePoint === null)
+      if (curentVotePoint === null)
         api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
           if (status === 200) {
             updateRoom();
@@ -92,11 +94,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   };
 
   useEffect(() => {
-    if (roomData?.story?.avgPoint !== null) {
-      setVotedData(roomData?.users?.map(({votePoint}) => (votePoint === undefined ? null : votePoint)));
-    }
     const promiseArr = [];
-
     if (auth && roomData) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
         promiseArr.push(
@@ -106,31 +104,56 @@ export default function useVoting({roomId}: IVoteRoomProps) {
             }
           })
         );
+      } else {
+        if (!roomData.users.filter(user => user.id === auth.id)[0].isOnline) {
+          promiseArr.push(api.userRoom.update({isOnline: true, roomId}));
+        }
+      }
+      if (roomData?.story && roomData.story.avgPoint === null) {
+        if (roomData.users.filter(user => user.id === auth.id)[0]?.votePoint === undefined)
+          promiseArr.push(api.userStory.create({storyId: roomData.story.id}));
       }
     }
-    if (auth && roomData?.story && roomData.story.avgPoint === null) {
-      if (roomData.users.filter(user => user.id === auth.id && user.votePoint === undefined).length === 1) {
-        promiseArr.push(api.userStory.create({storyId: roomData.story.id}));
-      }
-    }
-    console.log(promiseArr);
+
     if (promiseArr.length > 0) {
-      Promise.allSettled(promiseArr).finally(() => {
+      Promise.allSettled(promiseArr).then(() => {
         socketUpdateRoom();
       });
     }
+
     if (roomData && !roomData.story && isHost) setOpenModal(!roomData.story);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomData]);
 
   useEffect(() => {
+    if (roomData && roomData.story && roomData.story.avgPoint !== null) {
+      const typeData = StoryTypes[storyType];
+      const data: IChartData[] = Object.keys(typeData).map((value, index) => {
+        return {
+          label: typeData[Number(value)],
+          value: roomData?.users.filter(({votePoint}) => votePoint === Number(value)).length || 0,
+          color: String(ChartColors[index])
+        };
+      });
+      setChartData(data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomData?.story?.avgPoint]);
+
+  useEffect(() => {
+    setDisableBtn(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomData?.story?.id]);
+
+  useEffect(() => {
     if (auth) {
       socket.auth = {...auth, roomId};
       socket.connect();
+      updateRoom();
     }
 
     socket.on(SOCKET_EVENTS.reconnect, attempt => {
-      console.log(SOCKET_EVENTS.reconnect, attempt);
+      console.log('SocketIO', SOCKET_EVENTS.reconnect, attempt);
       updateRoom();
     });
 
@@ -139,12 +162,12 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     });
 
     socket.on(SOCKET_EVENTS.updateRoom, () => {
-      console.log(SOCKET_EVENTS.updateRoom);
+      console.log('SocketIO', SOCKET_EVENTS.updateRoom);
       updateRoom();
     });
 
     socket.on(SOCKET_EVENTS.updateRoomExceptMe, () => {
-      console.log(SOCKET_EVENTS.updateRoomExceptMe);
+      console.log('SocketIO', SOCKET_EVENTS.updateRoomExceptMe);
       updateRoom();
     });
 
@@ -168,21 +191,18 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setDisableBtn(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roomData?.story?.id]);
   return {
     auth,
     roomData,
-    votedData,
     openModal,
+    setOpenModal,
+    storyType,
+    chartData,
     isHost,
     disableBtn,
     isCompleted,
     setRoomData,
     onClickCopy,
-    setOpenModal,
     onClickNext,
     onClickComplete,
     onSelectPoker

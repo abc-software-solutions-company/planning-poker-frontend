@@ -11,7 +11,7 @@ const DefaultSeo: React.FC = () => {
         type: 'website',
         locale: 'en',
         description: siteSettings.description,
-        images: [{url: '/og-img.jpg', width: 1200, height: 630, alt: 'Seo image'}]
+        images: [{url: '/og-img.png', width: 1200, height: 630, alt: 'Seo image'}]
       }}
       twitter={{handle: '@handle', site: '@site', cardType: 'summary_large_image'}}
       additionalMetaTags={[

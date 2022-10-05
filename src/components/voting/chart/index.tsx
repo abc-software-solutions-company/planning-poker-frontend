@@ -1,31 +1,23 @@
 import {FC} from 'react';
 
 import Button from '@/core-ui/button';
-import DoughnutChart from '@/core-ui/doughnut-chart';
-import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
+import DoughnutChart, {IChartData} from '@/core-ui/doughnut-chart';
 
 interface IProps {
   className?: string;
-  votedData: (number | null)[];
+  votedInfo?: string;
+  chartData: IChartData[];
   showBtnNextStory?: boolean;
   onClickNext: () => void;
 }
 
-const Chart: FC<IProps> = ({className, votedData, showBtnNextStory, onClickNext}) => {
-  const numVotedUser = votedData.filter(point => point !== undefined && point !== null).length || 0;
-  const numJoinUser = votedData.length || 0;
-
-  const backgroundColor = Object.values(CHARTCOLORS);
-  const sortedArray: {value: number; len: number; color: string}[] = FIBONACCI.map((item, index) => {
-    return {value: item, len: votedData.filter(v => v === item).length, color: backgroundColor[index]};
-  }).sort((a, b) => b.len - a.len);
-
+const Chart: FC<IProps> = ({className, votedInfo, chartData, showBtnNextStory, onClickNext}) => {
   return (
     <div className={className}>
       <div className="chart">
-        <DoughnutChart votedData={votedData} />
+        <DoughnutChart chartData={chartData} />
         <div className="chart-center-text">
-          <p>{`${numVotedUser}/${numJoinUser}`} players</p>
+          <p>{votedInfo} players</p>
           <p className="opacity-50">voted</p>
           {showBtnNextStory && (
             <Button
@@ -38,19 +30,20 @@ const Chart: FC<IProps> = ({className, votedData, showBtnNextStory, onClickNext}
           )}
         </div>
       </div>
-
       <div className="chart-info">
-        {sortedArray
-          .filter(item => item.len == sortedArray[0].len)
-          .map((item, index) => {
+        {chartData
+          .filter(item => item.value > 0)
+          .sort((a, b) => b.value - a.value)
+          .map((item, index, arr) => {
+            const fontSize = 23 - item.label.length * 3;
             return (
               <div key={index} className="label">
                 <div className="wrapper">
-                  <p className="value" style={{backgroundColor: item.color}}>
-                    {item.value}
+                  <p className="value" style={{backgroundColor: item.color, fontSize}}>
+                    {item.label}
                   </p>
                 </div>
-                <span className="most">Most</span>
+                {item.value === arr[0].value && <span className="most">Most</span>}
               </div>
             );
           })}

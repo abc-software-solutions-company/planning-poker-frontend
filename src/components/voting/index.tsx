@@ -1,20 +1,20 @@
 import cls from 'classnames';
 import {useRouter} from 'next/router';
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 
-import VoteCard from '@/components/voting/cards';
+import Card from '@/components/voting/card';
 import ModalStory from '@/components/voting/modal-story';
 import {ROUTES} from '@/configs/routes.config';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
-import {FIBONACCI} from '@/utils/constant';
+import {ChartColors, StoryTypes} from '@/utils/constant';
 
 import Chart from './chart';
-import useVoting from './hook';
+import useVoting from './hooks';
 import style from './style.module.scss';
-import VoteUser from './voters';
+import Voter from './voter';
 
 export interface IVoteRoomProps {
   roomId: string;
@@ -27,22 +27,20 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
     auth,
     openModal,
     roomData,
-    votedData,
+    chartData,
     isHost,
     disableBtn,
+    storyType,
     isCompleted,
     onClickCopy,
-    setOpenModal,
     onClickComplete,
     onClickNext,
     onSelectPoker
   } = useVoting({roomId});
 
-  const inputLink = useRef<HTMLInputElement>(null);
-
-  const numVotedUser =
-    roomData?.users?.filter(({votePoint}) => votePoint !== undefined && votePoint !== null).length || 0;
+  const numVotedUser = roomData?.users?.filter(({votePoint}) => votePoint || votePoint === 0).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
+  const votedInfo = `${numVotedUser}/${numJoinUser}`;
 
   useEffect(() => {
     setUrl(window.location.href);
@@ -69,8 +67,8 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
             <div className="left-content">
               <div className="story-name">
                 <p className="name">{roomData?.story?.name || 'Story name'}</p>
-                {isHost && (
-                  <button onClick={onClickNext}>
+                {isHost && !isCompleted && (
+                  <button className="btn-edit" onClick={onClickNext}>
                     <Icon name="ico-edit" size={24} />
                   </button>
                 )}
@@ -78,27 +76,29 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
               {!isCompleted && auth && (
                 <div className="card-holder">
                   {roomData &&
-                    FIBONACCI.map(num => {
-                      const isSelected = num === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint;
+                    Object.keys(StoryTypes[storyType]).map(key => {
+                      const value = Number(key);
+                      const isSelected = value === roomData.users.filter(user => user.id === auth.id)[0]?.votePoint;
                       return (
-                        <VoteCard
-                          key={num}
+                        <Card
+                          key={value}
                           className={isSelected ? 'selected' : ''}
-                          value={num}
+                          name={StoryTypes[storyType][value]}
                           onClick={() => {
-                            if (!isSelected) onSelectPoker(num);
+                            if (!isSelected) onSelectPoker(value);
                           }}
                         />
                       );
                     })}
                 </div>
               )}
-              {isCompleted && votedData && (
+              {isCompleted && chartData && (
                 <Chart
                   className="chart-holder"
-                  votedData={votedData}
                   onClickNext={onClickNext}
+                  chartData={chartData}
                   showBtnNextStory={isCompleted && isHost}
+                  votedInfo={votedInfo}
                 />
               )}
             </div>
@@ -108,23 +108,22 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                 {isCompleted && 'Result'}
               </Heading>
               <Heading className="sub-title border-line" as="h6">
-                Voted players:{' '}
-                {roomData && (
-                  <span className="user-lenght">
-                    {numVotedUser}/{numJoinUser}
-                  </span>
-                )}
+                Voted players: {roomData && <span className="user-lenght">{votedInfo}</span>}
               </Heading>
               <div className="voter-list border-line scrollbar">
                 {roomData?.users.map(({id, name, votePoint, isOnline}) => {
+                  const isVoted = votePoint || votePoint === 0;
                   return (
-                    <VoteUser
+                    <Voter
                       className="border-line"
                       key={id}
                       name={name}
                       host={id === roomData.hostUserId}
                       isOnline={isOnline}
-                      votePoint={votePoint}
+                      voteCard={isVoted ? StoryTypes[storyType][votePoint] : undefined}
+                      colorCard={
+                        isVoted ? ChartColors[Object.keys(StoryTypes[storyType]).indexOf(String(votePoint))] : undefined
+                      }
                       isCompleted={isCompleted}
                     />
                   );
@@ -151,17 +150,12 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
                   )}
                 </div>
               )}
-              {openModal && <ModalStory {...{roomData, openModal, setOpenModal}} />}
-              <div className="sharing">
+              {openModal && <ModalStory />}
+              <div className="invite-link">
                 <Heading as="h6">Invite a teammate</Heading>
                 <div className="share-link">
-                  <Input className="input-link" value={url} ref={inputLink} readOnly />
-                  <Button
-                    className="copy-btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={() => onClickCopy(inputLink.current!.value)}
-                  >
+                  <Input className="input-link" value={url} readOnly />
+                  <Button className="copy-btn" variant="contained" color="primary" onClick={() => onClickCopy(url)}>
                     <Icon name="ico-copy" />
                   </Button>
                 </div>

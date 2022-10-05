@@ -1,17 +1,20 @@
 import chartPluginDataLabels from 'chartjs-plugin-datalabels';
 import React, {FC, useEffect, useRef, useState} from 'react';
 
-import {CHARTCOLORS, FIBONACCI} from '@/utils/constant';
+export interface IChartData {
+  label: string;
+  value: number;
+  color: string;
+}
 
 interface IProps {
   className?: string;
-  votedData: (number | null)[];
+  chartData: IChartData[];
 }
 
-const DoughnutChart: FC<IProps> = ({className, votedData}) => {
+const DoughnutChart: FC<IProps> = ({className, chartData}) => {
   const [module, setModule] = useState<any>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const backgroundColor = Object.values(CHARTCOLORS);
   useEffect(() => {
     const chartJs = import('chart.js');
     chartJs.then(resp => setModule(resp));
@@ -27,9 +30,9 @@ const DoughnutChart: FC<IProps> = ({className, votedData}) => {
       data: {
         datasets: [
           {
-            labels: FIBONACCI.map(e => String(e)),
-            data: FIBONACCI.map(num => votedData.filter(v => v === num).length),
-            backgroundColor,
+            labels: chartData.map(({label}) => label),
+            data: chartData.map(({value}) => value),
+            backgroundColor: chartData.map(({color}) => color),
             datalabels: {
               color: '#fff',
               textAlign: 'center',

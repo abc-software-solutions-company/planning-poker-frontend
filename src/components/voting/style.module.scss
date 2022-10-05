@@ -42,7 +42,7 @@
         @apply flex justify-center;
       }
       button {
-        @apply ml-1;
+        @apply ml-1.5 lg:mt-1.5;
       }
       .name {
         @apply text-h4 font-medium leading-6 text-break md:leading-7 lg:text-h3;
@@ -77,7 +77,7 @@
             @apply h-8 w-8;
           }
           .value {
-            @apply text-center text-h4 leading-8 text-white;
+            @apply text-center leading-8 text-white;
             @apply h-full w-full rounded-full;
           }
           .most {
@@ -152,7 +152,7 @@
     .btn {
       @apply py-1;
     }
-    .sharing {
+    .invite-link {
       @apply rounded-b-lg;
       @apply border-x border-b;
       h6 {
