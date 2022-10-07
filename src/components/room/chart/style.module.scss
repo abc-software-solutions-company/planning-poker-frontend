@@ -1,0 +1,36 @@
+.chart-holder :global {
+  @apply flex flex-col items-center lg:flex-row-reverse;
+  .chart {
+    @apply relative mx-auto my-8 flex h-[320px] w-[320px] items-center justify-center sm:h-[400px] sm:w-[400px];
+    canvas {
+      @apply absolute object-contain object-center;
+    }
+    .chart-center-text {
+      @apply z-40 text-center;
+    }
+    .chart-center-btn {
+      @apply mt-3 block py-2.5 lg:hidden;
+    }
+  }
+  .chart-info :global {
+    @apply left-0 flex flex-wrap justify-center lg:absolute lg:flex-col;
+    @apply mr-8 gap-x-10 gap-y-3 lg:gap-y-4;
+    .label {
+      @apply flex items-center;
+      // @apply border border-blue-500;
+      @apply rounded-3xl p-1;
+      .wrapper {
+        @apply h-8 w-8;
+      }
+      .value {
+        @apply text-center leading-8 text-white;
+        @apply h-full w-full rounded-full;
+      }
+      .most {
+        @apply rounded-full bg-green-400 text-white;
+        @apply ml-1 px-2;
+        @apply align-middle;
+      }
+    }
+  }
+}

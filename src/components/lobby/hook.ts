@@ -26,7 +26,6 @@ export default function useLobby() {
   const toast = useToast();
   const router = useRouter();
   const [disabled, setDisable] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
 
   const detectId = (idOrLink: string) => {

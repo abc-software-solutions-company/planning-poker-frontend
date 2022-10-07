@@ -2,7 +2,7 @@ import {InferGetStaticPropsType} from 'next';
 import React from 'react';
 
 import Seo from '@/components/common/seo/seo';
-import Voting from '@/components/voting';
+import Voting from '@/components/room';
 import {getStaticPaths, getStaticProps} from '@/data/ssr/room.ssr';
 import LayoutDefault from '@/layouts/default';
 

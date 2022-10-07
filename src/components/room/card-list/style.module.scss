@@ -1,0 +1,10 @@
+.card-holder :global {
+  @apply mx-auto mt-8 max-w-xs md:max-w-md lg:mt-14 lg:ml-0 lg:max-w-none;
+  @apply grid grid-cols-4 gap-3 lg:gap-8;
+  .vote-card {
+    &.selected,
+    &:hover {
+      @apply bg-blue-400 text-white;
+    }
+  }
+}

@@ -1,13 +1,12 @@
-import cls from 'classnames';
 import {FC} from 'react';
 
-import ModalRoom from '@/components/lobby/modal-room';
+import RoomModal from '@/components/lobby/room-modal';
 import {useStateAuth} from '@/contexts/auth';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 
+import TopBar from '../top-bar';
 import useLobby from './hook';
 import styles from './style.module.scss';
 
@@ -18,12 +17,7 @@ const Lobby: FC = () => {
     <>
       <div className={styles.lobby}>
         <div className="container">
-          <div className="topbar">
-            <div className="right">
-              <Icon name="ico-user" size={24} />
-              <p className={cls('text')}>{auth && auth.name}</p>
-            </div>
-          </div>
+          <TopBar authName={auth?.name} />
           <div className="inner">
             <Heading as="h2" className="heading head">
               PLANNING POKER
@@ -46,8 +40,7 @@ const Lobby: FC = () => {
             </div>
           </div>
         </div>
-
-        <ModalRoom open={openModal} setOpen={setOpenModal} />
+        <RoomModal {...{openModal, setOpenModal}} />
       </div>
     </>
   );

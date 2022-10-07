@@ -1,0 +1,38 @@
+.voter :global {
+  @apply flex h-14 items-center justify-between px-4;
+  .voted {
+    @apply ml-auto flex items-center gap-1 pr-1 text-blue-500;
+  }
+  .point {
+    @apply text-h4 font-bold;
+    @apply ml-1;
+  }
+  .player-info {
+    @apply flex items-center;
+    @apply w-full;
+    .icon {
+      @apply relative h-6;
+      &::after {
+        @apply content-[''];
+        @apply h-2 w-2;
+        @apply bg-slate-500;
+        @apply rounded-full;
+        @apply absolute right-0 bottom-0;
+      }
+      &.online::after {
+        @apply bg-green-500;
+      }
+    }
+  }
+  .name {
+    @apply leading-4 text-break;
+    @apply flex items-center;
+    @apply mt-[2px] pl-3;
+  }
+  .host {
+    @apply bg-green-400;
+    @apply whitespace-nowrap text-xs text-white;
+    @apply mx-1 rounded-lg px-2;
+    @apply align-middle;
+  }
+}

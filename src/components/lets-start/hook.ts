@@ -39,12 +39,12 @@ export default function useLetsStart() {
     api.auth.login(data).then(res => {
       if (res.status === 201) {
         Cookie.accessToken.set(res.data.accessToken);
-        dispatchAuth(AuthActions.login(res.data.user));
+        dispatchAuth(AuthActions.UPDATE(res.data.user));
         const previousPage = Cookie.previousPage.get();
         if (previousPage) {
           router.push(previousPage);
         } else {
-          router.push(ROUTES.HOME);
+          router.push(ROUTES.LOBBY);
         }
       }
       setDisable(false);
