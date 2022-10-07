@@ -1,55 +1,45 @@
-import cls from 'classnames';
 import {FC} from 'react';
 
-import ModalRoom from '@/components/lobby/modal-room';
+import RoomModal from '@/components/lobby/room-modal';
 import {useStateAuth} from '@/contexts/auth';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
-import Icon from '@/core-ui/icon';
 import Input from '@/core-ui/input';
 
+import TopBar from '../top-bar';
 import useLobby from './hook';
 import styles from './style.module.scss';
 
 const Lobby: FC = () => {
-  const {openModal, setOpenModal, register, handleSubmit, errors, onSubmit, disabled} = useLobby();
+  const {openModal, setOpenModal, register, errors, onSubmit, disabled} = useLobby();
   const auth = useStateAuth();
   return (
-    <>
-      <div className={styles.lobby}>
-        <div className="container">
-          <div className="topbar">
-            <div className="right">
-              <Icon name="ico-user" size={24} />
-              <p className={cls('text')}>{auth && auth.name}</p>
-            </div>
-          </div>
-          <div className="inner">
-            <Heading as="h2" className="heading head">
-              PLANNING POKER
-            </Heading>
-            <Heading as="h4" className="headline head">
-              High-functioning teams here also rely on Planning Poker
-            </Heading>
-            <div className="actions">
-              <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                  error={errors.idOrLink?.message}
-                  groupEnd={
-                    <Button variant="contained" color="primary" type="submit" text="Join" disabled={disabled} />
-                  }
-                  placeholder="Enter a link or ID"
-                  {...register('idOrLink')}
-                />
-              </form>
-            </div>
+    <div className={styles.lobby}>
+      <div className="container">
+        <TopBar authName={auth?.name} />
+        <div className="inner">
+          <Heading as="h2" className="heading head">
+            PLANNING POKER
+          </Heading>
+          <Heading as="h4" className="headline head">
+            High-functioning teams here also rely on Planning Poker
+          </Heading>
+          <div className="actions">
+            <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
+            <form onSubmit={onSubmit}>
+              <Input
+                error={errors.idOrLink?.message}
+                maxLength={257}
+                groupEnd={<Button variant="contained" color="primary" type="submit" text="Join" disabled={disabled} />}
+                placeholder="Enter a link or ID"
+                {...register('idOrLink')}
+              />
+            </form>
           </div>
         </div>
-
-        <ModalRoom open={openModal} setOpen={setOpenModal} />
       </div>
-    </>
+      <RoomModal {...{openModal, setOpenModal}} />
+    </div>
   );
 };
 

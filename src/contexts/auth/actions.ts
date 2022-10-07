@@ -1,15 +1,15 @@
 import * as types from './types';
 
 interface IPayload {
-  id: string;
+  id?: string;
   name: string;
 }
 
 export interface IAction {
-  type: typeof types.LOGIN;
+  type: typeof types.UPDATE;
   payload: IPayload;
 }
 
-export const login = (payload: IPayload): IAction => {
-  return {type: types.LOGIN, payload};
+export const UPDATE = (payload: IPayload): IAction => {
+  return {type: types.UPDATE, payload};
 };

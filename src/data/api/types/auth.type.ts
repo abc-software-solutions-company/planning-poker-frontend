@@ -1,10 +1,10 @@
 export interface IAuthLogin {
   name: string;
 }
+export type IAuthUpdate = IAuthLogin;
 
-export interface IAuthInfor {
+export interface IAuthInfor extends IAuthLogin {
   id: string;
-  name: string;
 }
 
 export interface IAuthResponse {

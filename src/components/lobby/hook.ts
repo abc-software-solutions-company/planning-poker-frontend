@@ -20,13 +20,10 @@ interface IFormInputs {
   idOrLink: string;
 }
 
-const FORM_DEFAULT_VALUES: IFormInputs = {idOrLink: ''};
-
 export default function useLobby() {
   const toast = useToast();
   const router = useRouter();
   const [disabled, setDisable] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
 
   const detectId = (idOrLink: string) => {
@@ -45,11 +42,11 @@ export default function useLobby() {
     handleSubmit,
     formState: {errors}
   } = useForm<IFormInputs>({
-    defaultValues: FORM_DEFAULT_VALUES,
+    defaultValues: {idOrLink: ''},
     resolver: yupResolver(Schema)
   });
 
-  const onSubmit: SubmitHandler<IFormInputs> = ({idOrLink}) => {
+  const submitHandler: SubmitHandler<IFormInputs> = ({idOrLink}) => {
     setDisable(true);
     api.room.get({id: detectId(idOrLink)}).then(res => {
       if (res.status === 200 && res.data) {
@@ -70,5 +67,5 @@ export default function useLobby() {
     });
   };
 
-  return {openModal, setOpenModal, register, handleSubmit, errors, onSubmit, disabled};
+  return {openModal, errors, disabled, setOpenModal, register, onSubmit: handleSubmit(submitHandler)};
 }

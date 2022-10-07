@@ -21,7 +21,7 @@ const Authentication: FC<IProps> = ({children}) => {
   const handleSetAuth = async () => {
     const res = await api.auth.verify();
     if (res.status === 200) {
-      authDispatch(AuthActions.login(res.data));
+      authDispatch(AuthActions.UPDATE(res.data));
     }
   };
   let showPage = false;

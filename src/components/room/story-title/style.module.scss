@@ -1,0 +1,14 @@
+.story-title :global {
+  @apply flex items-start justify-center;
+  @apply text-h5;
+  .abc-icon {
+    @apply lg:text-[32px];
+    @apply flex justify-center;
+  }
+  button {
+    @apply ml-1.5 lg:mt-1.5;
+  }
+  .name {
+    @apply text-h4 font-medium leading-6 text-break md:leading-7 lg:text-h3;
+  }
+}
