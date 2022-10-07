@@ -8,19 +8,6 @@
     @apply mx-auto grow;
     @apply flex flex-col justify-center;
   }
-  .topbar {
-    @apply flex items-center justify-end;
-    @apply mt-7 w-full lg:mt-7;
-    .abc-icon {
-      @apply mr-2;
-    }
-    .text {
-      @apply mt-[2px] text-h4 leading-5 text-break;
-    }
-    .right {
-      @apply flex items-start;
-    }
-  }
   .head {
     @apply text-center text-blue-500;
   }

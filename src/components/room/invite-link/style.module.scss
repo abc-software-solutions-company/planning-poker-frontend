@@ -1,0 +1,21 @@
+.invite-link :global {
+  @apply rounded-b-lg;
+  @apply border-x border-b;
+  h6 {
+    @apply p-4;
+  }
+  .form-link {
+    @apply px-4 pb-4;
+    @apply flex justify-between;
+    @apply rounded-r;
+    .abc-input {
+      @apply w-full;
+    }
+    .input-link {
+      @apply rounded-r-none;
+    }
+    .copy-btn {
+      @apply rounded-l-none;
+    }
+  }
+}

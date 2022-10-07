@@ -1,0 +1,33 @@
+.section-vote-room :global {
+  .container {
+    @apply p-4 lg:p-0;
+  }
+  .content {
+    @apply relative mt-8 lg:mt-12 lg:flex lg:gap-x-12;
+  }
+  .border-line {
+    @apply border-0 border-b;
+  }
+  .left-content {
+    @apply grow;
+    .room-name {
+      @apply justify-start;
+    }
+  }
+  .right-content {
+    @apply mt-8 rounded-lg bg-white lg:mt-0;
+    @apply basis-96;
+    .title {
+      @apply text-center text-white;
+      @apply bg-blue-500;
+      @apply rounded-t-lg py-5;
+    }
+    .sub-title {
+      @apply p-4 text-center text-h4;
+      @apply border-0 border-x;
+      .vote-info {
+        @apply font-bold text-red-400;
+      }
+    }
+  }
+}

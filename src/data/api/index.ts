@@ -10,7 +10,8 @@ import {IUserStoryCreate, IUserStoryResponse, IUserStoryUpdate} from './types/us
 const api = {
   auth: {
     login: (data: IAuthLogin) => http.post<IAuthResponse>(API_ENDPOINTS.AUTH + '/login', data),
-    verify: () => http.get<IAuthInfor>(API_ENDPOINTS.AUTH + '/verify')
+    verify: () => http.get<IAuthInfor>(API_ENDPOINTS.AUTH + '/verify'),
+    update: (data: IAuthLogin) => http.patch<IAuthInfor>(API_ENDPOINTS.AUTH, data)
   },
   room: {
     all: () => http.get<IRoomResponse[]>(API_ENDPOINTS.ROOM),

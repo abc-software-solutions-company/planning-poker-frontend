@@ -5,8 +5,8 @@ import * as types from './types';
 export default function reducer(state: IState, action: IAction): IState {
   const {type, payload} = action;
   switch (type) {
-    case types.LOGIN: {
-      return {...state, ...payload};
+    case types.UPDATE: {
+      return {...state, ...payload} as IState;
     }
     default:
       return state;
