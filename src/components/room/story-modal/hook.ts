@@ -21,7 +21,7 @@ interface IFormInputs {
 
 const FORM_DEFAULT_VALUES: IFormInputs = {name: '', type: 'Fibonacci'};
 
-export default function useStoryModal({openModal, setOpenModal}: IProps) {
+export default function useStoryModal({setOpenModal}: IProps) {
   const {roomData, setStoryType} = useRoom();
   const [disabled, setDisable] = useState(false);
 
@@ -64,13 +64,11 @@ export default function useStoryModal({openModal, setOpenModal}: IProps) {
       });
   };
   useEffect(() => {
-    const name = roomData?.story?.avgPoint === null ? roomData.story.name : '';
-    console.log('🚀 ~ file: hook.ts ~ line 68 ~ useEffect ~ name', name);
-    if (openModal) {
-      setValue('name', name);
+    if (roomData?.story?.avgPoint === null && getValues().name === '') {
+      setValue('name', roomData.story.name);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openModal]);
+  }, [roomData?.story?.name]);
 
   useEffect(() => {
     const {type} = getValues();

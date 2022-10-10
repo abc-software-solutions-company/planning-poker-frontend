@@ -16,7 +16,7 @@
   "contact-input-message": "Nhập nội dung",
   "contact-button-submit": "Gửi",
   "contact-button-sending": "Đang gửi...",
-  "contact-submit-success-msg": "Cảm ơn bạn đã quan tâm đến IKI.\nMột trong những thành viên trong nhóm của chúng tôi sẽ sớm liên hệ với bạn.",
+  "contact-submit-success-msg": "Cảm ơn bạn đã quan tâm đến Planning Poker.\nMột trong những thành viên trong nhóm của chúng tôi sẽ sớm liên hệ với bạn.",
   "contact-submit-success-btn": "Về trang chủ",
   "contact-submit-fail-title": "Lỗi!",
   "contact-submit-fail-msg": "Đã xảy ra lỗi, vui lòng thử lại.",
@@ -33,7 +33,7 @@
   "validate-subject-required": "Vui lòng nhập thông tin.",
   "validate-message-required": "Vui lòng nhập thông tin.",
 
-  "copyright":"© Bản quyền 2022 | Công ty thiết kế nội thất IKI",
+  "copyright":"© Bản quyền 2022 | Công ty ABC",
   "copyright-right":"Đã đăng ký Bản quyền",
 
   "blog-view-more": "Xem thêm",

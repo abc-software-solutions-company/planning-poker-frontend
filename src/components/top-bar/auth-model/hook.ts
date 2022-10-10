@@ -16,7 +16,7 @@ const Schema = yup.object().shape({
   name: yup.string().required('Please enter user name').max(32, 'Your name must not exceed 32 letters').trim()
 });
 
-export default function useAuthModal({openModal, setOpenModal}: IProps) {
+export default function useAuthModal({setOpenModal}: IProps) {
   const auth = useStateAuth();
   const [disabled, setDisable] = useState(false);
   const dispatch = useDispatchAuth();
@@ -25,6 +25,7 @@ export default function useAuthModal({openModal, setOpenModal}: IProps) {
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     formState: {errors}
   } = useForm<IAuthUpdate>({
@@ -34,11 +35,11 @@ export default function useAuthModal({openModal, setOpenModal}: IProps) {
   });
 
   useEffect(() => {
-    if (openModal) {
-      setValue('name', auth?.name || '');
+    if (auth && getValues().name === '') {
+      setValue('name', auth.name);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openModal]);
+  }, [auth]);
 
   const submitHandler: SubmitHandler<IAuthUpdate> = data => {
     setDisable(true);
