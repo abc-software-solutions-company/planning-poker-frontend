@@ -10,6 +10,7 @@ import {SOCKET_EVENTS} from '@/data/socket/type';
 import useRoom from '@/hooks/useRoom';
 import {ChartColors, StoryTypes} from '@/utils/constant';
 
+import {tracking} from '../common/third-party/tracking';
 import {IVoteRoomProps} from '.';
 
 export default function useVoting({roomId}: IVoteRoomProps) {
@@ -59,6 +60,7 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   };
 
   const onNext = () => {
+    tracking.event({name: 'Next Story'});
     if (isHost) {
       setOpenModal(true);
     }

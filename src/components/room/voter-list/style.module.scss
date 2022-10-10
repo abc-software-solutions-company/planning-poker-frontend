@@ -1,3 +1,6 @@
-.voter-list {
+.voter-list :global {
   @apply overflow-y-auto border lg:h-[280px];
+  .border-line {
+    @apply border-0 border-b;
+  }
 }

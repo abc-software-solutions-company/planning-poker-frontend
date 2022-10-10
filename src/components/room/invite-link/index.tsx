@@ -1,5 +1,6 @@
 import {FC} from 'react';
 
+import {tracking} from '@/components/common/third-party/tracking';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
@@ -15,6 +16,7 @@ interface Iprops {
 const InviteLink: FC<Iprops> = ({linkValue}) => {
   const toast = useToast();
   const onClickCopy = () => {
+    tracking.event({name: 'Coppy Link'});
     navigator.clipboard.writeText(linkValue || '');
     toast.show({
       type: 'success',

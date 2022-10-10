@@ -28,7 +28,6 @@ export default function useStoryModal({setOpenModal}: IProps) {
     setValue,
     getValues,
     handleSubmit,
-    reset,
     formState: {errors, dirtyFields}
   } = useForm<IFormInputs>({
     defaultValues: {type: 'Fibonacci'},
@@ -50,7 +49,6 @@ export default function useStoryModal({setOpenModal}: IProps) {
       Promise.any(promiseArr).then(({status}) => {
         if (status === 200 || status === 201) {
           socketUpdateRoom();
-          reset();
           setOpenModal(false);
           socketToast({
             type: 'success',

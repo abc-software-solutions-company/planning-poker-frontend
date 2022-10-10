@@ -5,9 +5,6 @@
   .content {
     @apply relative mt-8 lg:mt-12 lg:flex lg:gap-x-12;
   }
-  .border-line {
-    @apply border-0 border-b;
-  }
   .left-content {
     @apply grow;
     .room-name {

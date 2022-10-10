@@ -1,7 +1,15 @@
-import * as gtag from './gtag';
-import * as segment from './segment';
+import {gtag} from './gtag';
+import {segment} from './segment';
+import {IEvent} from './types';
 
-export function page(url: string) {
-  gtag.pageview(url);
-  segment.pageview(url);
-}
+export const tracking = {
+  page: (url: string) => {
+    gtag.page(url);
+    segment.page(url);
+  },
+
+  event: (params: IEvent) => {
+    segment.event(params);
+    gtag.event(params);
+  }
+};
