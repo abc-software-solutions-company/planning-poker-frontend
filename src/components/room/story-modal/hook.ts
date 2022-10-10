@@ -26,6 +26,7 @@ export default function useStoryModal({setOpenModal}: IProps) {
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     reset,
     formState: {errors, dirtyFields}
@@ -62,6 +63,7 @@ export default function useStoryModal({setOpenModal}: IProps) {
   };
 
   useEffect(() => {
+    const {type} = getValues();
     if (!roomData?.story?.type) setStoryType(type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dirtyFields.type]);
