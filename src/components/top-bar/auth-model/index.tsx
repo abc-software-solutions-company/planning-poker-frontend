@@ -17,7 +17,6 @@ export interface IProps {
 
 const AuthModal: FC<IProps> = props => {
   const auth = useStateAuth();
-  console.log('🚀 ~ file: index.tsx ~ line 20 ~ auth', auth);
   const {openModal, setOpenModal} = props;
   const {errors, register, onSubmit, disabled} = useAuthModal(props);
 
@@ -37,6 +36,7 @@ const AuthModal: FC<IProps> = props => {
                         error={errors.name?.message}
                         className={errors.name && 'error'}
                         placeholder="Enter user name"
+                        value={openModal ? auth?.name : ''}
                         autoFocus={true}
                         maxLength={33}
                         {...register('name')}

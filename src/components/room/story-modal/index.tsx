@@ -21,6 +21,7 @@ const StoryModal: FC<IProps> = props => {
   const {roomData, errors, register, onSubmit, disabled} = useStoryModal(props);
   const titlePrefix = roomData?.story?.avgPoint === null ? 'Update' : 'Create New';
   const btnText = roomData?.story?.avgPoint === null ? 'Update' : 'Create';
+  const nameValue = roomData?.story?.avgPoint === null ? roomData.story.name : '';
 
   return (
     <>
@@ -36,6 +37,8 @@ const StoryModal: FC<IProps> = props => {
                     <Input
                       error={errors.name?.message}
                       maxLength={257}
+                      autoFocus={true}
+                      value={nameValue}
                       className={errors.name && 'error'}
                       placeholder="Enter story"
                       {...register('name')}

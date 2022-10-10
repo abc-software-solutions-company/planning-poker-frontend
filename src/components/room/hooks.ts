@@ -14,7 +14,6 @@ import {IVoteRoomProps} from '.';
 
 export default function useVoting({roomId}: IVoteRoomProps) {
   const {roomData, storyType, setStoryType, setOpenModal, setRoomData} = useRoom();
-  console.log('🚀 ~ file: hooks.ts ~ line 17 ~ useVoting ~ roomData', roomData);
   const [chartData, setChartData] = useState<IChartData[]>();
   const [disableAction, setDisableBtn] = useState<boolean>(false);
   const auth = useStateAuth();

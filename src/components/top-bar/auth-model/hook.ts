@@ -1,10 +1,10 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
 import {AuthActions} from '@/contexts/auth';
-import {useDispatchAuth, useStateAuth} from '@/contexts/auth/context';
+import {useDispatchAuth} from '@/contexts/auth/context';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
 import {IAuthUpdate} from '@/data/api/types/auth.type';
@@ -17,29 +17,18 @@ const Schema = yup.object().shape({
 });
 
 export default function useAuthModal({setOpenModal}: IProps) {
-  const auth = useStateAuth();
   const [disabled, setDisable] = useState(false);
   const dispatch = useDispatchAuth();
   const toast = useToast();
 
   const {
     register,
-    setValue,
-    getValues,
     handleSubmit,
     formState: {errors}
   } = useForm<IAuthUpdate>({
-    defaultValues: {name: ''},
     mode: 'onChange',
     resolver: yupResolver(Schema)
   });
-
-  useEffect(() => {
-    if (auth && getValues().name === '') {
-      setValue('name', auth.name);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
 
   const submitHandler: SubmitHandler<IAuthUpdate> = data => {
     setDisable(true);
