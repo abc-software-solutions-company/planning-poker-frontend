@@ -17,19 +17,17 @@ const Schema = yup.object().shape({
   name: yup.string().required('Please fill in your name').max(32, 'Your name must not exceed 32 letters').trim()
 });
 
-const FORM_DEFAULT_VALUES: IFormInputs = {
-  name: ''
-};
 export default function useLetsStart() {
   const [disabled, setDisable] = useState(false);
   const router = useRouter();
   const dispatchAuth = useDispatchAuth();
   const {
     register,
+    setFocus,
     handleSubmit,
     formState: {errors}
   } = useForm<IFormInputs>({
-    defaultValues: FORM_DEFAULT_VALUES,
+    defaultValues: {name: ''},
     mode: 'onChange',
     resolver: yupResolver(Schema)
   });
@@ -50,9 +48,10 @@ export default function useLetsStart() {
       setDisable(false);
     });
   };
-
   useEffect(() => {
+    setFocus('name');
     Cookie.accessToken.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {register, errors, handleSubmit, onSubmit, disabled};

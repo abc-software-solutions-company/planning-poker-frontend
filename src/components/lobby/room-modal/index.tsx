@@ -32,6 +32,7 @@ const RoomModal: FC<IProps> = props => {
                       <Input
                         error={errors.name?.message}
                         className={errors.name && 'error'}
+                        autoFocus={true}
                         placeholder="Enter room name"
                         maxLength={33}
                         {...register('name')}

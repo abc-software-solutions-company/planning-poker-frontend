@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
@@ -7,8 +7,9 @@ import Input from '@/core-ui/input';
 import useLetsStart from './hook';
 import style from './style.module.scss';
 
-const LetsStart: React.FC = () => {
+const LetsStart: FC = () => {
   const {register, errors, handleSubmit, onSubmit, disabled} = useLetsStart();
+
   return (
     <div className={`${style['lets-start']}`}>
       <div className="container">
@@ -24,7 +25,9 @@ const LetsStart: React.FC = () => {
                 </Heading>
                 <Input
                   error={errors.name?.message}
+                  className={errors.name && 'error'}
                   placeholder="Enter your name"
+                  autoFocus={true}
                   maxLength={33}
                   {...register('name')}
                 />
