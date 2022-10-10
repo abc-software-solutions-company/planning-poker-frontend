@@ -1,3 +1,4 @@
+import tracking from '@/components/common/third-party/tracking';
 import {API_ENDPOINTS} from '@/configs/endpoint.config';
 import http from '@/utils/http';
 
@@ -16,7 +17,11 @@ const api = {
   room: {
     all: () => http.get<IRoomResponse[]>(API_ENDPOINTS.ROOM),
     get: ({id}: IRoomGet) => http.get<IRoomFullResponse>(API_ENDPOINTS.ROOM + '/' + id),
-    create: (data: IRoomCreate) => http.post<IRoomResponse>(API_ENDPOINTS.ROOM, data)
+    create: (data: IRoomCreate) => {
+      tracking.event({name: 'Create Rroom'});
+      console.log("🚀 ~ file: index.ts ~ line 22 ~ tracking.event({name: 'Create Rroom'});");
+      return http.post<IRoomResponse>(API_ENDPOINTS.ROOM, data);
+    }
   },
   story: {
     create: (data: IStoryCreate) => http.post<IStoryResponse>(API_ENDPOINTS.STORY, data),
@@ -29,7 +34,10 @@ const api = {
   },
   userStory: {
     create: (data: IUserStoryCreate) => http.post<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data),
-    update: (data: IUserStoryUpdate) => http.patch<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data)
+    update: (data: IUserStoryUpdate) => {
+      console.log("🚀 ~ file: index.ts ~ line 39 ~ tracking.event({name: 'Select Poker'});");
+      return http.patch<IUserStoryResponse>(API_ENDPOINTS.USERSTORY, data);
+    }
   }
 };
 

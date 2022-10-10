@@ -1,10 +1,23 @@
+import {useRouter} from 'next/router';
 import Script from 'next/script';
-import React from 'react';
+import {FC, useEffect} from 'react';
 
+import tracking from '.';
 import {GA_TRACKING_ID} from './gtag';
 import {SEGMENT_TRACKING_ID} from './segment';
 
-const Analytics = () => {
+const Analytics: FC = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const pageTracking = () => {
+      tracking.page(window.location.pathname);
+    };
+    router.events.on('routeChangeComplete', pageTracking);
+    return () => {
+      router.events.off('routeChangeComplete', pageTracking);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.events]);
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -19,7 +32,6 @@ const Analytics = () => {
           });
         `}
       </Script>
-
       {/* Segment */}
       <Script strategy="afterInteractive" id="segment">
         {`
