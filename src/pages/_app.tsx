@@ -11,7 +11,6 @@ import nProgress from 'nprogress';
 import {useEffect} from 'react';
 
 import DefaultSeo from '@/components/common/seo/default-seo';
-import * as Tracking from '@/components/common/third-party/tracking';
 import Analytics from '@/components/common/third-party/tracking/Analytics';
 import {AuthProvider} from '@/contexts/auth';
 import {RoomProvider} from '@/contexts/room';
@@ -49,15 +48,6 @@ const CustomApp = ({Component, pageProps: {...pageProps}}: AppProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const handleRouteChange = (url: string) => Tracking.page(url);
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
   return (
     <>
       <DefaultSeo />

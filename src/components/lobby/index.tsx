@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 
 import RoomModal from '@/components/lobby/room-modal';
 import {useStateAuth} from '@/contexts/auth';
@@ -13,6 +13,9 @@ import styles from './style.module.scss';
 const Lobby: FC = () => {
   const {openModal, setOpenModal, register, errors, onSubmit, disabled} = useLobby();
   const auth = useStateAuth();
+  useEffect(() => {
+    // console.log(window);
+  }, []);
   return (
     <div className={styles.lobby}>
       <div className="container">
