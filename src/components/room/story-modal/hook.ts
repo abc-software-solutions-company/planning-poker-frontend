@@ -3,6 +3,8 @@ import {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
+import {Tracking} from '@/components/common/third-party/tracking';
+import {useStateAuth} from '@/contexts/auth';
 import api from '@/data/api';
 import {socketToast, socketUpdateRoom} from '@/data/socket';
 import useRoom from '@/hooks/useRoom';
@@ -20,6 +22,7 @@ interface IFormInputs {
 }
 
 export default function useStoryModal({setOpenModal}: IProps) {
+  const auth = useStateAuth();
   const {roomData, setStoryType} = useRoom();
   const [disabled, setDisable] = useState(false);
 
@@ -35,29 +38,45 @@ export default function useStoryModal({setOpenModal}: IProps) {
     resolver: yupResolver(Schema)
   });
 
-  const submitHandler: SubmitHandler<IFormInputs> = ({name, type}) => {
+  const submitHandler: SubmitHandler<IFormInputs> = data => {
+    const {name, type} = data;
     setDisable(true);
-    const promiseArr = [];
     if (roomData) {
       if (roomData.story?.avgPoint === null) {
-        promiseArr.push(api.story.update({id: roomData.story.id, name: name}));
+        Tracking.event({
+          name: 'Submit Update Story form',
+          properties: {auth, submitData: data, currentData: roomData.story}
+        });
+        api.story.update({id: roomData.story.id, name}).then(res => {
+          if (res.status === 200) {
+            socketUpdateRoom();
+            setOpenModal(false);
+            socketToast({
+              type: 'success',
+              title: 'Success!',
+              content: 'Update success story'
+            });
+            Tracking.event({name: 'Update Story - success', properties: {auth, res}});
+          } else Tracking.event({name: 'Update Story - fail', properties: {auth, res}});
+          setDisable(false);
+        });
       } else {
-        promiseArr.push(api.story.create({name, roomId: roomData.id, type}));
+        Tracking.event({name: 'Submit Create Story form', properties: {auth, submitData: data}});
+        api.story.create({name, roomId: roomData.id, type}).then(res => {
+          if (res.status === 201) {
+            socketUpdateRoom();
+            setOpenModal(false);
+            socketToast({
+              type: 'success',
+              title: 'Success!',
+              content: 'Create success story'
+            });
+            Tracking.event({name: 'Create Story - success', properties: {auth, res}});
+          } else Tracking.event({name: 'Create Story - fail', properties: {auth, res}});
+          setDisable(false);
+        });
       }
     }
-    if (promiseArr.length > 0)
-      Promise.any(promiseArr).then(({status}) => {
-        if (status === 200 || status === 201) {
-          socketUpdateRoom();
-          setOpenModal(false);
-          socketToast({
-            type: 'success',
-            title: 'Success!',
-            content: 'Update success story'
-          });
-        }
-        setDisable(false);
-      });
   };
 
   useEffect(() => {
@@ -66,5 +85,5 @@ export default function useStoryModal({setOpenModal}: IProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dirtyFields.type]);
 
-  return {roomData, setValue, errors, register, onSubmit: handleSubmit(submitHandler), disabled};
+  return {roomData, errors, disabled, setValue, register, onSubmit: handleSubmit(submitHandler)};
 }

@@ -10,7 +10,7 @@ import {SOCKET_EVENTS} from '@/data/socket/type';
 import useRoom from '@/hooks/useRoom';
 import {ChartColors, StoryTypes} from '@/utils/constant';
 
-import {tracking} from '../common/third-party/tracking';
+import {Tracking} from '../common/third-party/tracking';
 import {IVoteRoomProps} from '.';
 
 export default function useVoting({roomId}: IVoteRoomProps) {
@@ -33,19 +33,28 @@ export default function useVoting({roomId}: IVoteRoomProps) {
   };
 
   const onSelectPoker = async (value: number) => {
+    Tracking.event({name: 'Click Poker', properties: {auth, poker: StoryTypes[storyType][value]}});
     if (auth && roomData?.story) {
       const curentVotePoint = roomData.users.filter(u => u.id === auth.id)[0].votePoint;
       const roomDataTemp = {...roomData};
       roomDataTemp.users.filter(u => u.id === auth.id)[0].votePoint = value;
       setRoomData(roomDataTemp);
-      api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(({status}) => {
-        if (status === 200) {
+      api.userStory.update({storyId: roomData.story.id, votePoint: value}).then(res => {
+        if (res.status === 200) {
+          Tracking.event({
+            name: 'Select Poker - success',
+            properties: {auth, res}
+          });
           if (curentVotePoint === null) socketUpdateRoomExceptMe();
         } else {
           toast.show({
             type: 'danger',
             title: 'Select Story Error',
             content: 'An error occurred, please try again'
+          });
+          Tracking.event({
+            name: 'Select Poker - fail',
+            properties: {auth, res}
           });
           updateRoom();
         }
@@ -59,18 +68,27 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     }
   };
 
+  const onClickUpdateStory = () => {
+    Tracking.event({name: 'Click Update Story button', properties: {auth}});
+    if (isHost) {
+      setOpenModal(true);
+    }
+  };
+
   const onNext = () => {
-    tracking.event({name: 'Next Story'});
+    Tracking.event({name: 'Click Next Story button', properties: {auth}});
     if (isHost) {
       setOpenModal(true);
     }
   };
 
   const onComplete = () => {
+    Tracking.event({name: 'Click Complete button', properties: {auth}});
     setDisableBtn(true);
     if (isHost && roomData?.story?.avgPoint === null)
       api.story.complete({id: roomData.story.id}).then(res => {
         if (res.status === 200) {
+          Tracking.event({name: 'Complete - success', properties: {auth, res}});
           socketUpdateRoom();
           socketToast({type: 'success', title: 'Success!', content: 'Show all votes'});
         } else {
@@ -79,8 +97,9 @@ export default function useVoting({roomId}: IVoteRoomProps) {
             title: 'warning!',
             content: 'No users have voted yet'
           });
-          setDisableBtn(false);
+          Tracking.event({name: 'Complete - fail', properties: {auth, res}});
         }
+        setDisableBtn(false);
       });
   };
 
@@ -89,9 +108,12 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     if (auth && roomData) {
       if (roomData.users.filter(user => user.id === auth.id).length === 0) {
         promiseArr.push(
-          api.userRoom.create({roomId}).then(({status}) => {
-            if (status === 201) {
+          api.userRoom.create({roomId}).then(res => {
+            if (res.status === 201) {
+              Tracking.event({name: 'Join Room - success', properties: {auth, res}});
               socketJoinRoom();
+            } else {
+              Tracking.event({name: 'Join Room - fail', properties: {auth, res}});
             }
           })
         );
@@ -102,7 +124,15 @@ export default function useVoting({roomId}: IVoteRoomProps) {
       }
       if (roomData?.story && roomData.story.avgPoint === null) {
         if (roomData.users.filter(user => user.id === auth.id)[0]?.votePoint === undefined)
-          promiseArr.push(api.userStory.create({storyId: roomData.story.id}));
+          promiseArr.push(
+            api.userStory.create({storyId: roomData.story.id}).then(res => {
+              if (res.status === 201) {
+                Tracking.event({name: 'Join Story - success', properties: {auth, res}});
+              } else {
+                Tracking.event({name: 'Join Story - fail', properties: {auth, res}});
+              }
+            })
+          );
       }
     }
 
@@ -182,5 +212,5 @@ export default function useVoting({roomId}: IVoteRoomProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {auth, chartData, isHost, disableAction, onNext, onComplete, onSelectPoker};
+  return {auth, chartData, isHost, disableAction, onNext, onComplete, onSelectPoker, onClickUpdateStory};
 }

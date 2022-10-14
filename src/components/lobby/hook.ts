@@ -5,14 +5,17 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
 import {ROUTES} from '@/configs/routes.config';
+import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
+
+import {Tracking} from '../common/third-party/tracking';
 
 const Schema = yup.object().shape({
   idOrLink: yup
     .string()
     .required('Please enter room link or ID')
-    .max(256, 'Room link must not exceed 256 letters')
+    .max(256, 'room link or ID must not exceed 256 letters')
     .trim()
 });
 
@@ -21,6 +24,7 @@ interface IFormInputs {
 }
 
 export default function useLobby() {
+  const auth = useStateAuth();
   const toast = useToast();
   const router = useRouter();
   const [disabled, setDisable] = useState(false);
@@ -46,15 +50,17 @@ export default function useLobby() {
     resolver: yupResolver(Schema)
   });
 
-  const submitHandler: SubmitHandler<IFormInputs> = ({idOrLink}) => {
+  const submitHandler: SubmitHandler<IFormInputs> = data => {
     setDisable(true);
-    api.room.get({id: detectId(idOrLink)}).then(res => {
+    Tracking.event({name: 'Submit Join Room form', properties: {auth, submitData: data}});
+    api.room.get({id: detectId(data.idOrLink)}).then(res => {
       if (res.status === 200 && res.data) {
+        Tracking.event({name: 'Find Room - success', properties: {auth, res}});
         router.push(ROUTES.ROOM + res.data.id);
         toast.show({
           type: 'success',
           title: 'Success',
-          content: 'Join the success room'
+          content: 'Join success room'
         });
       } else {
         toast.show({
@@ -62,8 +68,9 @@ export default function useLobby() {
           title: 'Error!',
           content: 'Room does not exist'
         });
-        setDisable(false);
+        Tracking.event({name: 'Find Room - fail', properties: {auth, res}});
       }
+      setDisable(false);
     });
   };
 

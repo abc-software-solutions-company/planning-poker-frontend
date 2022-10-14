@@ -18,7 +18,7 @@ export interface IProps {
 
 const StoryModal: FC<IProps> = props => {
   const {openModal, setOpenModal} = props;
-  const {roomData, errors, setValue, register, onSubmit, disabled} = useStoryModal(props);
+  const {roomData, errors, disabled, setValue, register, onSubmit} = useStoryModal(props);
   const titlePrefix = roomData?.story?.avgPoint === null ? 'Update' : 'Create New';
   const btnText = roomData?.story?.avgPoint === null ? 'Update' : 'Create';
   const nameValue = roomData?.story?.avgPoint === null ? roomData.story.name : '';

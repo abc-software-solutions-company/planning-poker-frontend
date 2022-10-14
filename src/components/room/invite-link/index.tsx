@@ -1,6 +1,7 @@
 import {FC} from 'react';
 
-import {tracking} from '@/components/common/third-party/tracking';
+import {Tracking} from '@/components/common/third-party/tracking';
+import {useStateAuth} from '@/contexts/auth';
 import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Icon from '@/core-ui/icon';
@@ -14,10 +15,12 @@ interface Iprops {
 }
 
 const InviteLink: FC<Iprops> = ({linkValue}) => {
+  const auth = useStateAuth();
   const toast = useToast();
   const onClickCopy = () => {
-    tracking.event({name: 'Coppy Link'});
-    navigator.clipboard.writeText(linkValue || '');
+    const link = linkValue || '';
+    Tracking.event({name: 'Copy Link', properties: {auth, link}});
+    navigator.clipboard.writeText(link);
     toast.show({
       type: 'success',
       title: 'Success!',

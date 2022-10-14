@@ -11,7 +11,7 @@ import nProgress from 'nprogress';
 import {useEffect} from 'react';
 
 import DefaultSeo from '@/components/common/seo/default-seo';
-import Tracking from '@/components/common/third-party/tracking/Tracking';
+import TrackingInit from '@/components/common/third-party/tracking/TrackingInit';
 import {AuthProvider} from '@/contexts/auth';
 import {RoomProvider} from '@/contexts/room';
 
@@ -51,7 +51,7 @@ const CustomApp = ({Component, pageProps: {...pageProps}}: AppProps) => {
   return (
     <>
       <DefaultSeo />
-      <Tracking />
+      <TrackingInit />
       <AuthProvider>
         <RoomProvider>
           <Layout pageProps={pageProps}>

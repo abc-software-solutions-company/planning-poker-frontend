@@ -22,7 +22,7 @@ export interface IVoteRoomProps {
 const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
   const auth = useStateAuth();
   const {openModal, storyType, roomData, setOpenModal} = useRoom();
-  const {chartData, isHost, disableAction, onComplete, onNext, onSelectPoker} = useVoting({roomId});
+  const {chartData, isHost, disableAction, onComplete, onNext, onSelectPoker, onClickUpdateStory} = useVoting({roomId});
   const isCompleted = roomData?.story && roomData.story.avgPoint !== null;
   const numVotedUser = roomData?.users?.filter(({votePoint}) => votePoint || votePoint === 0).length || 0;
   const numJoinUser = roomData?.users?.length || 0;
@@ -39,7 +39,7 @@ const VoteRoom: FC<IVoteRoomProps> = ({roomId}) => {
         <TopBar showBackBtn={true} roomName={roomData?.name} authName={auth?.name} />
         <div className="content">
           <div className="left-content">
-            <StoryTitle {...{onNext, showEditBtn: isHost && !isCompleted}} />
+            <StoryTitle {...{onClick: onClickUpdateStory, showEditBtn: isHost && !isCompleted}} />
             {displayHolder()}
           </div>
           <div className="right-content">

@@ -2,8 +2,10 @@ import {useRouter} from 'next/router';
 import {FC, useState} from 'react';
 
 import {ROUTES} from '@/configs/routes.config';
+import {useStateAuth} from '@/contexts/auth';
 import Icon from '@/core-ui/icon';
 
+import {Tracking} from '../common/third-party/tracking';
 import AuthModal from './auth-model';
 import styles from './style.module.scss';
 
@@ -14,8 +16,13 @@ interface Iprops {
 }
 
 const TopBar: FC<Iprops> = ({roomName, authName, showBackBtn}) => {
+  const auth = useStateAuth();
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
+  const onClickUserName = () => {
+    Tracking.event({name: 'Click User Name button', properties: {auth}});
+    setOpenModal(true);
+  };
 
   return (
     <div className={styles['top-bar']}>
@@ -30,7 +37,7 @@ const TopBar: FC<Iprops> = ({roomName, authName, showBackBtn}) => {
         )}
       </div>
       <div className="grow"></div>
-      <button className="right" onClick={() => setOpenModal(true)}>
+      <button className="right" onClick={onClickUserName}>
         <Icon name="ico-user" size={24} />
         <p className="text">{authName}</p>
       </button>

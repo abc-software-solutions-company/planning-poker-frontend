@@ -3,8 +3,9 @@ import {useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
+import {Tracking} from '@/components/common/third-party/tracking';
 import {AuthActions} from '@/contexts/auth';
-import {useDispatchAuth} from '@/contexts/auth/context';
+import {useDispatchAuth, useStateAuth} from '@/contexts/auth/context';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
 import {IAuthUpdate} from '@/data/api/types/auth.type';
@@ -17,6 +18,7 @@ const Schema = yup.object().shape({
 });
 
 export default function useAuthModal({setOpenModal}: IProps) {
+  const auth = useStateAuth();
   const [disabled, setDisable] = useState(false);
   const dispatch = useDispatchAuth();
   const toast = useToast();
@@ -31,10 +33,12 @@ export default function useAuthModal({setOpenModal}: IProps) {
   });
 
   const submitHandler: SubmitHandler<IAuthUpdate> = data => {
+    Tracking.event({name: 'Submit Update User Name form', properties: {auth, submitData: data}});
     setDisable(true);
-    api.auth.update(data).then(({status, data: {name}}) => {
-      if (status === 200) {
-        dispatch(AuthActions.UPDATE({name}));
+    api.auth.update(data).then(res => {
+      if (res.status === 200) {
+        Tracking.event({name: 'Update User Name - success', properties: {auth, res}});
+        dispatch(AuthActions.UPDATE({name: res.data.name}));
         socketUpdateRoomExceptMe();
         setOpenModal(false);
         toast.show({
@@ -42,7 +46,7 @@ export default function useAuthModal({setOpenModal}: IProps) {
           title: 'Success!',
           content: 'Update success name'
         });
-      }
+      } else Tracking.event({name: 'Update User Name - fail', properties: {auth, res}});
       setDisable(false);
     });
   };

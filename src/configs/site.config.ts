@@ -1,6 +1,6 @@
 import {merge} from 'lodash-es';
 
-const WEBSITE_NAME = 'Planning Pocker';
+const WEBSITE_NAME = 'Planning Poker';
 const WEBSITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 const COMPANY_NAME = 'ABC Software Solutions';
 const COMPANY_URL = 'https://abcsoftwarecompany.com';
@@ -54,7 +54,7 @@ export const siteSettings = {
     socials: COMPANY_SOCIAL
   },
   description: 'Planning Poker is an application for many participants to vote on user stories.',
-  keyword: 'planning pocker, vote user story, realtime, scrum pocker, agile estimation, story point estimations',
+  keyword: 'planning poker, vote user story, realtime, scrum poker, agile estimation, story point estimations',
   schemaJsonLd: {
     organization: merge(organizationDefault, {name: COMPANY_NAME}),
     website: merge(websiteDefault, {name: WEBSITE_NAME})

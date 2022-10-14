@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 
 import RoomModal from '@/components/lobby/room-modal';
 import {useStateAuth} from '@/contexts/auth';
@@ -6,6 +6,7 @@ import Button from '@/core-ui/button';
 import Heading from '@/core-ui/heading';
 import Input from '@/core-ui/input';
 
+import {Tracking} from '../common/third-party/tracking';
 import TopBar from '../top-bar';
 import useLobby from './hook';
 import styles from './style.module.scss';
@@ -13,9 +14,11 @@ import styles from './style.module.scss';
 const Lobby: FC = () => {
   const {openModal, setOpenModal, register, errors, onSubmit, disabled} = useLobby();
   const auth = useStateAuth();
-  useEffect(() => {
-    // console.log(window);
-  }, []);
+  const onClickCreateRoom = () => {
+    Tracking.event({name: 'Click Create Room button', properties: {auth}});
+    setOpenModal(true);
+  };
+
   return (
     <div className={styles.lobby}>
       <div className="container">
@@ -28,7 +31,7 @@ const Lobby: FC = () => {
             High-functioning teams here also rely on Planning Poker
           </Heading>
           <div className="actions">
-            <Button variant="contained" color="primary" text="Create Room" onClick={() => setOpenModal(true)} />
+            <Button variant="contained" color="primary" text="Create Room" onClick={onClickCreateRoom} />
             <form onSubmit={onSubmit}>
               <Input
                 error={errors.idOrLink?.message}
