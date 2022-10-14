@@ -4,7 +4,9 @@ import {useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 
+import {Tracking} from '@/components/common/third-party/tracking';
 import {ROUTES} from '@/configs/routes.config';
+import {useStateAuth} from '@/contexts/auth';
 import useToast from '@/core-ui/toast';
 import api from '@/data/api';
 import {IRoomCreate} from '@/data/api/types/room.type';
@@ -17,6 +19,7 @@ const Schema = yup.object().shape({
 
 export default function useRoomModal({setOpenModal}: IProps) {
   const [disabled, setDisable] = useState(false);
+  const auth = useStateAuth();
   const router = useRouter();
   const toast = useToast();
 
@@ -33,8 +36,10 @@ export default function useRoomModal({setOpenModal}: IProps) {
 
   const submitHandler: SubmitHandler<IRoomCreate> = data => {
     setDisable(true);
+    Tracking.event({name: 'Submit Create Room form', properties: {auth, submitData: data}});
     api.room.create(data).then(res => {
       if (res.status === 201) {
+        Tracking.event({name: 'Create Room - success', properties: {auth, res}});
         setOpenModal(false);
         reset();
         toast.show({
@@ -43,10 +48,11 @@ export default function useRoomModal({setOpenModal}: IProps) {
           content: 'Create success room'
         });
         router.push(`${ROUTES.ROOM}${res.data.id}`);
-      }
+      } else Tracking.event({name: 'Create Room - fail', properties: {auth, res}});
+
       setDisable(false);
     });
   };
 
-  return {errors, register, onSubmit: handleSubmit(submitHandler), disabled};
+  return {errors, disabled, register, onSubmit: handleSubmit(submitHandler)};
 }

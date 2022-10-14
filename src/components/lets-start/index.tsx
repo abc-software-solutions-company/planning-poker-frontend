@@ -8,7 +8,7 @@ import useLetsStart from './hook';
 import style from './style.module.scss';
 
 const LetsStart: FC = () => {
-  const {register, errors, handleSubmit, onSubmit, disabled} = useLetsStart();
+  const {disabled, errors, register, onSubmit} = useLetsStart();
 
   return (
     <div className={`${style['lets-start']}`}>
@@ -19,7 +19,7 @@ const LetsStart: FC = () => {
               PLANNING POKER
             </Heading>
             <div className="form-enter-your-name">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={onSubmit}>
                 <Heading className="head-form" as="h4">
                   Let&apos;s start!
                 </Heading>
