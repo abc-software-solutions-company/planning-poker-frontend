@@ -33,7 +33,7 @@ export default function useStoryModal({setOpenModal}: IProps) {
     handleSubmit,
     formState: {errors, dirtyFields}
   } = useForm<IFormInputs>({
-    defaultValues: {type: 'Fibonacci'},
+    defaultValues: {type: 'Fibonacci', name: 'Untitled'},
     mode: 'onChange',
     resolver: yupResolver(Schema)
   });
