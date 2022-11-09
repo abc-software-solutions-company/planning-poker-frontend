@@ -29,7 +29,7 @@ export default function useRoomModal({setOpenModal}: IProps) {
     reset,
     formState: {errors}
   } = useForm<IRoomCreate>({
-    defaultValues: {name: ''},
+    defaultValues: {name: 'untitled'},
     mode: 'onChange',
     resolver: yupResolver(Schema)
   });
