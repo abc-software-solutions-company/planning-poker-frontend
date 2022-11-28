@@ -1,10 +1,10 @@
 {
-  "name": "abc-website",
+  "name": "plan-pocker-website",
   "version": "1.0.3",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abc-software-solutions-company/abc-website.git"
+    "url": "git+https://github.com/abc-software-solutions-company/plan-pocker-website.git"
   },
   "scripts": {
     "dev": "next dev",
