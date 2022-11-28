@@ -5,14 +5,14 @@ name: Auto Deploy NextJS to EC2 Instance
 
 on:
   push:
-    branches: ["main"]
+    branches: ["release"]
 
 env:
   APP_ENV: ${{ secrets.APP_ENV }}
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, production]
 
     strategy:
       matrix:
