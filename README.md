@@ -1,7 +1,5 @@
 # Planning Poker
 
-[Stage](https://abc-website-stage.vercel.app)
-
 ## ⚠️ Prerequisites.
 
 1. Install Node.js =16.x
