@@ -50,8 +50,5 @@ jobs:
       - name: Gen font
         run: yarn genfont
 
-      # - name: Build,Start and Restart Web Application
-      #   run: RUNNER_TRACKING_ID="" && yarn build && pm2 start yarn -- start && pm2 restart yarn
-
-      - name: Build,Start Temporary as yarn dev mode and Restart Web Application
-        run: RUNNER_TRACKING_ID="" pm2 start yarn -- dev && pm2 restart yarn
+      - name: Build,Start and Restart Web Application
+        run: RUNNER_TRACKING_ID="" && yarn build && pm2 start yarn -- start && pm2 restart yarn
