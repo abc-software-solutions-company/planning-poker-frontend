@@ -29,6 +29,6 @@ export const getStaticProps: GetStaticProps<PageProps, ParsedQueryParams> = asyn
 
 export const getStaticPaths: GetStaticPaths<ParsedQueryParams> = async () => {
   const rooms = await api.room.all();
-  const paths = rooms.data.flatMap(room => ({params: {id: `${room.id}`}}));
+  const paths = rooms.data.slice(0, 3).flatMap(room => ({params: {id: `${room.id}`}}));
   return {paths, fallback: 'blocking'};
 };
